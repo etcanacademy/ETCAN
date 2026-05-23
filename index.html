@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="pageTitle">أكاديمية إتقان | المنصة التعليمية</title>
+    
+    <!-- Importing Premium Cairo Font and FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #1a237e;
+            --secondary: #0288d1;
+            --accent: #ffd600;
+            --white: #ffffff;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            scroll-behavior: smooth; 
+        }
+
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+        }
+
+        /* Styling Header & Navigation Bar */
+        header { 
+            background: var(--white); 
+            box-shadow: var(--shadow); 
+            position: sticky; 
+            top: 40px; /* Spacing for the fixed top ticker */
+            z-index: 1000; 
+            transition: var(--transition); 
+            width: 100%;
+        }
+
+        .navbar { 
+            width: 100%;
+            max-width: 100%; 
+            margin: 0; 
+            padding: 12px 30px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: relative;
+            flex-wrap: nowrap;
+        }
+
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: 900; 
+            color: var(--primary); 
+            text-decoration: none; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            white-space: nowrap;
+        }
+
+        .nav-links { 
+            display: flex; 
+            list-style: none; 
+            gap: 8px; 
+            align-items: center; 
+            flex-wrap: nowrap;
+        }
+
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--text-dark); 
+            font-weight: 700; 
+            padding: 8px 12px; 
+            border-radius: 6px; 
+            transition: var(--transition); 
+            cursor: pointer; 
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover { 
+            background: rgba(2, 136, 209, 0.1); 
+            color: var(--secondary); 
+        }
+
+        .menu-toggle { 
+            display: none; 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+            color: var(--primary); 
+            padding: 5px;
+        }
+
+        .dropdown { 
+            position: relative; 
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background: var(--white);
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            padding: 10px 0;
+            z-index: 3000;
+            border: 1px solid #f1f5f9;
+        }
+
+        html[dir="rtl"] .dropdown-content { 
+            right: 0; 
+            left: auto; 
+        }
+
+        html[dir="ltr"] .dropdown-content { 
+            left: 0; 
+            right: auto; 
+        }
+
+        .dropdown-content li { 
+            list-style: none; 
+        }
+
+        .dropdown-content a { 
+            display: block; 
+            border-radius: 0; 
+            padding: 10px 20px; 
+            text-align: start;
+        }
+
+        @media (min-width: 992px) {
+            .dropdown-content {
+                position: absolute; 
+            }
+            .dropdown:hover .dropdown-content { 
+                display: block !important; 
+            }
+        }
+
+        @media screen and (max-width: 991px) {
+            .menu-toggle { 
+                display: block; 
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; 
+                left: 15px; 
+                right: 15px;
+                background: var(--white);
+                box-shadow: var(--shadow);
+                border-radius: 15px;
+                padding: 20px;
+                gap: 5px;
+                flex-wrap: wrap;
+                z-index: 2000;
+            }
+            .nav-links.active { 
+                display: flex; 
+                animation: fadeIn 0.3s ease; 
+            }
+            .dropdown-content { 
+                position: static; 
+                box-shadow: none; 
+                width: 100%; 
+                background: #f8fafc; 
+            }
+            .dropdown.active .dropdown-content { 
+                display: block; 
+            }
+        }
+
+        .dropdown-content.show {
+            display: block !important;
+        }
+
+        .page-content { 
+            display: none; 
+            min-height: 80vh; 
+            animation: fadeIn 0.5s ease forwards; 
+        }
+
+        .page-active { 
+            display: block; 
+        }
+
+        @keyframes fadeIn { 
+            from { 
+                opacity: 0; 
+                transform: translateY(15px); 
+            } 
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            } 
+        }
+
+        .hero { 
+            background: linear-gradient(rgba(26, 35, 126, 0.85), rgba(2, 136, 209, 0.85)), 
+                        url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80') center/cover; 
+            color: white; 
+            padding: 120px 20px; 
+            text-align: center; 
+            border-radius: 0 0 50px 50px; 
+            margin-bottom: 40px; 
+        }
+
+        .hero h1 { 
+            font-size: 3rem; 
+            margin-bottom: 20px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+        }
+
+        .hero p { 
+            font-size: 1.2rem; 
+            max-width: 700px; 
+            margin: 0 auto 30px; 
+            opacity: 0.9; 
+        }
+
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 40px 20px; 
+        }
+
+        .btn { 
+            padding: 12px 28px; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            border: none; 
+            transition: var(--transition); 
+            text-decoration: none; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            justify-content: center; 
+        }
+
+        .btn-primary { 
+            background: var(--primary); 
+            color: white; 
+        }
+
+        .btn-primary:hover { 
+            background: #121858; 
+            transform: translateY(-2px); 
+        }
+
+        .btn-accent { 
+            background: var(--accent); 
+            color: var(--primary); 
+        }
+
+        .btn-accent:hover { 
+            filter: brightness(1.1); 
+            transform: translateY(-2px); 
+        }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: var(--shadow); 
+            text-align: center; 
+            transition: var(--transition); 
+            border-top: 5px solid var(--secondary); 
+        }
+
+        .card:hover { 
+            transform: translateY(-10px); 
+        }
+
+        .card i { 
+            font-size: 2.5rem; 
+            color: var(--secondary); 
+            margin-bottom: 15px; 
+        }
+
+        .form-panel { 
+            background: white; 
+            padding: 35px; 
+            border-radius: 25px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1); 
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+
+        .form-group { 
+            margin-bottom: 20px; 
+            text-align: start; 
+        }
+
+        .form-group label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 700; 
+            color: var(--primary); 
+        }
+
+        .form-group input, .form-group select { 
+            width: 100%; 
+            padding: 14px; 
+            border: 2px solid #e2e8f0; 
+            border-radius: 10px; 
+            font-size: 1rem; 
+            transition: var(--transition); 
+        }
+
+        .form-group input:focus { 
+            border-color: var(--secondary); 
+            outline: none; 
+            box-shadow: 0 0 0 4px rgba(2, 136, 209, 0.1); 
+        }
+
+        .loader { 
+            display: none; 
+            width: 20px; 
+            height: 20px; 
+            border: 3px solid #f3f3f3; 
+            border-top: 3px solid var(--primary); 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+            margin-inline-start: 10px;
+        }
+
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+
+        /* Styling Top Marquee Ticker */
+        .fixed-ticker {
+            background: var(--primary);
+            color: white;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        .ticker-label { 
+            background: var(--accent); 
+            color: var(--primary); 
+            padding: 0 15px; 
+            font-weight: 900; 
+            z-index: 2; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            box-shadow: 4px 0 10px rgba(0,0,0,0.15);
+        }
+
+        .ticker-text { 
+            white-space: nowrap; 
+            display: inline-block;
+            padding-inline-start: 100%;
+        }
+
+        html[dir="rtl"] .ticker-text {
+            animation: ticker-rtl 25s linear infinite;
+        }
+
+        html[dir="ltr"] .ticker-text {
+            animation: ticker-ltr 25s linear infinite;
+        }
+
+        @keyframes ticker-rtl { 
+            0% { transform: translate3d(0, 0, 0); } 
+            100% { transform: translate3d(-100%, 0, 0); } 
+        }
+
+        @keyframes ticker-ltr { 
+            0% { transform: translate3d(0, 0, 0); } 
+            100% { transform: translate3d(100%, 0, 0); } 
+        }
+
+        /* PREMIUM TOAST NOTIFICATION STYLING */
+        #toast-container {
+            position: fixed;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .toast-msg {
+            background: #1e293b;
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            border-inline-start: 6px solid var(--secondary);
+        }
+
+        .toast-success { border-inline-start-color: var(--success); }
+        .toast-danger { border-inline-start-color: var(--danger); }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { 
+            background: #0f172a; 
+            color: white; 
+            padding: 40px 20px; 
+            text-align: center; 
+            margin-top: 60px; 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SMART TICKER -->
+    <div class="fixed-ticker">
+        <div class="ticker-label" data-i18n="logoText">أكاديمية إتقان</div>
+        <div class="ticker-text" data-i18n="heroSub">تعليم شرعي وأكاديمي بأساليب تقنية حديثة تجمع بين الأصالة والمعاصرة.</div>
+    </div>
+
+    <!-- MAIN NAVBAR HEADER -->
+    <header>
+        <nav class="navbar">
+            <div class="logo" onclick="navigateTo('home-page')">
+                <i class="fas fa-graduation-cap"></i> <span data-i18n="logoText">أكاديمية إتقان</span>
+            </div>
+
+            <!-- Enhanced Toggle Menu -->
+            <div class="menu-toggle" id="menuToggleBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <ul class="nav-links" id="nav-list">
+                <li><a onclick="closeMenu('about-page')" data-i18n="navAbout">التعريف</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-btn"><span data-i18n="navCourses">الدورات</span> <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-content">
+                        <li><a onclick="closeMenu('quran-page')" data-i18n="courseQuran">قسم القرآن الكريم</a></li>
+                        <li><a onclick="closeMenu('islamic-page')" data-i18n="courseIslamic">قسم الثقافة الإسلامية</a></li>
+                        <li><a onclick="closeMenu('arabic-page')" data-i18n="courseArabic">قسم اللغة العربية</a></li>
+                        <li><a onclick="closeMenu('skills-page')" data-i18n="courseSkills">قسم مهارات التواصل</a></li>
+                    </ul>
+                </li>
+                <!-- قسم أخبارنا المضاف رسمياً للقائمة العلوية لتسهيل الوصول والتصفح السلس -->
+                <li><a onclick="closeMenu('news-page')" data-i18n="navNews">أخبارنا</a></li>
+                <li><a onclick="closeMenu('contact-page')" data-i18n="navContact">اتصل بنا</a></li>
+                <li><a onclick="closeMenu('reviews-page')" data-i18n="navReviews">آراء المشتركين</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-btn" style="color: var(--secondary); font-weight: bold;">
+                        <span data-i18n="navLogin">دخول المسجلين</span> <i class="fas fa-user-lock"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a onclick="closeMenu('student-portal')" data-i18n="loginStudent">دخول الطلاب</a></li>
+                        <li><a onclick="closeMenu('teacher-login')" data-i18n="loginTeacher">دخول الأساتذة</a></li>
+                    </ul>
+                </li>
+                <li><a onclick="closeMenu('register-page')" class="btn btn-primary" style="color:white;" data-i18n="navRegister">التسجيل</a></li>
+                <!-- Interactive Language Toggle -->
+                <li><button id="lang-toggle" class="btn" style="background: var(--secondary); color: white; border: none; padding: 6px 16px; cursor: pointer; border-radius: 8px;" onclick="switchLanguage()">Français</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- TOAST PORT CONTAINER -->
+    <div id="toast-container"></div>
+
+    <!-- ================= START NEWS PAGE (صفحة الأخبار المستقلة) ================= -->
+    <div id="news-page" class="page-content" style="background-color: #f8fafc; min-height: 100vh;">
+        <section id="news-section" style="padding: 60px 20px;">
+            <div style="max-width: 1100px; margin: 0 auto; text-align: center;">
+                <h2 data-i18n="newsHeading" style="color: #1a365d; font-size: 2.5rem; margin-bottom: 10px;">أخبارنا</h2>
+                <div style="width: 50px; height: 3px; background-color: #f6ad55; margin: 0 auto 40px auto; border-radius: 2px;"></div>
+                
+                <!-- الحاوية الديناميكية التي تستقبل كافة الأخبار من السيرفر أو القاموس كاحتياطي ممتاز -->
+                <div id="news-container" style="display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%;">
+                    <p style="color: #a0aec0;" data-i18n="loadingNamesOption">جاري تحميل الأخبار...</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- ========================================================================= -->
+    
+    <!-- START ABOUT PAGE -->
+    <div id="about-page" class="page-content" style="background-color: #ffffff; min-height: 100vh;">
+        <div class="container" style="padding: 40px 20px; text-align: center;">
+            <h1 style="color: #1a365d; font-size: 2.5rem; margin-bottom: 20px; border-bottom: 3px solid #f6ad55; display: inline-block; padding-bottom: 10px;" data-i18n="aboutHeading">من نحن؟</h1>
+
+            <div style="background: #f8fafc; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-top: 20px;">
+                <p style="color: #2d3748; font-size: 1.2rem; line-height: 1.8; text-align: justify;" data-i18n="aboutDescription">
+                    أكاديمية إتقان هي مؤسسة تعليمية متخصصة تسعى إلى تقديم محتوى تعليمي متميز في شتى العلوم. نحن نؤمن بأن الإتقان هو أساس النجاح، ولذلك نعمل على توفير بيئة تعليمية تفاعلية تجمع بين الجودة الأكاديمية والسهولة التقنية لتصل المعلومة إلى كل طالب علم أينما كان.
+                </p>
+            </div>
+
+            <div class="grid" style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div class="card" style="background: #1a365d; color: white; padding: 25px; border-radius: 10px;">
+                    <h3 style="color: #f6ad55;" data-i18n="visionTitle">رؤيتنا</h3>
+                    <p data-i18n="visionText">أن نكون المنصة الأولى والرائدة في العالم العربي للتعليم المتقن والمؤصل.</p>
+                </div>
+
+                <div class="card" style="background: #2d3748; color: white; padding: 25px; border-radius: 10px;">
+                    <h3 style="color: #f6ad55;" data-i18n="missionTitle">رسالتنا</h3>
+                    <p data-i18n="missionText">تيسير سبل طلب العلم ونشره باستخدام أحدث الوسائل التكنولوجية المتاحة.</p>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- END ABOUT PAGE -->
+
+    <!-- START QURAN PAGE -->
+    <div id="quran-page" class="page-content" style="background-color: #ffffff; min-height: 100vh;">
+        <div class="container" style="padding: 40px 20px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <i class="fas fa-quran" style="font-size: 3rem; color: #2c7a7b; margin-bottom: 15px;"></i>
+                <h1 style="color: #1a365d; font-size: 2.5rem;" data-i18n="quranTitle">قسم القرآن الكريم</h1>
+                <p style="color: #4a5568; font-size: 1.1rem;" data-i18n="quranSub">نعتني بكتاب الله حفظاً وتجويداً وترتيلاً</p>
+            </div>
+
+            <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="card" style="border-inline-start: 5px solid #2c7a7b; background: #f0fff4; padding: 20px;">
+                    <h3 style="color: #2c7a7b; margin-bottom: 12px;"><i class="fas fa-check-circle"></i> <span data-i18n="availableTracks">المسارات المتاحة</span></h3>
+                    <ul style="list-style: none; padding: 0; line-height: 2; text-align: start;">
+                        <li data-i18n="quranTrack1">• حفظ القرآن الكريم للكبار والصغار.</li>
+                        <li data-i18n="quranTrack2">• تصحيح التلاوة وإتقان مخارج الحروف.</li>
+                        <li data-i18n="quranTrack3">• دراسة أحكام التجويد (نظري وتطبيقي).</li>
+                        <li data-i18n="quranTrack4">• الإجازة بالسند المتصل إلى النبي ﷺ.</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-inline-start: 5px solid #2b6cb0; background: #ebf8ff; padding: 20px; text-align: start;">
+                    <h3 style="color: #2b6cb0; margin-bottom: 12px;"><i class="fas fa-clock"></i> <span data-i18n="studySystem">نظام الدراسة</span></h3>
+                    <p data-i18n="quranSystemText">نوفر حصصاً مرنة تناسب جميع الأوقات (صباحية ومسائية) عبر قاعات افتراضية تفاعلية، مع متابعة فردية لكل طالب.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn" onclick="navigateTo('register-page')" style="background: #2c7a7b; color: white; padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; border: none; cursor: pointer;" data-i18n="registerSectionBtn">
+                    سجل الآن في هذا القسم
+                </button>
+            </div>
+        </div>
+    </div> 
+    <!-- END QURAN PAGE -->
+
+    <!-- START ARABIC PAGE -->
+    <div id="arabic-page" class="page-content" style="background-color: #ffffff; min-height: 100vh;">
+        <div class="container" style="padding: 40px 20px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <i class="fas fa-pen-nib" style="font-size: 3rem; color: #9c4221; margin-bottom: 15px;"></i>
+                <h1 style="color: #1a365d; font-size: 2.5rem;" data-i18n="arabicTitle">قسم اللغة العربية</h1>
+                <p style="color: #4a5568; font-size: 1.1rem;" data-i18n="arabicSub">لغة الضاد.. هوية، ثقافة، وإتقان</p>
+            </div>
+
+            <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <div class="card" style="border-top: 5px solid #dd6b20; background: #fffaf0; padding: 25px; text-align: center;">
+                    <i class="fas fa-child fa-2x" style="color: #dd6b20; margin-bottom: 10px;"></i>
+                    <h3 style="color: #7b341e; margin-bottom: 10px;" data-i18n="arabicTrack1Title">العربية للصغار</h3>
+                    <p style="font-size: 0.95rem;" data-i18n="arabicTrack1Text">تعليم الحروف والقراءة والكتابة بأساليب ترفيهية وقصصية محببة للأطفال.</p>
+                </div>
+
+                <div class="card" style="border-top: 5px solid #3182ce; background: #ebf8ff; padding: 25px; text-align: center;">
+                    <i class="fas fa-globe-americas fa-2x" style="color: #3182ce; margin-bottom: 10px;"></i>
+                    <h3 style="color: #2a4365; margin-bottom: 10px;" data-i18n="arabicTrack2Title">لغير الناطقين بها</h3>
+                    <p style="font-size: 0.95rem;" data-i18n="arabicTrack2Text">منهج عالمي لتمكين الأجانب والراغبين في تعلم العربية من التواصل والفهم السليم.</p>
+                </div>
+
+                <div class="card" style="border-top: 5px solid #38a169; background: #f0fff4; padding: 25px; text-align: center;">
+                    <i class="fas fa-book fa-2x" style="color: #38a169; margin-bottom: 10px;"></i>
+                    <h3 style="color: #22543d; margin-bottom: 10px;" data-i18n="arabicTrack3Title">النحو والآداب</h3>
+                    <p style="font-size: 0.95rem;" data-i18n="arabicTrack3Text">شرح قواعد النحو والصرف، وتذوق النصوص الأدبية والبلاغة العربية.</p>
+                </div>
+            </div>
+
+            <div style="background: #edf2f7; padding: 25px; border-radius: 12px; margin-top: 30px; border-inline-start: 6px solid #1a365d; text-align: start;">
+                <h4 style="color: #1a365d; margin-bottom: 10px;"><i class="fas fa-star"></i> <span data-i18n="arabicFeaturesTitle">ما يميز منهجنا في العربية:</span></h4>
+                <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                    <li data-i18n="arabicFeature1">• <b>التفاعل المباشر:</b> دروس حية تعتمد على الحوار وليس التلقين فقط.</li>
+                    <li data-i18n="arabicFeature2">• <b>الوسائل البصرية:</b> استخدام فيديوهات وعروض تقديمية لتسهيل القواعد الجامدة.</li>
+                    <li data-i18n="arabicFeature3">• <b>التقويم المستمر:</b> اختبارات قصيرة لمتابعة تطور مستوى الطالب في القراءة والاستماع.</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn" onclick="navigateTo('register-page')" style="background: #9c4221; color: white; padding: 15px 40px; font-size: 1.2rem; border-radius: 8px; border: none; cursor: pointer;" data-i18n="arabicRegisterBtn">
+                    انضم إلينا في قسم العربية
+                </button>
+            </div>
+        </div>
+    </div> 
+    <!-- END ARABIC PAGE -->
+
+    <!-- START ISLAMIC CULTURE PAGE -->
+    <div id="islamic-page" class="page-content" style="background-color: #ffffff; min-height: 100vh;">
+        <div class="container" style="padding: 40px 20px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <i class="fas fa-mosque" style="font-size: 3rem; color: #1a365d; margin-bottom: 15px;"></i>
+                <h1 style="color: #1a365d; font-size: 2.5rem;" data-i18n="islamicTitle">قسم الثقافة الإسلامية</h1>
+                <p style="color: #4a5568; font-size: 1.1rem;" data-i18n="islamicSub">وعيٌ بالماضي، وفهمٌ للحاضر، وبناءٌ للمستقبل</p>
+            </div>
+
+            <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; text-align: start;">
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-inline-start: 6px solid #d4af37; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                    <h3 style="color: #d4af37; margin-bottom: 12px;"><i class="fas fa-history"></i> <span data-i18n="islamicHub1Title">التاريخ والحضارة</span></h3>
+                    <p style="color: #4a5568; line-height: 1.6;" data-i18n="islamicHub1Text">رحلة في أعماق التاريخ الإسلامي، من العهد النبوي وصولاً إلى إسهامات العلماء المسلمين في بناء الحضارة الإنسانية في الطب والفلك والعمارة.</p>
+                </div>
+
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-inline-start: 6px solid #2c7a7b; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                    <h3 style="color: #2c7a7b; margin-bottom: 12px;"><i class="fas fa-hands-helping"></i> <span data-i18n="islamicHub2Title">العبادات والشعائر</span></h3>
+                    <p style="color: #4a5568; line-height: 1.6;" data-i18n="islamicHub2Text">فقه العبادات بأسلوب ميسر (الصلاة، الزكاة، الصيام، والحج)، مع التركيز على المقاصد الروحية والأخلاقية لكل شعيرة دينية.</p>
+                </div>
+
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-inline-start: 6px solid #718096; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                    <h3 style="color: #718096; margin-bottom: 12px;"><i class="fas fa-heart"></i> <span data-i18n="islamicHub3Title">السيرة والأخلاق</span></h3>
+                    <p style="color: #4a5568; line-height: 1.6;" data-i18n="islamicHub3Text">دراسة شخصية النبي ﷺ ومنهجه في التعامل، واستخلاص القيم الأخلاقية التي تبني الفرد والمجتمع في العصر الحديث.</p>
+                </div>
+            </div>
+
+            <div style="background: #f7fafc; border-radius: 15px; padding: 30px; margin-top: 40px; text-align: center; border: 1px dashed #cbd5e0;">
+                <h4 style="color: #2d3748; margin-bottom: 15px;" data-i18n="whyStudyIslamic">لماذا تدرس الثقافة الإسلامية في إتقان؟</h4>
+                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; color: #4a5568;">
+                    <span><i class="fas fa-check-double" style="color: #38a169;"></i> <span data-i18n="islamicReason1">منهج وسطي معتدل</span></span>
+                    <span><i class="fas fa-check-double" style="color: #38a169;"></i> <span data-i18n="islamicReason2">ربط العلم بالواقع</span></span>
+                    <span><i class="fas fa-check-double" style="color: #38a169;"></i> <span data-i18n="islamicReason3">أساتذة متخصصون</span></span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn" onclick="navigateTo('register-page')" style="background: #1a365d; color: white; padding: 15px 45px; font-size: 1.2rem; border-radius: 8px; border: none; cursor: pointer;" data-i18n="islamicRegisterBtn">
+                    سجل الآن في دوراتنا الثقافية
+                </button>
+            </div>
+        </div>
+    </div> 
+    <!-- END ISLAMIC CULTURE PAGE -->
+
+    <!-- START SKILLS & TRAINING PAGE -->
+    <div id="skills-page" class="page-content" style="background-color: #ffffff; min-height: 100vh;">
+        <div class="container" style="padding: 40px 20px;">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <i class="fas fa-lightbulb" style="font-size: 3rem; color: #ecc94b; margin-bottom: 15px;"></i>
+                <h1 style="color: #1a365d; font-size: 2.5rem;" data-i18n="skillsTitle">قسم المهارات والتطوير</h1>
+                <p style="color: #4a5568; font-size: 1.1rem;" data-i18n="skillsSub">تمكين الكفاءات وتطوير القدرات لمواكبة العصر</p>
+            </div>
+
+            <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <div class="card" style="border-bottom: 4px solid #4299e1; padding: 20px; text-align: center;">
+                    <i class="fas fa-chalkboard-teacher fa-2x" style="color: #4299e1; margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 10px;" data-i18n="skill1Title">تأهيل مدرسي العربية</h3>
+                    <p style="font-size: 0.9rem; color: #718096;" data-i18n="skill1Text">دورات في طرق التدريس الحديثة وكيفية إدارة الفصول الافتراضية بفعالية.</p>
+                </div>
+
+                <div class="card" style="border-bottom: 4px solid #9f7aea; padding: 20px; text-align: center;">
+                    <i class="fas fa-robot fa-2x" style="color: #9f7aea; margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 10px;" data-i18n="skill2Title">التقنية والذكاء الاصطناعي</h3>
+                    <p style="font-size: 0.9rem; color: #718096;" data-i18n="skill2Text">إتقان التعامل مع الحاسوب واستثمار أدوات الذكاء الاصطناعي في البحث والتعليم.</p>
+                </div>
+
+                <div class="card" style="border-bottom: 4px solid #f56565; padding: 20px; text-align: center;">
+                    <i class="fas fa-microphone-alt fa-2x" style="color: #f56565; margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 10px;" data-i18n="skill3Title">الخطابة والإلقاء</h3>
+                    <p style="font-size: 0.9rem; color: #718096;" data-i18n="skill3Text">فن مواجهة الجمهور والتحدث بطلاقة وتأثير، وبناء الكاريزما الصوتية.</p>
+                </div>
+
+                <div class="card" style="border-bottom: 4px solid #38a169; padding: 20px; text-align: center;">
+                    <i class="fas fa-scroll fa-2x" style="color: #38a169; margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 10px;" data-i18n="skill4Title">مهارات التجويد الفني</h3>
+                    <p style="font-size: 0.9rem; color: #718096;" data-i18n="skill4Text">دورة متقدمة في جماليات القراءة، المقامات الصوتية، وضبط الأداء القرآني.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; padding: 20px; background: #ebf8ff; border-radius: 10px; text-align: center;">
+                <p style="color: #2b6cb0; font-weight: bold;" data-i18n="skillsNotice">
+                    <i class="fas fa-info-circle"></i> جميع دوراتنا في هذا القسم تشمل ورش عمل تطبيقية وشهادات إتمام معتمدة من الأكاديمية.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="navigateTo('register-page')" style="background: #2d3748; color: white; padding: 12px 35px; border-radius: 8px; border: none; cursor: pointer;" data-i18n="skillsRegisterBtn">
+                    احجز مقعدك الآن
+                </button>
+            </div>
+        </div>
+    </div> 
+    <!-- END SKILLS & TRAINING PAGE -->
+
+    <!-- START CONTACT PAGE -->
+    <div id="contact-page" class="page-content" style="background-color: #f7fafc; min-height: 100vh;">
+        <div class="container" style="padding: 40px 20px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <i class="fas fa-envelope-open-text" style="font-size: 3rem; color: #3182ce; margin-bottom: 15px;"></i>
+                <h1 style="color: #1a365d;" data-i18n="contactTitle">اتصل بنا</h1>
+                <p data-i18n="contactSub">يسعدنا استقبال استفساراتكم واقتراحاتكم</p>
+            </div>
+
+            <div class="form-panel">
+                <form id="contact-form" action="https://formspree.io/f/xyzkvypd" method="POST">
+                    <div class="form-group">
+                        <label data-i18n="contactLabelName">الاسم الكامل</label>
+                        <input type="text" name="name" style="border-radius: 10px;" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="contactLabelEmail">البريد الإلكتروني</label>
+                        <input type="email" name="email" style="border-radius: 10px;" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="contactLabelMsg">موضوع الرسالة</label>
+                        <textarea name="message" rows="5" style="width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem;" required></textarea>
+                    </div>
+                    <button type="submit" style="width: 100%; background: #3182ce; color: white; padding: 15px; border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer;" data-i18n="contactSendBtn">
+                        إرسال الرسالة الآن
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END CONTACT PAGE -->
+
+    <!-- START REVIEWS PAGE -->
+    <div id="reviews-page" class="page-content" style="background-color: #ffffff; min-height: 100vh;">
+        <div class="container" style="padding: 40px 20px;">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <i class="fas fa-star" style="font-size: 3rem; color: #f6ad55; margin-bottom: 15px;"></i>
+                <h1 style="color: #1a365d;" data-i18n="reviewsTitle">قالوا عن أكاديمية إتقان</h1>
+            </div>
+
+            <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="card" style="background: #f8fafc; padding: 25px; border-radius: 15px; border-inline-start: 4px solid #f6ad55; text-align: start;">
+                    <p style="font-style: italic; color: #4a5568;" data-i18n="review1Text">"تجربتي في قسم القرآن كانت استثنائية، المدرسون صبورون جداً والمنصة سهلة الاستخدام."</p>
+                    <div style="margin-top: 15px; font-weight: bold; color: #2d3748;" data-i18n="review1Author">- الطالب أحمد من المغرب</div>
+                </div>
+
+                <div class="card" style="background: #f8fafc; padding: 25px; border-radius: 15px; border-inline-start: 4px solid #f6ad55; text-align: start;">
+                    <p style="font-style: italic; color: #4a5568;" data-i18n="review2Text">"دورة الذكاء الاصطناعي غيرت نظرتي للتعليم تماماً. شكراً لأكاديمية إتقان."</p>
+                    <div style="margin-top: 15px; font-weight: bold; color: #2d3748;" data-i18n="review2Author">- الأستاذة فاطمة</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px; background: #ebf8ff; padding: 30px; border-radius: 20px;">
+                <h3 data-i18n="reviewCallTitle">رأيك يهمنا في تطوير الأكاديمية</h3>
+                <p data-i18n="reviewCallSub">هل جربت الدراسة معنا؟ شاركنا تجربتك بكل صراحة</p>
+                <button onclick="window.open('https://forms.gle/YOUR_GOOGLE_FORM_LINK', '_blank')" style="background: #f6ad55; color: #1a365d; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px;" data-i18n="reviewCallBtn">
+                    اضغط هنا لترك رأيك
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- END REVIEWS PAGE -->
+
+    <!-- START HOME PAGE -->
+    <div id="home-page" class="page-content page-active">
+        <section class="hero">
+            <div class="container">
+                <h1 data-i18n="heroTitle">مرحباً بك في صرح "إتقان" العلمي</h1>
+                <p data-i18n="heroSub">تعليم شرعي وأكاديمي بأساليب تقنية حديثة تجمع بين الأصالة والمعاصرة.</p>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <button class="btn btn-accent" onclick="navigateTo('register-page')" data-i18n="heroRegisterBtn">سجل الآن</button>
+                    <button class="btn" style="background: rgba(255,255,255,0.2); color: white;" onclick="navigateTo('about-page')" data-i18n="heroAboutBtn">التعريف</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- صندوق آخر الأخبار (يُعرض حصرياً فقط في الصفحة الرئيسية) للتوجيه السريع -->
+        <section class="container" style="padding-top: 0; padding-bottom: 40px;">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h3 data-i18n="newsHeading" style="color: var(--primary); font-size: 1.6rem; margin-bottom: 5px;">أخبارنا</h3>
+                <div style="width: 40px; height: 3px; background-color: var(--secondary); margin: 0 auto;"></div>
+            </div>
+            <!-- صندوق الخبر الأخير سيُحقن هنا ديناميكياً حسب اللغة -->
+            <div id="home-news-highlight" style="display: flex; justify-content: center; width: 100%;">
+                <p style="color: #a0aec0;" data-i18n="loadingNamesOption">جاري تحميل الأخبار...</p>
+            </div>
+        </section>
+
+        <section class="container" style="padding-top: 0;">
+            <div class="grid">
+                <div class="card"><i class="fas fa-user-tie"></i><h3 data-i18n="feature1Title">نخبة المعلمين</h3><p data-i18n="feature1Text">خريجو كبار الجامعات الإسلامية.</p></div>
+                <div class="card"><i class="fas fa-laptop-code"></i><h3 data-i18n="feature2Title">بيئة تفاعلية</h3><p data-i18n="feature2Text">دروس مباشرة وحلقات نقاش.</p></div>
+                <div class="card"><i class="fas fa-award"></i><h3 data-i18n="feature3Title">شهادات معتمدة</h3><p data-i18n="feature3Text">توثيق رسمي لمسيرتك العلمية.</p></div>
+            </div>
+        </section>
+    </div>
+    <!-- END HOME PAGE -->
+
+    <!-- START REGISTER PAGE -->
+    <div id="register-page" class="page-content">
+        <section class="container" style="max-width: 600px; margin: 0 auto;">
+            <div class="card shadow" style="background: white; border-radius: 16px; padding: 0; overflow: hidden; border: none;">
+                <div class="card-header" style="background: var(--primary); padding: 25px 20px; text-align: center;">
+                    <h3 style="margin:0; color:white; font-size: 1.5rem;"><i class="fas fa-user-plus"></i> <span data-i18n="regHeader">طلب تسجيل طالب جديد</span></h3>
+                </div>
+                <div style="padding: 30px;">
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label data-i18n="regLabelName">الاسم الكامل</label>
+                            <input type="text" id="regName" data-i18n-placeholder="regPlaceholderName" placeholder="الاسم الثلاثي" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-i18n="regLabelPhone">رقم الهاتف</label>
+                            <input type="tel" id="regPhone" data-i18n-placeholder="regPlaceholderPhone" placeholder="06XXXXXXXX" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="regLabelCourse">اختر الدورة المطلوبة</label>
+                            <select id="regCourse" style="border-radius:12px;">
+                                <option value="قسم القرآن الكريم" data-i18n="courseQuran">قسم القرآن الكريم</option>
+                                <option value="قسم الثقافة الإسلامية" data-i18n="courseIslamic">قسم الثقافة الإسلامية</option>
+                                <option value="قسم اللغة العربية" data-i18n="courseArabic">قسم اللغة العربية</option>
+                                <option value="قسم مهارات التواصل" data-i18n="courseSkills">قسم مهارات التواصل</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn" style="background-color: #25D366; color: white; width: 100%; border-radius: 12px;">
+                            <i class="fab fa-whatsapp"></i> <span data-i18n="regSubmitBtn">إرسال الطلب عبر واتساب</span>
+                        </button>
+                    </form>
+                    <div id="regStatus" style="margin-top: 15px; text-align: center; font-weight:bold;"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- END REGISTER PAGE -->
+
+    <!-- START STUDENT PORTAL -->
+    <div id="student-portal" class="page-content">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2><i class="fas fa-search"></i> <span data-i18n="portalHeader">بوابة استعلام النتائج</span></h2>
+            </div>
+            <div class="form-panel">
+                <div class="form-group">
+                    <label data-i18n="portalLabelName">اسم الطالب الثلاثي</label>
+                    <input type="text" id="searchName" data-i18n-placeholder="portalPlaceholderName" placeholder="أدخل الاسم كما هو مسجل...">
+                </div>
+                <button onclick="fetchStudentResult()" id="searchBtn" class="btn btn-primary" style="width: 100%;">
+                    <span data-i18n="portalSubmitBtn">عرض النتيجة</span>
+                    <div id="searchLoader" class="loader"></div>
+                </button>
+                <div id="resultArea" style="margin-top: 30px; display: none; border-top: 2px solid #eee; padding-top: 20px;">
+                    <h3 id="studentDisplayName" style="text-align: center; color: var(--primary); margin-bottom: 15px;"></h3>
+                    <div id="resultDetails"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END STUDENT PORTAL -->
+
+    <!-- START TEACHER LOGIN -->
+    <div id="teacher-login" class="page-content">
+        <div class="container">
+            <div id="login-box" class="form-panel">
+                <h2 style="text-align:center; margin-bottom: 25px;"><i class="fas fa-lock"></i> <span data-i18n="teacherLoginHeader">دخول المعلمين</span></h2>
+                <div class="form-group">
+                    <label data-i18n="teacherLoginLabelPass">كلمة المرور</label>
+                    <input type="password" id="teacherPass" style="text-align: center;">
+                </div>
+                <button onclick="checkTeacherPass()" class="btn btn-primary" style="width:100%;" data-i18n="teacherLoginBtn">دخول</button>
+            </div>
+
+            <div id="teacher-dashboard" class="form-panel" style="display:none; max-width: 800px;">
+                <h2 style="text-align:center; margin-bottom:20px;" data-i18n="dashHeader">لوحة رصد الدرجات</h2>
+                <div class="form-group">
+                    <label data-i18n="dashSelectStudent">اختر الطالب</label>
+                    <select id="studentSelect"></select>
+                </div>
+                <div id="ratingGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;"></div>
+                <button onclick="saveFromWeb()" id="saveBtnWeb" class="btn btn-primary" style="width: 100%; margin-top: 25px;">
+                    <i class="fas fa-save"></i> <span data-i18n="dashSaveBtn">حفظ البيانات</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- END TEACHER LOGIN -->
+
+    <!-- FOOTER PANEL -->
+    <footer>
+        <p data-i18n="footerText">© 2026 جميع الحقوق محفوظة لأكاديمية إتقان التعليمية</p>
+    </footer>
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT LOGIC AND MULTI-LINGUAL SYSTEM (INTEGRATED FROM script.js)     -->
+    <!-- ========================================================================= -->
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzfq4eVTCahrQdzc5VEmZozSNYMyxRgBOtj4-4uejGYR5yv082RSpsycqWrShkFjc_q/exec";
+
+        const translations = {
+          ar: {
+            pageTitle: "أكاديمية إتقان | المنصة التعليمية",
+            logoText: "أكاديمية إتقان",
+            navAbout: "التعريف",
+            navCourses: "الدورات",
+            courseQuran: "قسم القرآن الكريم",
+            courseIslamic: "قسم الثقافة الإسلامية",
+            courseArabic: "قسم اللغة العربية",
+            courseSkills: "قسم مهارات التواصل",
+            navNews: "أخبارنا",
+            navContact: "اتصل بنا",
+            navReviews: "آراء المشتركين",
+            navLogin: "دخول المسجلين",
+            loginStudent: "دخول الطلاب",
+            loginTeacher: "دخول الأساتذة",
+            loginAdmin: "دخول المشرفين",
+            navRegister: "التسجيل",
+            langToggle: "Français",
+            
+            // قسم أخبارنا الجديد
+            newsHeading: "أخبارنا",
+            newsHighlight: "🎉 يسرنا الإعلان عن افتتاح باب التسجيل للفصل الدراسي الجديد لجميع الأقسام.تواصل معنا لحجز مقعدك والتسجيل لسنة 2026 /2027",
+            newsLink: "اقرأ المزيد من الأخبار...",
+            
+            // صفحة من نحن
+            aboutHeading: "اعرف بنا",
+            aboutDescription: "أكاديمية إتقان هي مؤسسة تعليمية متخصصة تسعى إلى تقديم محتوى تعليمي متميز في شتى العلوم. نحن نؤمن بأن الإتقان هو أساس النجاح، ولذلك نعمل على توفير بيئة تعليمية تفاعلية تجمع بين الجودة الأكاديمية والسهولة التقنية لتصل المعلومة إلى كل طالب علم أينما كان.",
+            visionTitle: "رؤيتنا",
+            visionText: "أن نكون المنصة الأولى والرائدة في العالم العربي للتعليم المتقن والمؤصل.",
+            missionTitle: "رسالتنا",
+            missionText: "تيسير سبل طلب العلم ونشره باستخدام أحدث الوسائل التكنولوجية المتاحة.",
+
+            // صفحة القرآن
+            quranTitle: "قسم القرآن الكريم",
+            quranSub: "نعتني بكتاب الله حفظاً وتجويداً وترتيلاً",
+            availableTracks: "المسارات المتاحة",
+            quranTrack1: "• حفظ القرآن الكريم للكبار والصغار.",
+            quranTrack2: "• تصحيح التلاوة وإتقان مخارج الحروف.",
+            quranTrack3: "• دراسة أحكام التجويد (نظري وتطبيقي).",
+            quranTrack4: "• الإجازة بالسند المتصل إلى النبي ﷺ.",
+            studySystem: "نظام الدراسة",
+            quranSystemText: "نوفر حصصاً مرنة تناسب جميع الأوقات (صباحية ومسائية) عبر قاعات افتراضية تفاعلية، مع متابعة فردية لكل طالب.",
+            registerSectionBtn: "سجل الآن في هذا القسم",
+
+            // صفحة العربية
+            arabicTitle: "قسم اللغة العربية",
+            arabicSub: "لغة الضاد.. هوية، ثقافة، وإتقان",
+            arabicTrack1Title: "العربية للصغار",
+            arabicTrack1Text: "تعليم الحروف والقراءة والكتابة بأساليب ترفيهية وقصصية محببة للأطفال.",
+            arabicTrack2Title: "لغير الناطقين بها",
+            arabicTrack2Text: "منهج عالمي لتمكين الأجانب والراغبين في تعلم العربية من التواصل والفهم السليم.",
+            arabicTrack3Title: "النحو والآداب",
+            arabicTrack3Text: "شرح قواعد النحو والصرف، وتذوق النصوص الأدبية والبلاغة العربية.",
+            arabicFeaturesTitle: "ما يميز منهجنا في العربية:",
+            arabicFeature1: "• التفاعل المباشر: دروس حية تعتمد على الحوار وليس التلقين فقط.",
+            arabicFeature2: "• الوسائل البصرية: استخدام فيديوهات وعروض تقديمية لتسهيل القواعد الجامدة.",
+            arabicFeature3: "• التقويم المستمر: اختبارات قصيرة لمتابعة تطور مستوى الطالب في القراءة والاستماع.",
+            arabicRegisterBtn: "انضم إلينا في قسم العربية",
+
+            // الثقافة الإسلامية
+            islamicTitle: "قسم الثقافة الإسلامية",
+            islamicSub: "وعيٌ بالماضي، وفهمٌ للحاضر، وبناءٌ للمستقبل",
+            islamicHub1Title: "التاريخ والحضارة",
+            islamicHub1Text: "رحلة في أعماق التاريخ الإسلامي، من العهد النبوي وصولاً إلى إسهامات العلماء المسلمين في بناء الحضارة الإنسانية في الطب بالفلك والعمارة.",
+            islamicHub2Title: "العبادات والشعائر",
+            islamicHub2Text: "فقه العبادات بأسلوب ميسر (الصلاة، الزكاة، الصيام، والحج)، مع التركيز على المقاصد الروحية والأخلاقية لكل شعيرة دينية.",
+            islamicHub3Title: "السيرة والأخلاق",
+            islamicHub3Text: "دراسة شخصية النبي ﷺ ومنهجه في التعامل، واستخلاص القيم الأخلاقية التي تبني الفرد والمجتمع في العصر الحديث.",
+            whyStudyIslamic: "لماذا تدرس الثقافة الإسلامية في إتقان؟",
+            islamicReason1: "منهج وسطي معتدل",
+            islamicReason2: "ربط العلم بالواقع",
+            islamicReason3: "أساتذة متخصصون",
+            islamicRegisterBtn: "سجل الآن في دوراتنا الثقافية",
+
+            // المهارات
+            skillsTitle: "قسم المهارات والتطوير",
+            skillsSub: "تمكين الكفاءات وتطوير القدرات لمواكبة العصر",
+            skill1Title: "تأهيل مدرسي العربية",
+            skill1Text: "دورات في طرق التدريس الحديثة وكيفية إدارة الفصول الافتراضية بفعالية.",
+            skill2Title: "التقنية والذكاء الاصطناعي",
+            skill2Text: "إتقان التعامل مع الحاسوب واستثمار أدوات الذكاء الاصطناعي في البحث والتعليم.",
+            skill3Title: "الخطابة والإلقاء",
+            skill3Text: "فن مواجهة الجمهور والتحدث بطلاقة وتأثير، وبناء الكاريزما الصوتية.",
+            skill4Title: "مهارات التجويد الفني",
+            skill4Text: "دورة متقدمة في جماليات القراءة، المقامات الصوتية، وضبط الأداء القرآني.",
+            skillsNotice: "جميع دوراتنا في هذا القسم تشمل ورش عمل تطبيقية وشهادات إتمام معتمدة من الأكاديمية.",
+            skillsRegisterBtn: "احجز مقعدك الآن",
+
+            // اتصل بنا
+            contactTitle: "اتصل بنا",
+            contactSub: "يسعدنا استقبال استفساراتكم واقتراحاتكم",
+            contactLabelName: "الاسم الكامل",
+            contactLabelEmail: "البريد الإلكتروني",
+            contactLabelMsg: "موضوع الرسالة",
+            contactSendBtn: "إرسال الرسالة الآن",
+
+            // الآراء
+            reviewsTitle: "قالوا عن أكاديمية إتقان",
+            review1Text: `"تجربتي في قسم القرآن كانت استثنائية، المدرسون صبورون جداً والمنصة سهلة الاستخدام."`,
+            review1Author: "- الطالب أحمد من المغرب",
+            review2Text: `"دورة الذكاء الاصطناعي غيرت نظرتي للتعليم تماماً. شكراً لأكاديمية إتقان."`,
+            review2Author: "- الأستاذة فاطمة",
+            reviewCallTitle: "رأيك يهمنا في تطوير الأكاديمية",
+            reviewCallSub: "هل جربت الدراسة معنا؟ شاركنا تجربتك بكل صراحة",
+            reviewCallBtn: "اضغط هنا لترك رأيك",
+
+            // الرئيسية
+            heroTitle: "مرحباً بك في صرح \"إتقان\" العلمي",
+            heroSub: "تعليم شرعي وأكاديمي بأساليب تقنية حديثة تجمع بين الأصالة والمعاصرة.",
+            heroRegisterBtn: "سجل الآن",
+            heroAboutBtn: "التعريف",
+            feature1Title: "نخبة المعلمين",
+            feature1Text: "خريجو كبار الجامعات الإسلامية.",
+            feature2Title: "بيئة تفاعلية",
+            feature2Text: "دروس مباشرة وحلقات نقاش.",
+            feature3Title: "شهادات معتمدة",
+            feature3Text: "توثيق رسمي لمسيرتك العلمية.",
+
+            // صفحة التسجيل
+            regHeader: "طلب تسجيل طالب جديد",
+            regLabelName: "الاسم الكامل",
+            regLabelPhone: "رقم الهاتف",
+            regLabelCourse: "اختر الدورة المطلوبة",
+            regSubmitBtn: "إرسال الطلب عبر واتساب",
+            regPlaceholderName: "الاسم الثلاثي",
+            regPlaceholderPhone: "06XXXXXXXX",
+
+            // بوابة الطلاب والنتائج
+            portalHeader: "بوابة استعلام النتائج",
+            portalLabelName: "اسم الطالب الثلاثي",
+            portalPlaceholderName: "أدخل الاسم كما هو مسجل...",
+            portalSubmitBtn: "عرض النتيجة",
+            studentCard: "بطاقة الطالب:",
+
+            // بوابة الأساتذة
+            teacherLoginHeader: "دخول المعلمين",
+            teacherLoginLabelPass: "كلمة المرور",
+            teacherLoginBtn: "دخول",
+            dashHeader: "لوحة رصد الدرجات",
+            dashSelectStudent: "اختر الطالب",
+            dashSaveBtn: "حفظ البيانات",
+            footerText: "© 2026 جميع الحقوق محفوظة لأكاديمية إتقان التعليمية",
+
+            // رسائل وتنبيهات برمجية
+            enterNameAlert: "يرجى إدخال اسم الطالب",
+            noResultAlert: "عذراً، لم نجد نتائج لهذا الاسم.",
+            serverErrorAlert: "حدث خطأ أثناء الاتصال بالسيرفر.",
+            wrongPassAlert: "كلمة المرور غير صحيحة",
+            saveSuccessAlert: "✅ تم حفظ البيانات بنجاح",
+            saveErrorAlert: "حدث خطأ أثناء الحفظ",
+            savingBtnText: "جاري الحفظ...",
+            loadingNamesOption: "جاري تحميل القائمة...",
+            loadFailOption: "فشل التحميل",
+            redirectingMsg: "✅ تم توجيهك للواتساب لتأكيد الطلب...",
+
+            // حقول الرصد للمعلمين ونتائج الطلاب
+            fields: {
+              "مراجعة": "مراجعة",
+              "استظهار": "استظهار",
+              "إعداد": "إعداد",
+              "اللغة العربية": "اللغة العربية",
+              "التربية": "التربية",
+              "الفرض": "الفرض",
+              "ملاحظات": "ملاحظات",
+              "الدرجة النهائية": "الدرجة النهائية"
+            },
+            dir: "rtl"
+          },
+          fr: {
+            pageTitle: "Académie Itqan | Plateforme Éducative",
+            logoText: "Académie Itqan",
+            navAbout: "Présentation",
+            navCourses: "Cours",
+            courseQuran: "Département du Saint Coran",
+            courseIslamic: "Culture Islamique",
+            courseArabic: "Langue Arabe",
+            courseSkills: "Compétences de com.",
+            navNews: "Nos Actualités",
+            navContact: "Contact",
+            navReviews: "Témoignages",
+            navLogin: "Accès Membres",
+            loginStudent: "Espace Étudiants",
+            loginTeacher: "Espace Enseignants",
+            loginAdmin: "Espace Admin",
+            navRegister: "S'inscrire",
+            langToggle: "العربية",
+            
+            // قسم أخبارنا بالفرنسية
+            newsHeading: "Nos Actualités",
+            newsHighlight: "🎉 Nous avons le plaisir d'annoncer l'ouverture des inscriptions pour la nouvelle session académique.",
+            newsLink: "Lire plus d'actualités...",
+
+            // Qui sommes-nous
+            aboutHeading: "Qui sommes-nous ?",
+            aboutDescription: "L'Académie Itqan est une institution éducative spécialisée qui s'efforce d'offrir un contenu académique d'excellence dans divers domaines du savoir. Nous croyons fermement que la rigueur et l'excellence (Itqan) sont les piliers de la réussite. C'est pourquoi nous créons un environnement d'apprentissage interactif qui allie qualité académique et simplicité technologique afin de transmettre le savoir à chaque étudiant, où qu'il soit dans le monde.",
+            visionTitle: "Notre Vision",
+            visionText: "Devenir la première plateforme de référence dans le monde pour un enseignement maîtrisé et rigoureux.",
+            missionTitle: "Notre Mission",
+            missionText: "Faciliter l'accès à la science et sa diffusion par le biais des dernières innovations technologiques.",
+
+            // Département Coran
+            quranTitle: "Département du Saint Coran",
+            quranSub: "Une attention particulière à la mémorisation, au Tajwid et à la récitation du Livre d'Allah",
+            availableTracks: "Filières Disponibles",
+            quranTrack1: "• Mémorisation du Saint Coran pour adultes et enfants.",
+            quranTrack2: "• Correction de la récitation et perfectionnement de la phonétique.",
+            quranTrack3: "• Étude théorique et pratique des règles du Tajwid.",
+            quranTrack4: "• Obtention d'une Ijazah avec chaîne de transmission (Sanad) liée au Prophète ﷺ.",
+            studySystem: "Système d'Études",
+            quranSystemText: "Nous offrons des séances d'apprentissage flexibles adaptées à tous les emplois du temps (matin et soir) via des classes virtuelles interactives, avec un suivi rigoureux et individuel de chaque apprenant.",
+            registerSectionBtn: "S'inscrire dans ce département",
+
+            // Département Arabe
+            arabicTitle: "Département de Langue Arabe",
+            arabicSub: "La langue arabe.. Identité, culture et maîtrise",
+            arabicTrack1Title: "L'Arabe pour Enfants",
+            arabicTrack1Text: "Enseignement de l'alphabet, de la lecture et de l'écriture grâce à des méthodes ludiques basées sur le conte et le jeu.",
+            arabicTrack2Title: "Pour Non-Arabophones",
+            arabicTrack2Text: "Un programme international structuré permettant aux non-arabophones de communiquer et de comprendre l'arabe avec aisance.",
+            arabicTrack3Title: "Grammaire et Littérature",
+            arabicTrack3Text: "Explications simplifiées de la grammaire (Nahw), de la morphologie (Sarf), de la rhétorique et de la littérature arabe.",
+            arabicFeaturesTitle: "Les atouts de notre programme d'arabe :",
+            arabicFeature1: "• Interaction directe : Cours en direct axés sur le dialogue et l'expression orale.",
+            arabicFeature2: "• Supports multimédias : Des présentations visuelles pour simplifier l'assimilation des règles complexes.",
+            arabicFeature3: "• Évaluation régulière : Des tests pour évaluer le niveau en lecture, écriture et compréhension orale.",
+            arabicRegisterBtn: "Rejoindre le département d'arabe",
+
+            // Culture Islamique
+            islamicTitle: "Culture Islamique",
+            islamicSub: "Comprendre le passé, appréhender le présent et bâtir l'avenir",
+            islamicHub1Title: "Histoire et Civilisation",
+            islamicHub1Text: "Un voyage dans l'histoire islamique, de l'époque prophétique aux contributions scientifiques majeures des musulmans en médecine, astronomie et architecture.",
+            islamicHub2Title: "Pratiques et Adorations",
+            islamicHub2Text: "Explication simplifiée de la jurisprudence (Fiqh) des actes cultuels (Prière, Zakat, Jeûne, Hajj) avec un accent sur les valeurs morales et spirituelles.",
+            islamicHub3Title: "Biographie et Éthique",
+            islamicHub3Text: "Étude approfondie du modèle comportemental du Prophète ﷺ et de ses enseignements moraux pour l'individu et la société moderne.",
+            whyStudyIslamic: "Pourquoi étudier la culture islamique à l'Académie Itqan ?",
+            islamicReason1: "Approche juste et modérée",
+            islamicReason2: "Lien concret avec le quotidien",
+            islamicReason3: "Enseignants qualifiés et spécialisés",
+            islamicRegisterBtn: "S'inscrire à nos cours culturels",
+
+            // Compétences
+            skillsTitle: "Développement des Compétences",
+            skillsSub: "Valoriser les talents et renforcer les aptitudes pour relever les défis de notre époque",
+            skill1Title: "Formation de Profs d'Arabe",
+            skill1Text: "Formations spécialisées aux méthodologies d'enseignement modernes et à la gestion interactive des classes en ligne.",
+            skill2Title: "Outils de l'IA et Technologie",
+            skill2Text: "Maîtrise de l'outil informatique et exploitation des opportunités offertes par l'IA dans l'éducation et la recherche.",
+            skill3Title: "Art Oratoire et Éloquence",
+            skill3Text: "Maîtriser la prise de parole en public, s'exprimer avec assurance et cultiver son charisme vocal.",
+            skill4Title: "Esthétique de la Récitation",
+            skill4Text: "Cours approfondi sur la pose de voix, les mélodies de récitation (Maqamats) et l'excellence de l'interprétation coranique.",
+            skillsNotice: "Tous nos cursus intègrent des ateliers pratiques et sont sanctionnés par des attestations de réussite agréées par l'Académie.",
+            skillsRegisterBtn: "Réserver ma place dès maintenant",
+
+            // Contact
+            contactTitle: "Contactez-nous",
+            contactSub: "Nous serons ravis de recevoir vos questions et suggestions",
+            contactLabelName: "Nom complet",
+            contactLabelEmail: "Adresse e-mail",
+            contactLabelMsg: "Votre message",
+            contactSendBtn: "Envoyer le message maintenant",
+
+            // Témoignages
+            reviewsTitle: "Ce qu'ils disent de l'Académie Itqan",
+            review1Text: `"Mon expérience dans le département du Coran a été exceptionnelle, les professeurs font preuve d'une grande patience et la plateforme est très intuitive."`,
+            review1Author: "- Ahmed, étudiant du Maroc",
+            review2Text: `"La formation sur l'Intelligence Artificielle a totalement transformé ma manière d'enseigner. Un grand merci à l'Académie Itqan."`,
+            review2Author: "- Professeure Fatima",
+            reviewCallTitle: "Votre avis nous est précieux",
+            reviewCallSub: "Avez-vous étudié avec nous ? Partagez votre expérience en toute franchise",
+            reviewCallBtn: "Laisser mon avis ici",
+
+            // Accueil
+            heroTitle: "Bienvenue au sein de l'Académie \"Itqan\"",
+            heroSub: "Enseignement authentique et académique par des méthodes numériques modernes alliant tradition et modernité.",
+            heroRegisterBtn: "S'inscrire",
+            heroAboutBtn: "Présentation",
+            feature1Title: "Professeurs d'Élite",
+            feature1Text: "Diplômés des plus prestigieuses universités islamiques.",
+            feature2Title: "Classes Interactives",
+            feature2Text: "Séances en direct et groupes de discussion dynamiques.",
+            feature3Title: "Diplômes Reconnus",
+            feature3Text: "Validation officielle de votre parcours et de vos acquis.",
+
+            // Formulaire inscription
+            regHeader: "Inscription Nouvel Étudiant",
+            regLabelName: "Nom complet",
+            regLabelPhone: "Numéro de téléphone",
+            regLabelCourse: "Sélectionnez le cours souhaité",
+            regSubmitBtn: "Envoyer l'inscription par WhatsApp",
+            regPlaceholderName: "Nom et Prénom",
+            regPlaceholderPhone: "06XXXXXXXX",
+
+            // Portail résultats
+            portalHeader: "Consultation des Résultats",
+            portalLabelName: "Nom complet de l'étudiant",
+            portalPlaceholderName: "Entrez le nom tel qu'il a été enregistré...",
+            portalSubmitBtn: "Rechercher",
+            studentCard: "Fiche d'étudiant :",
+
+            // Portail Enseignants
+            teacherLoginHeader: "Portail Enseignants",
+            teacherLoginLabelPass: "Mot de passe",
+            teacherLoginBtn: "Se connecter",
+            dashHeader: "Saisie des Notes & Évaluations",
+            dashSelectStudent: "Sélectionner un étudiant",
+            dashSaveBtn: "Enregistrer les évaluations",
+            footerText: "© 2026 Tous droits réservés à l'Académie Éducative Itqan",
+
+            // Alertes
+            enterNameAlert: "Veuillez entrer le nom de l'étudiant.",
+            noResultAlert: "Désolé, aucun résultat trouvé pour ce nom.",
+            serverErrorAlert: "Une erreur est survenue lors de la connexion au serveur.",
+            wrongPassAlert: "Mot de passe incorrect.",
+            saveSuccessAlert: "✅ Évaluations enregistrées avec succès.",
+            saveErrorAlert: "Une erreur est survenue lors de l'enregistrement.",
+            savingBtnText: "Enregistrement...",
+            loadingNamesOption: "Chargement de la liste...",
+            loadFailOption: "Échec du chargement de la liste",
+            redirectingMsg: "✅ Redirection vers WhatsApp en cours...",
+
+            // حقول الرصد للمعلمين ونتائج الطلاب
+            fields: {
+              "مراجعة": "Révision",
+              "استظهار": "Récitation",
+              "إعداد": "Préparation",
+              "اللغة العربية": "Langue Arabe",
+              "التربية": "Éducation",
+              "الفرض": "Évaluation",
+              "ملاحظات": "Notes/Remarques",
+              "الدرجة النهائية": "Note Finale"
+            },
+            dir: "ltr"
+          }
+        };
+
+        let currentLang = localStorage.getItem('selectedLang') || 'ar';
+
+        // Premium Toast Notifications System replacing raw alerts
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast-msg toast-${type}`;
+            
+            let icon = '<i class="fas fa-info-circle"></i>';
+            if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
+            if (type === 'danger') icon = '<i class="fas fa-exclamation-circle"></i>';
+            
+            toast.innerHTML = `${icon} <span>${message}</span>`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideDown 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    element.setAttribute('placeholder', translations[lang][key]);
+                }
+            });
+
+            document.documentElement.dir = translations[lang]['dir'];
+            document.documentElement.lang = lang;
+
+            const langBtn = document.getElementById('lang-toggle');
+            if(langBtn) {
+                langBtn.textContent = translations[lang]['langToggle'];
+            }
+
+            const grid = document.getElementById('ratingGrid');
+            if (grid && grid.innerHTML !== "") {
+                const currentInputs = Array.from(document.querySelectorAll('.rating-input')).map(i => i.value);
+                initTeacherDashboard();
+                const newInputs = document.querySelectorAll('.rating-input');
+                currentInputs.forEach((val, index) => {
+                    if(newInputs[index]) newInputs[index].value = val;
+                });
+            }
+
+            // استدعاء دالة جلب وعرض الأخبار لتتزامن مع اللغة الحالية للزائر تلقائياً
+            fetchAndDisplayNews();
+        }
+
+        function switchLanguage() {
+            currentLang = (currentLang === 'ar') ? 'fr' : 'ar';
+            localStorage.setItem('selectedLang', currentLang);
+            applyTranslations(currentLang);
+            navigateTo('home-page');
+        }
+
+        function navigateTo(pageId) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.style.display = 'none';
+                page.classList.remove('page-active');
+            });
+
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                setTimeout(() => {
+                    targetPage.classList.add('page-active');
+                }, 10);
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                console.log("Navigated successfully to: " + pageId);
+            } else {
+                console.error("Error: ID not found: " + pageId);
+            }
+        }
+
+        // دالة عرض الأخبار ثنائية النمط: تأخذ مباشرة من القاموس (محلية) + تدعم الجلب من الشيت حياً إذا توفر السيرفر
+        function fetchAndDisplayNews() {
+            const container = document.getElementById('news-container');
+            const homeHighlight = document.getElementById('home-news-highlight');
+
+            // 1. مصفوفة الأخبار الافتراضية محلياً (تأخذ من القاموس مباشرة لتعديل فوري وسهل!)
+            const fallbackNews = [
+                [translations['ar']['newsHighlight'], translations['fr']['newsHighlight']]
+            ];
+
+            function renderNews(newsList) {
+                // أولاً: حقن كافة الأخبار بالتفصيل في صفحة الأخبار المستقلة (news-page)
+                if (container) {
+                    container.innerHTML = '';
+                    if (!newsList || newsList.length === 0) {
+                        container.innerHTML = `<p style="color: #a0aec0;">${translations[currentLang]['loadingNamesOption']}</p>`;
+                    } else {
+                        newsList.forEach(function(newsItem) {
+                            const newsText = (currentLang === 'ar') ? newsItem[0] : newsItem[1];
+                            if (!newsText) return;
+                            const newsCard = document.createElement('div');
+                            const isRtl = (currentLang === 'ar');
+                            newsCard.style.cssText = `
+                                background: #ffffff;
+                                padding: 25px;
+                                border-radius: 12px;
+                                box-shadow: var(--shadow);
+                                border-${isRtl ? 'right' : 'left'}: 5px solid var(--secondary);
+                                text-align: ${isRtl ? 'right' : 'left'};
+                                max-width: 800px;
+                                width: 100%;
+                                box-sizing: border-box;
+                            `;
+                            newsCard.innerHTML = `<p style="font-size: 1.1rem; color: var(--text-dark); line-height: 1.7; margin: 0;">${newsText}</p>`;
+                            container.appendChild(newsCard);
+                        });
+                    }
+                }
+
+                // ثانياً: حقن آخر وأحدث خبر فقط في صندوق واجهة الصفحة الرئيسية (home-page) كعرض مؤقت
+                if (homeHighlight) {
+                    homeHighlight.innerHTML = '';
+                    if (newsList && newsList.length > 0) {
+                        const latestNews = newsList[0];
+                        const newsText = (currentLang === 'ar') ? latestNews[0] : latestNews[1];
+                        if (newsText) {
+                            const isRtl = (currentLang === 'ar');
+                            homeHighlight.innerHTML = `
+                                <div style="background: #ffffff; padding: 25px; border-radius: 15px; box-shadow: var(--shadow); border-${isRtl ? 'right' : 'left'}: 6px solid var(--secondary); text-align: ${isRtl ? 'right' : 'left'}; max-width: 800px; margin: 0 auto; width: 100%; box-sizing: border-box;">
+                                    <span style="background: var(--accent); color: var(--primary); padding: 4px 10px; border-radius: 6px; font-weight: 900; font-size: 0.8rem; margin-bottom: 10px; display: inline-block;">${currentLang === 'ar' ? 'آخر الأخبار' : 'Dernière Actualité'}</span>
+                                    <p style="font-size: 1.15rem; color: var(--text-dark); line-height: 1.7; margin-bottom: 15px;">${newsText}</p>
+                                    <a onclick="navigateTo('news-page')" style="color: var(--secondary); font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                                        <span>${currentLang === 'ar' ? 'عرض كافة الأخبار' : 'Voir toutes les actualités'}</span> 
+                                        <i class="fas ${isRtl ? 'fa-arrow-left' : 'fa-arrow-right'}"></i>
+                                    </a>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        homeHighlight.innerHTML = `<p style="color: #a0aec0;">${currentLang === 'ar' ? 'لا توجد أخبار حالياً.' : 'Aucune actualité pour le moment.'}</p>`;
+                    }
+                }
+            }
+
+            // التبديل الديناميكي بين الاتصال بالسيرفر (أونلاين) وبين النسخة الاحتياطية المأخوذة من القاموس (أوفلاين)
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                  .withSuccessHandler(function(newsList) {
+                      renderNews(newsList);
+                  })
+                  .withFailureHandler(function(err) {
+                      console.error("فشل الاتصال بجدول البيانات للخبر، استخدام المحلي: ", err);
+                      renderNews(fallbackNews);
+                  })
+                  .getNewsFromSheet();
+            } else {
+                // التشغيل الأوفلاين يعتمد تماماً على القاموسcontentDB لسهولة تعديل لا نهائية!
+                renderNews(fallbackNews);
+            }
+        }
+
+        function toggleMenu(e) {
+            if (e) e.stopPropagation();
+            const nav = document.getElementById('nav-list');
+            if (nav) nav.classList.toggle('active');
+        }
+
+        function closeMenu(pageId) {
+            const navList = document.getElementById('nav-list');
+            if (navList) navList.classList.remove('active');
+            
+            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+            navigateTo(pageId);
+        }
+
+        document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = this;
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLang === 'fr' ? 'Envoi...' : 'جاري الإرسال...'}`;
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    showToast(currentLang === 'fr' ? '✅ Message envoyé avec succès !' : '✅ تم إرسال رسالتك بنجاح !', 'success');
+                    form.reset();
+                } else {
+                    showToast(currentLang === 'fr' ? '❌ Erreur de serveur.' : '❌ حدث خطأ في الخادم أثناء الإرسال.', 'danger');
+                }
+            } catch (error) {
+                showToast(currentLang === 'fr' ? '❌ Erreur de connexion.' : '❌ خطأ في الاتصال بالشبكة.', 'danger');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+
+        document.getElementById('registrationForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const phone = document.getElementById('regPhone').value;
+            const course = document.getElementById('regCourse').value;
+
+            try {
+                fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        type: "register",
+                        name: name,
+                        phone: phone,
+                        course: course
+                    })
+                });
+            } catch (err) { 
+                console.log("Sheet registration error", err); 
+            }
+
+            let message = "";
+            if (currentLang === 'fr') {
+                message = `Bonjour Académie Itqan,%0A%0A` +
+                          `Je souhaite inscrire un nouvel étudiant :%0A` +
+                          `*Nom complet :* ${name}%0A` +
+                          `*Téléphone :* ${phone}%0A` +
+                          `*Formation demandée :* ${course}%0A%0A` +
+                          `Merci de bien vouloir confirmer mon inscription.`;
+            } else {
+                message = `السلام عليكم أكاديمية إتقان،%0A%0A` +
+                          `أرغب في التسجيل بطلب جديد:%0A` +
+                          `*الاسم:* ${name}%0A` +
+                          `*الهاتف:* ${phone}%0A` +
+                          `*الدورة:* ${course}%0A%0A` +
+                          `يرجى تأكيد تسجيل طلبي.`;
+            }
+
+            const whatsappUrl = `https://wa.me/212633661441?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+
+            document.getElementById('regStatus').innerHTML = translations[currentLang]['redirectingMsg'];
+            showToast(translations[currentLang]['redirectingMsg'], 'success');
+            this.reset();
+        });
+
+        async function fetchStudentResult() {
+            const name = document.getElementById('searchName').value.trim();
+            const btn = document.getElementById('searchBtn');
+            const loader = document.getElementById('searchLoader');
+            const resArea = document.getElementById('resultArea');
+
+            if(!name) { 
+                showToast(translations[currentLang]['enterNameAlert'], 'danger'); 
+                return; 
+            }
+
+            btn.disabled = true;
+            loader.style.display = "inline-block";
+            resArea.style.display = "none";
+
+            try {
+                const resp = await fetch(`${SCRIPT_URL}?action=getResult&name=${encodeURIComponent(name)}`);
+                const data = await resp.json();
+
+                if (data.status === "success") {
+                    const headingText = translations[currentLang]['studentCard'];
+                    document.getElementById('studentDisplayName').innerText = `${headingText} ${name}`;
+                    
+                    document.getElementById('resultDetails').innerHTML = data.results.map(r => {
+                        const translatedLabel = translations[currentLang]['fields'][r.label] || r.label;
+                        return `
+                            <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid #f1f5f9; text-align: start;">
+                                <span style="font-weight:bold; color:#64748b;">${translatedLabel}</span>
+                                <span style="font-weight:700;">${r.value || '---'}</span>
+                            </div>
+                        `;
+                    }).join('');
+                    resArea.style.display = "block";
+                    showToast(translations[currentLang]['portalHeader'], 'success');
+                } else {
+                    showToast(translations[currentLang]['noResultAlert'], 'danger');
+                }
+            } catch (e) {
+                showToast(translations[currentLang]['serverErrorAlert'], 'danger');
+            } finally {
+                btn.disabled = false;
+                loader.style.display = "none";
+            }
+        }
+
+        function checkTeacherPass() {
+            const pass = document.getElementById('teacherPass').value;
+            if(pass === "1234") {
+                document.getElementById('login-box').style.display = "none";
+                document.getElementById('teacher-dashboard').style.display = "block";
+                initTeacherDashboard();
+            } else {
+                showToast(translations[currentLang]['wrongPassAlert'], 'danger');
+            }
+        }
+
+        function initTeacherDashboard() {
+            const fields = ["مراجعة", "استظهار", "إعداد", "اللغة العربية", "التربية", "الفرض", "ملاحظات", "الدرجة النهائية"];
+            const grid = document.getElementById('ratingGrid');
+            if (grid) {
+                grid.innerHTML = fields.map(f => {
+                    const translatedFieldLabel = translations[currentLang]['fields'][f] || f;
+                    return `
+                        <div class="form-group">
+                            <label>${translatedFieldLabel}</label>
+                            <input type="text" class="rating-input" data-field-origin="${f}" placeholder="--">
+                        </div>
+                    `;
+                }).join('');
+                loadStudentNames();
+            }
+        }
+
+        async function loadStudentNames() {
+            const select = document.getElementById('studentSelect');
+            if (!select) return;
+            select.innerHTML = `<option>${translations[currentLang]['loadingNamesOption']}</option>`;
+            try {
+                const resp = await fetch(SCRIPT_URL + "?action=getNames");
+                const names = await resp.json();
+                select.innerHTML = names.map(n => `<option value="${n}">${n}</option>`).join('');
+            } catch (e) {
+                select.innerHTML = `<option>${translations[currentLang]['loadFailOption']}</option>`;
+                showToast(translations[currentLang]['loadFailOption'], 'danger');
+            }
+        }
+
+        async function saveFromWeb() {
+            const name = document.getElementById('studentSelect').value;
+            const ratings = Array.from(document.querySelectorAll('.rating-input')).map(i => i.value);
+            const btn = document.getElementById('saveBtnWeb');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${translations[currentLang]['savingBtnText']}`;
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({ name, ratings })
+                });
+                showToast(translations[currentLang]['saveSuccessAlert'], 'success');
+                document.querySelectorAll('.rating-input').forEach(i => i.value = "");
+            } catch (e) {
+                showToast(translations[currentLang]['saveErrorAlert'], 'danger');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-save"></i> <span>${translations[currentLang]['dashSaveBtn']}</span>`;
+            }
+        }
+
+        const dropdownBtns = document.querySelectorAll('.dropdown-btn');
+
+        dropdownBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation(); 
+
+                const currentContent = this.nextElementSibling;
+                const parent = this.parentElement; 
+
+                document.querySelectorAll('.dropdown-content').forEach(content => {
+                    if (content !== currentContent) {
+                        content.classList.remove('show');
+                    }
+                });
+                
+                document.querySelectorAll('.dropdown').forEach(d => {
+                    if (d !== parent) d.classList.remove('active');
+                });
+
+                if (currentContent) currentContent.classList.toggle('show');
+                if (parent) parent.classList.toggle('active'); 
+            });
+        });
+
+        // Global dismiss for all active menus
+        window.addEventListener('click', function(event) {
+            if (event.target.matches('.dropdown-btn') || event.target.matches('.menu-toggle') || event.target.closest('.menu-toggle')) {
+                return;
+            }
+
+            document.querySelectorAll('.dropdown-content').forEach(content => {
+                content.classList.remove('show');
+            });
+            document.querySelectorAll('.dropdown').forEach(d => {
+                d.classList.remove('active');
+            });
+            
+            const navList = document.getElementById('nav-list');
+            if (navList && navList.classList.contains('active')) {
+                navList.classList.remove('active');
+            }
+        });
+
+        // Load correct language and setup events on start
+        window.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('menuToggleBtn');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', toggleMenu);
+            }
+            applyTranslations(currentLang);
+            navigateTo('home-page');
+        });
+    </script>
+</body>
+</html>
