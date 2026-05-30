@@ -452,20 +452,17 @@
 </head>
 <body>
 
-    <!-- SMART TICKER -->
     <div class="fixed-ticker">
         <div class="ticker-label" data-i18n="logoText">أكاديمية إتقان</div>
         <div class="ticker-text" data-i18n="heroSub">تعليم شرعي وأكاديمي بأساليب تقنية حديثة تجمع بين الأصالة والمعاصرة.</div>
     </div>
 
-    <!-- MAIN NAVBAR HEADER -->
     <header>
         <nav class="navbar">
             <div class="logo" onclick="navigateTo('home-page')">
                 <i class="fas fa-graduation-cap"></i> <span data-i18n="logoText">أكاديمية إتقان</span>
             </div>
 
-            <!-- Enhanced Toggle Menu -->
             <div class="menu-toggle" id="menuToggleBtn">
                 <i class="fas fa-bars"></i>
             </div>
@@ -481,22 +478,28 @@
                         <li><a onclick="closeMenu('skills-page')" data-i18n="courseSkills">قسم مهارات التواصل</a></li>
                     </ul>
                 </li>
-                <!-- قسم أخبارنا المضاف رسمياً للقائمة العلوية لتسهيل الوصول والتصفح السلس -->
                 <li><a onclick="closeMenu('news-page')" data-i18n="navNews">أخبارنا</a></li>
                 <li><a onclick="closeMenu('contact-page')" data-i18n="navContact">اتصل بنا</a></li>
                 <li><a onclick="closeMenu('reviews-page')" data-i18n="navReviews">آراء المشتركين</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-btn" style="color: var(--secondary); font-weight: bold;">
-                        <span data-i18n="navLogin">دخول المسجلين</span> <i class="fas fa-user-lock"></i>
-                    </a>
-                    <ul class="dropdown-content">
-                        <li><a onclick="closeMenu('student-portal')" data-i18n="loginStudent">دخول الطلاب</a></li>
-                        <li><a onclick="closeMenu('teacher-login')" data-i18n="loginTeacher">دخول الأساتذة</a></li>
-                    </ul>
-                </li>
-                <li><a onclick="closeMenu('register-page')" class="btn btn-primary" style="color:white;" data-i18n="navRegister">التسجيل</a></li>
-                <!-- Interactive Language Toggle -->
-                <li><button id="lang-toggle" class="btn" style="background: var(--secondary); color: white; border: none; padding: 6px 16px; cursor: pointer; border-radius: 8px;" onclick="switchLanguage()">Français</button></li>
+                
+                <li id="navLoginLi">
+    <a onclick="closeMenu('teacher-login')" style="color: var(--secondary); font-weight: bold; cursor: pointer;">
+        <span data-i18n="navLogin">دخول المسجلين</span> <i class="fas fa-user-lock"></i>
+    </a>
+</li>
+
+<li id="navRegisterLi">
+    <a onclick="closeMenu('register-page')" class="btn btn-primary" style="color:white;" data-i18n="navRegister">التسجيل</a>
+</li>
+
+<li id="navWelcomeLi" style="display: none; align-items: center; justify-content: center;">
+    <div id="navUserWelcomeArea" style="background: rgba(230, 81, 0, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--secondary); display: flex; align-items: center; gap: 8px;">
+        </div>
+</li>
+
+<li>
+    <button id="lang-toggle" class="btn" style="background: var(--secondary); color: white; border: none; padding: 6px 16px; cursor: pointer; border-radius: 8px;" onclick="switchLanguage()">Français</button>
+</li>
             </ul>
         </nav>
     </header>
@@ -885,30 +888,193 @@
     <!-- END STUDENT PORTAL -->
 
     <!-- START TEACHER LOGIN -->
-    <div id="teacher-login" class="page-content">
-        <div class="container">
-            <div id="login-box" class="form-panel">
-                <h2 style="text-align:center; margin-bottom: 25px;"><i class="fas fa-lock"></i> <span data-i18n="teacherLoginHeader">دخول المعلمين</span></h2>
-                <div class="form-group">
-                    <label data-i18n="teacherLoginLabelPass">كلمة المرور</label>
-                    <input type="password" id="teacherPass" style="text-align: center;">
-                </div>
-                <button onclick="checkTeacherPass()" class="btn btn-primary" style="width:100%;" data-i18n="teacherLoginBtn">دخول</button>
+   <div id="teacher-login" class="page-content" style="background-color: #f8fafc; min-height: 100vh; padding: 40px 20px;">
+        <div style="max-width: 450px; margin: 60px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-top: 5px solid var(--primary);">
+            
+            <div style="text-align: center; margin-bottom: 25px;">
+                <i class="fas fa-user-shield" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
+                <h2 data-i18n="navLogin" style="color: var(--dark); margin: 0; font-size: 24px;">دخول المسجلين</h2>
             </div>
 
-            <div id="teacher-dashboard" class="form-panel" style="display:none; max-width: 800px;">
-                <h2 style="text-align:center; margin-bottom:20px;" data-i18n="dashHeader">لوحة رصد الدرجات</h2>
-                <div class="form-group">
-                    <label data-i18n="dashSelectStudent">اختر الطالب</label>
-                    <select id="studentSelect"></select>
+			<form onsubmit="return handleUnifiedLogin(event)">       
+			<div style="margin-bottom: 20px;">
+                    <label data-i18n="regLabelName" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">الاسم الكامل</label>
+                    <div style="display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 2px 8px;">
+                        <i class="fas fa-user" style="color: #94a3b8; padding: 0 8px;"></i>
+                        <input type="text" id="loginUsername" data-i18n-placeholder="portalPlaceholderName" placeholder="أدخل الاسم كما هو مسجل..." required 
+                               style="flex: 1; border: none; padding: 10px 4px; font-size: 15px; outline: none; background: transparent; box-sizing: border-box;">
+                    </div>
                 </div>
-                <div id="ratingGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;"></div>
-                <button onclick="saveFromWeb()" id="saveBtnWeb" class="btn btn-primary" style="width: 100%; margin-top: 25px;">
-                    <i class="fas fa-save"></i> <span data-i18n="dashSaveBtn">حفظ البيانات</span>
+
+                <div style="margin-bottom: 25px;">
+                    <label data-i18n="teacherLoginLabelPass" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">كلمة المرور</label>
+                    <div style="display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 2px 8px;">
+                        <i class="fas fa-lock" style="color: #94a3b8; padding: 0 8px;"></i>
+                        <input type="password" id="loginPassword" data-i18n-placeholder="teacherLoginLabelPass" placeholder="كلمة المرور" required 
+                               style="flex: 1; border: none; padding: 10px 4px; font-size: 15px; outline: none; background: transparent; box-sizing: border-box;">
+                        <i class="fas fa-eye" id="togglePasswordBtn" onclick="togglePasswordVisibility()" 
+                           style="color: #94a3b8; cursor: pointer; padding: 0 8px;"></i>
+                    </div>
+                </div>
+
+                <button type="submit" id="loginSubmitBtn" data-i18n="teacherLoginBtn" 
+                        style="width: 100%; background: var(--primary); color: white; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: background 0.2s;">
+                    دخول
+                </button>
+            </form> 
+		</div>
+    </div>
+	<div id="teacher-dashboard" class="page-content" style="display: none; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fcf8f2; direction: rtl; max-width: 1200px; margin: 0 auto;">
+    
+    <div style="background: #fffcf5; border: 2px solid #ffe8be; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: space-between;">
+            
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="background: #ff9800; color: white; padding: 8px 16px; font-weight: bold; border-radius: 8px; font-size: 16px;">برنامج متابعة الطلاب</span>
+                <div style="display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; background: #f1f5f9; padding: 6px 12px;">
+                    <i class="fas fa-chalkboard-teacher" style="color: #64748b; margin-left: 8px;"></i>
+                    <span id="displayTeacherName" style="font-weight: bold; color: #334155;">الأستاذ أحمد</span>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; background: #e28743; color: white; border-radius: 8px; overflow: hidden; font-size: 14px;">
+                    <span style="padding: 6px 10px; background: rgba(0,0,0,0.1); font-weight: bold;">تاريخ التسجيل</span>
+                    <span id="currentDateDisplay" style="padding: 6px 12px; font-weight: bold; background: white; color: #000;">29/05/2026</span>
+                </div>
+                <div style="display: flex; align-items: center; background: #e28743; color: white; border-radius: 8px; overflow: hidden; font-size: 14px;">
+                    <span style="padding: 6px 10px; background: rgba(0,0,0,0.1); font-weight: bold;">توقيت البداية (دقائق)</span>
+                    <input type="number" id="startTimeInput" value="5" style="width: 50px; text-align: center; border: none; font-weight: bold; outline: none; background: white; color: #000; padding: 6px 0;">
+                    <button type="button" onclick="calculateTimeline()" style="background: #334155; color: white; border: none; padding: 6px 10px; font-weight: bold; cursor: pointer;">تطبيق</button>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; background: #d9b48f; color: #3e2723; font-weight: bold; padding: 6px 12px; border-radius: 8px;">التلميذ</div>
+                
+                <select id="dashboardStudentSelector" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; outline: none; background: white; min-width: 180px;">
+                    <option value="">-- اختر التلميذ --</option>
+                </select>
+
+                <button type="button" onclick="saveFromWeb()" style="background: #10b981; color: white; border: none; padding: 8px 20px; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-save"></i> <span>حفظ وإرسال</span>
+                </button>
+                <button type="button" onclick="clearDashboardForm()" style="background: #ef4444; color: white; border: none; padding: 8px 20px; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-eraser"></i> تفريغ
                 </button>
             </div>
+
         </div>
     </div>
+
+    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.01); overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px;">
+            <thead>
+                <tr style="background: #e2cbd2; color: #3e2723;">
+                    <th style="border: 1px solid #cbd5e1; padding: 10px; width: 20%;">الأنشطة</th>
+                    <th style="border: 1px solid #cbd5e1; padding: 10px; width: 10%;">نقاط النشاط</th>
+                    <th style="border: 1px solid #cbd5e1; padding: 10px; width: 30%;">الإنجازات (الجديدية)</th>
+                    <th style="border: 1px solid #cbd5e1; padding: 10px; width: 10%;">التوقيت</th>
+                    <th style="border: 1px solid #cbd5e1; padding: 10px; width: 15%;">إنجاز اليوم</th>
+                    <th style="border: 1px solid #cbd5e1; padding: 10px; width: 15%;">الإنجازات السابقة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: #fff5f5;" data-activity="revision">
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: 600; text-align: right;">Introduction et Révision :</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="number" id="score_revision" min="0" max="20" placeholder="0" style="width:80%; padding:6px; border:1px solid #cbd5e1; border-radius:4px; text-align:center;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="text" id="input_revision" style="width:94%; padding:6px; border:1px solid #e2e8f0; border-radius:4px; outline:none;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;" class="time-col">05</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #e2e8f0;" id="today_revision">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #f1f5f9; color: #475569;" id="prev_revision">---</td>
+                </tr>
+                <tr style="background: #fff5f5;" data-activity="recitation">
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: 600; text-align: right;">Récitation :</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="number" id="score_recitation" min="0" max="20" placeholder="0" style="width:80%; padding:6px; border:1px solid #cbd5e1; border-radius:4px; text-align:center;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="text" id="input_recitation" style="width:94%; padding:6px; border:1px solid #e2e8f0; border-radius:4px; outline:none;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;" class="time-col">17</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #e2e8f0;" id="today_recitation">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #f1f5f9;" id="prev_recitation">---</td>
+                </tr>
+                <tr style="background: #fff5f5;" data-activity="preparation">
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: 600; text-align: right;">Préparation :</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="number" id="score_preparation" min="0" max="20" placeholder="0" style="width:80%; padding:6px; border:1px solid #cbd5e1; border-radius:4px; text-align:center;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="text" id="input_preparation" style="width:94%; padding:6px; border:1px solid #e2e8f0; border-radius:4px; outline:none;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;" class="time-col">29</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #e2e8f0;" id="today_preparation">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #f1f5f9;" id="prev_preparation">---</td>
+                </tr>
+                <tr style="background: #fff5f5;" data-activity="arabe">
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: 600; text-align: right;">Arabe :</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="number" id="score_arabe" min="0" max="20" placeholder="0" style="width:80%; padding:6px; border:1px solid #cbd5e1; border-radius:4px; text-align:center;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="text" id="input_arabe" style="width:94%; padding:6px; border:1px solid #e2e8f0; border-radius:4px; outline:none;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;" class="time-col">41</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #e2e8f0;" id="today_arabe">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #f1f5f9;" id="prev_arabe">---</td>
+                </tr>
+                <tr style="background: #fff5f5;" data-activity="tarbiya">
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: 600; text-align: right;">Tarbiya :</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="number" id="score_tarbiya" min="0" max="20" placeholder="0" style="width:80%; padding:6px; border:1px solid #cbd5e1; border-radius:4px; text-align:center;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="text" id="input_tarbiya" style="width:94%; padding:6px; border:1px solid #e2e8f0; border-radius:4px; outline:none;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;" class="time-col">53</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #e2e8f0;" id="today_tarbiya">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #f1f5f9;" id="prev_tarbiya">---</td>
+                </tr>
+                <tr style="background: #fff5f5;" data-activity="devoir">
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: 600; text-align: right;">Devoir :</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="number" id="score_devoir" min="0" max="20" placeholder="0" style="width:80%; padding:6px; border:1px solid #cbd5e1; border-radius:4px; text-align:center;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="text" id="input_devoir" style="width:94%; padding:6px; border:1px solid #e2e8f0; border-radius:4px; outline:none;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;" class="time-col">05</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #e2e8f0;" id="today_devoir">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #f1f5f9;" id="prev_devoir">---</td>
+                </tr>
+                <tr style="background: #fff5f5;" data-activity="remarque">
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: 600; text-align: right;">Remarque :</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;">---</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;"><input type="text" id="input_remarque" style="width:94%; padding:6px; border:1px solid #e2e8f0; border-radius:4px; outline:none;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;" class="time-col">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #e2e8f0;" id="today_remarque">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #f1f5f9;" id="prev_remarque">---</td>
+                </tr>
+                <tr style="background: #f8d7da;">
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; text-align: right; color: #842029;">نقطة / معدل الحصة :</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 4px;" colspan="2"><input type="number" id="input_grade" min="0" max="20" placeholder="المعدل النهائي التلقائي أو اليدوي" style="width: 96%; padding:6px; border:1px solid #f5c2c7; border-radius:4px; outline:none; font-weight:bold; text-align:center;"></td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #e2e8f0;" id="today_grade">-</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; background: #f8d7da; font-weight:bold;" id="prev_grade">---</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.01);">
+        <div style="background: #fff3cd; color: #664d03; padding: 8px 16px; font-weight: bold; border-radius: 8px; margin-bottom: 15px; font-size: 16px; width: fit-content;">
+            كل الإنجازات السابقة الموثقة للأرشيف المسترجع من DB_RESPONSES
+        </div>
+        <div style="overflow-x: auto; max-height: 300px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 13px;">
+                <thead>
+                    <tr style="background: #e5ced6; color: #3e2723; position: sticky; top: 0;">
+                        <th style="border: 1px solid #cbd5e1; padding: 8px;">التاريخ والوقت</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px;">[مراجعة]</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px;">[استظهار]</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px;">[إعداد]</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px;">[العربية]</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px;">[الفرض]</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px;">[ملاحظات]</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px;">[نقطة]</th>
+                    </tr>
+                </thead>
+                <tbody id="studentArchiveTableBody">
+                    <tr>
+                        <td colspan="8" style="border: 1px solid #cbd5e1; padding: 15px; color: #64748b;">يرجى اختيار تلميذ لعرض شريط الأرشيف الخاص به هنا...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>	
     <!-- END TEACHER LOGIN -->
 
     <!-- FOOTER PANEL -->
@@ -919,772 +1085,1133 @@
     <!-- ========================================================================= -->
     <!-- JAVASCRIPT LOGIC AND MULTI-LINGUAL SYSTEM (INTEGRATED FROM script.js)     -->
     <!-- ========================================================================= -->
-    <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtT_5h1lu0fuOp16CEgHnvh1Gre7KuC3z1QzjOzltGTNr1OgmtF4V_dbraER_fsomh/exec";
+   <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrz1AdSqO2CnDyp369UiBM0Zm5AeXyediPM_zKW3jDET_1JxsRDUGWoC86BOMZ0aRl0A/exec";
 
-        const translations = {
-          ar: {
-            pageTitle: "أكاديمية إتقان | المنصة التعليمية",
-            logoText: "أكاديمية إتقان",
-            navAbout: "التعريف",
-            navCourses: "الدورات",
-            courseQuran: "قسم القرآن الكريم",
-            courseIslamic: "قسم الثقافة الإسلامية",
-            courseArabic: "قسم اللغة العربية",
-            courseSkills: "قسم مهارات التواصل",
-            navNews: "أخبارنا",
-            navContact: "اتصل بنا",
-            navReviews: "آراء المشتركين",
-            navLogin: "دخول المسجلين",
-            loginStudent: "دخول الطلاب",
-            loginTeacher: "دخول الأساتذة",
-            loginAdmin: "دخول المشرفين",
-            navRegister: "التسجيل",
-            langToggle: "Français",
-            
-            // قسم أخبارنا الجديد
-            newsHeading: "أخبارنا",
-            newsHighlight: "🎉 يسرنا الإعلان عن افتتاح باب التسجيل للفصل الدراسي الجديد لجميع الأقسام.تواصل معنا لحجز مقعدك والتسجيل لسنة 2026 /2027",
-            newsLink: "اقرأ المزيد من الأخبار...",
-            
-            // صفحة من نحن
-            aboutHeading: "اعرف بنا",
-            aboutDescription: "أكاديمية إتقان هي مؤسسة تعليمية متخصصة تسعى إلى تقديم محتوى تعليمي متميز في شتى العلوم. نحن نؤمن بأن الإتقان هو أساس النجاح، ولذلك نعمل على توفير بيئة تعليمية تفاعلية تجمع بين الجودة الأكاديمية والسهولة التقنية لتصل المعلومة إلى كل طالب علم أينما كان.",
-            visionTitle: "رؤيتنا",
-            visionText: "أن نكون المنصة الأولى والرائدة في العالم العربي للتعليم المتقن والمؤصل.",
-            missionTitle: "رسالتنا",
-            missionText: "تيسير سبل طلب العلم ونشره باستخدام أحدث الوسائل التكنولوجية المتاحة.",
+    const translations = {
+      ar: {
+        pageTitle: "أكاديمية إتقان ",
+        logoText: "أكاديمية إتقان",
+        navAbout: "التعريف",
+        navCourses: "الدورات",
+        courseQuran: "قسم القرآن الكريم",
+        courseIslamic: "قسم الثقافة الإسلامية",
+        courseArabic: "قسم اللغة العربية",
+        courseSkills: "قسم مهارات التواصل",
+        navNews: "أخبارنا",
+        navContact: "اتصل بنا",
+        navReviews: "آراء المشتركين",
+        navLogin: "دخول المسجلين",
+        navRegister: "التسجيل",
+        langToggle: "Français",
+        
+        // قسم أخبارنا الجديد
+        newsHeading: "أخبارنا",
+        newsHighlight: "🎉 يسرنا الإعلان عن افتتاح باب التسجيل للفصل الدراسي الجديد لجميع الأقسام.تواصل معنا لحجز مقعدك والتسجيل لسنة 2026 /2027",
+        newsLink: "اقرأ المزيد من الأخبار...",
+        
+        // صفحة من نحن
+        aboutHeading: "اعرف بنا",
+        aboutDescription: "أكاديمية إتقان هي مؤسسة تعليمية متخصصة تسعى إلى تقديم محتوى تعليمي متميز في شتى العلوم. نحن نؤمن بأن الإتقان هو أساس النجاح، ولذلك نعمل على توفير بيئة تعليمية تفاعلية تجمع بين الجودة الأكاديمية والسهولة التقنية لتصل المعلومة إلى كل طالب علم أينما كان.",
+        visionTitle: "رؤيتنا",
+        visionText: "أن نكون المنصة الأولى والرائدة في العالم العربي للتعليم المتقن والمؤصل.",
+        missionTitle: "رسالتنا",
+        missionText: "تيسير سبل طلب العلم ونشره باستخدام أحدث الوسائل التكنولوجية المتاحة.",
 
-            // صفحة القرآن
-            quranTitle: "قسم القرآن الكريم",
-            quranSub: "نعتني بكتاب الله حفظاً وتجويداً وترتيلاً",
-            availableTracks: "المسارات المتاحة",
-            quranTrack1: "• حفظ القرآن الكريم للكبار والصغار.",
-            quranTrack2: "• تصحيح التلاوة وإتقان مخارج الحروف.",
-            quranTrack3: "• دراسة أحكام التجويد (نظري وتطبيقي).",
-            quranTrack4: "• الإجازة بالسند المتصل إلى النبي ﷺ.",
-            studySystem: "نظام الدراسة",
-            quranSystemText: "نوفر حصصاً مرنة تناسب جميع الأوقات (صباحية ومسائية) عبر قاعات افتراضية تفاعلية، مع متابعة فردية لكل طالب.",
-            registerSectionBtn: "سجل الآن في هذا القسم",
+        // صفحة القرآن
+        quranTitle: "قسم القرآن الكريم",
+        quranSub: "نعتني بكتاب الله حفظاً وتجويداً وترتيلاً",
+        availableTracks: "المسارات المتاحة",
+        quranTrack1: "• حفظ القرآن الكريم للكبار والصغار.",
+        quranTrack2: "• تصحيح التلاوة وإتقان مخارج الحروف.",
+        quranTrack3: "• دراسة أحكام التجويد (نظري وتطبيقي).",
+        quranTrack4: "• الإجازة بالسند المتصل إلى النبي ﷺ.",
+        studySystem: "نظام الدراسة",
+        quranSystemText: "نوفر حصصاً مرنة تناسب جميع الأوقات (صباحية ومسائية) عبر قاعات افتراضية تفاعلية، مع متابعة فردية لكل طالب.",
+        registerSectionBtn: "سجل الآن في هذا القسم",
 
-            // صفحة العربية
-            arabicTitle: "قسم اللغة العربية",
-            arabicSub: "لغة الضاد.. هوية، ثقافة، وإتقان",
-            arabicTrack1Title: "العربية للصغار",
-            arabicTrack1Text: "تعليم الحروف والقراءة والكتابة بأساليب ترفيهية وقصصية محببة للأطفال.",
-            arabicTrack2Title: "لغير الناطقين بها",
-            arabicTrack2Text: "منهج عالمي لتمكين الأجانب والراغبين في تعلم العربية من التواصل والفهم السليم.",
-            arabicTrack3Title: "النحو والآداب",
-            arabicTrack3Text: "شرح قواعد النحو والصرف، وتذوق النصوص الأدبية والبلاغة العربية.",
-            arabicFeaturesTitle: "ما يميز منهجنا في العربية:",
-            arabicFeature1: "• التفاعل المباشر: دروس حية تعتمد على الحوار وليس التلقين فقط.",
-            arabicFeature2: "• الوسائل البصرية: استخدام فيديوهات وعروض تقديمية لتسهيل القواعد الجامدة.",
-            arabicFeature3: "• التقويم المستمر: اختبارات قصيرة لمتابعة تطور مستوى الطالب في القراءة والاستماع.",
-            arabicRegisterBtn: "انضم إلينا في قسم العربية",
+        // صفحة العربية
+        arabicTitle: "قسم اللغة العربية",
+        arabicSub: "لغة الضاد.. هوية، ثقافة، وإتقان",
+        arabicTrack1Title: "العربية للصغار",
+        arabicTrack1Text: "تعليم الحروف والقراءة والكتابة بأساليب ترفيهية وقصصية محببة للأطفال.",
+        arabicTrack2Title: "لغير الناطقين بها",
+        arabicTrack2Text: "منهج عالمي لتمكين الأجانب والراغبين في تعلم العربية من التواصل والفهم السليم.",
+        arabicTrack3Title: "النحو والآداب",
+        arabicTrack3Text: "شرح قواعد النحو والصرف، وتذوق النصوص الأدبية والبلاغة العربية.",
+        arabicFeaturesTitle: "ما يميز منهجنا في العربية:",
+        arabicFeature1: "• التفاعل المباشر: دروس حية تعتمد على الحوار وليس التلقين فقط.",
+        arabicFeature2: "• الوسائل البصرية: استخدام فيديوهات وعروض تقديمية لتسهيل القواعد الجامدة.",
+        arabicFeature3: "• التقويم المستمر: اختبارات قصيرة لمتابعة تطور مستوى الطالب في القراءة والاستماع.",
+        arabicRegisterBtn: "انضم إلينا في قسم العربية",
 
-            // الثقافة الإسلامية
-            islamicTitle: "قسم الثقافة الإسلامية",
-            islamicSub: "وعيٌ بالماضي، وفهمٌ للحاضر، وبناءٌ للمستقبل",
-            islamicHub1Title: "التاريخ والحضارة",
-            islamicHub1Text: "رحلة في أعماق التاريخ الإسلامي، من العهد النبوي وصولاً إلى إسهامات العلماء المسلمين في بناء الحضارة الإنسانية في الطب بالفلك والعمارة.",
-            islamicHub2Title: "العبادات والشعائر",
-            islamicHub2Text: "فقه العبادات بأسلوب ميسر (الصلاة، الزكاة، الصيام، والحج)، مع التركيز على المقاصد الروحية والأخلاقية لكل شعيرة دينية.",
-            islamicHub3Title: "السيرة والأخلاق",
-            islamicHub3Text: "دراسة شخصية النبي ﷺ ومنهجه في التعامل، واستخلاص القيم الأخلاقية التي تبني الفرد والمجتمع في العصر الحديث.",
-            whyStudyIslamic: "لماذا تدرس الثقافة الإسلامية في إتقان؟",
-            islamicReason1: "منهج وسطي معتدل",
-            islamicReason2: "ربط العلم بالواقع",
-            islamicReason3: "أساتذة متخصصون",
-            islamicRegisterBtn: "سجل الآن في دوراتنا الثقافية",
+        // الثقافة الإسلامية
+        islamicTitle: "قسم الثقافة الإسلامية",
+        islamicSub: "وعيٌ بالماضي، وفهمٌ للحاضر، وبناءٌ للمستقبل",
+        islamicHub1Title: "التاريخ والحضارة",
+        islamicHub1Text: "رحلة في أعماق التاريخ الإسلامي، من العهد النبوي وصولاً إلى إسهامات العلماء المسلمين في بناء الحضارة الإنسانية في الطب بالفلك والعمارة.",
+        islamicHub2Title: "العبادات والشعائر",
+        islamicHub2Text: "فقه العبادات بأسلوب ميسر (الصلاة، الزكاة، الصيام، والحج)، مع التركيز على المقاصد الروحية والأخلاقية لكل شعيرة دينية.",
+        islamicHub3Title: "السيرة والأخلاق",
+        islamicHub3Text: "دراسة شخصية النبي ﷺ ومنهجه في التعامل، واستخلاص القيم الأخلاقية التي تبني الفرد والمجتمع في العصر الحديث.",
+        whyStudyIslamic: "لماذا تدرس الثقافة الإسلامية في إتقان؟",
+        islamicReason1: "منهج وسطي معتدل",
+        islamicReason2: "ربط العلم بالواقع",
+        islamicReason3: "أساتذة متخصصون",
+        islamicRegisterBtn: "سجل الآن في دوراتنا الثقافية",
 
-            // المهارات
-            skillsTitle: "قسم المهارات والتطوير",
-            skillsSub: "تمكين الكفاءات وتطوير القدرات لمواكبة العصر",
-            skill1Title: "تأهيل مدرسي العربية",
-            skill1Text: "دورات في طرق التدريس الحديثة وكيفية إدارة الفصول الافتراضية بفعالية.",
-            skill2Title: "التقنية والذكاء الاصطناعي",
-            skill2Text: "إتقان التعامل مع الحاسوب واستثمار أدوات الذكاء الاصطناعي في البحث والتعليم.",
-            skill3Title: "الخطابة والإلقاء",
-            skill3Text: "فن مواجهة الجمهور والتحدث بطلاقة وتأثير، وبناء الكاريزما الصوتية.",
-            skill4Title: "مهارات التجويد الفني",
-            skill4Text: "دورة متقدمة في جماليات القراءة، المقامات الصوتية، وضبط الأداء القرآني.",
-            skillsNotice: "جميع دوراتنا في هذا القسم تشمل ورش عمل تطبيقية وشهادات إتمام معتمدة من الأكاديمية.",
-            skillsRegisterBtn: "احجز مقعدك الآن",
+        // المهارات
+        skillsTitle: "قسم المهارات والتطوير",
+        skillsSub: "تمكين الكفاءات وتطوير القدرات لمواكبة العصر",
+        skill1Title: "تأهيل مدرسي العربية",
+        skill1Text: "دورات في طرق التدريس الحديثة وكيفية إدارة الفصول الافتراضية بفعالية.",
+        skill2Title: "التقنية والذكاء الاصطناعي",
+        skill2Text: "إتقان التعامل مع الحاسوب واستثمار أدوات الذكاء الاصطناعي في البحث والتعليم.",
+        skill3Title: "الخطابة والإلقاء",
+        skill3Text: "فن مواجهة الجمهور والتحدث بطلاقة وتأثير، وبناء الكاريزما الصوتية.",
+        skill4Title: "مهارات التجويد الفني",
+        skill4Text: "دورة متقدمة في جماليات القراءة، المقامات الصوتية، وضبط الأداء القرآني.",
+        skillsNotice: "جميع دوراتنا في هذا القسم تشمل ورش عمل تطبيقية وشهادات إتمام معتمدة من الأكاديمية.",
+        skillsRegisterBtn: "احجز مقعدك الآن",
 
-            // اتصل بنا
-            contactTitle: "اتصل بنا",
-            contactSub: "يسعدنا استقبال استفساراتكم واقتراحاتكم",
-            contactLabelName: "الاسم الكامل",
-            contactLabelEmail: "البريد الإلكتروني",
-            contactLabelMsg: "موضوع الرسالة",
-            contactSendBtn: "إرسال الرسالة الآن",
+        // اتصل بنا
+        contactTitle: "اتصل بنا",
+        contactSub: "يسعدنا استقبال استفساراتكم واقتراحاتكم",
+        contactLabelName: "الاسم الكامل",
+        contactLabelEmail: "البريد الإلكتروني",
+        contactLabelMsg: "موضوع الرسالة",
+        contactSendBtn: "إرسال الرسالة الآن",
 
-            // الآراء
-            reviewsTitle: "قالوا عن أكاديمية إتقان",
-            review1Text: `"تجربتي في قسم القرآن كانت استثنائية، المدرسون صبورون جداً والمنصة سهلة الاستخدام."`,
-            review1Author: "- الطالب أحمد من المغرب",
-            review2Text: `"دورة الذكاء الاصطناعي غيرت نظرتي للتعليم تماماً. شكراً لأكاديمية إتقان."`,
-            review2Author: "- الأستاذة فاطمة",
-            reviewCallTitle: "رأيك يهمنا في تطوير الأكاديمية",
-            reviewCallSub: "هل جربت الدراسة معنا؟ شاركنا تجربتك بكل صراحة",
-            reviewCallBtn: "اضغط هنا لترك رأيك",
+        // الآراء
+        reviewsTitle: "قالوا عن أكاديمية إتقان",
+        review1Text: `"تجربتي في قسم القرآن كانت استثنائية، المدرسون صبورون جداً والمنصة سهلة الاستخدام."`,
+        review1Author: "- الطالب أحمد من المغرب",
+        review2Text: `"دورة الذكاء الاصطناعي غيرت نظرتي للتعليم تماماً. شكراً لأكاديمية إتقان."`,
+        review2Author: "- الأستاذة فاطمة",
+        reviewCallTitle: "رأيك يهمنا في تطوير الأكاديمية",
+        reviewCallSub: "هل جربت الدراسة معنا？ شاركنا تجربتك بكل صراحة",
+        reviewCallBtn: "اضغط هنا لترك رأيك",
 
-            // الرئيسية
-            heroTitle: "مرحباً بك في صرح \"إتقان\" العلمي",
-            heroSub: "تعليم شرعي وأكاديمي بأساليب تقنية حديثة تجمع بين الأصالة والمعاصرة.",
-            heroRegisterBtn: "سجل الآن",
-            heroAboutBtn: "التعريف",
-            feature1Title: "نخبة المعلمين",
-            feature1Text: "خريجو كبار الجامعات الإسلامية.",
-            feature2Title: "بيئة تفاعلية",
-            feature2Text: "دروس مباشرة وحلقات نقاش.",
-            feature3Title: "شهادات معتمدة",
-            feature3Text: "توثيق رسمي لمسيرتك العلمية.",
+        // الرئيسية
+        heroTitle: "مرحباً بك في صرح \"إتقان\" العلمي",
+        heroSub: "تعليم شرعي وأكاديمي بأساليب تقنية حديثة تجمع بين الأصالة والمعاصرة.",
+        heroRegisterBtn: "سجل الآن",
+        heroAboutBtn: "التعريف",
+        feature1Title: "نخبة المعلمين",
+        feature1Text: "خريجو كبار الجامعات الإسلامية.",
+        feature2Title: "بيئة تفاعلية",
+        feature2Text: "دروس مباشرة وحلقات نقاش.",
+        feature3Title: "شهادات معتمدة",
+        feature3Text: "توثيق رسمي لمسيرتك العلمية.",
 
-            // صفحة التسجيل
-            regHeader: "طلب تسجيل طالب جديد",
-            regLabelName: "الاسم الكامل",
-            regLabelPhone: "رقم الهاتف",
-            regLabelCourse: "اختر الدورة المطلوبة",
-            regSubmitBtn: "إرسال الطلب عبر واتساب",
-            regPlaceholderName: "الاسم الثلاثي",
-            regPlaceholderPhone: "06XXXXXXXX",
+        // صفحة التسجيل
+        regHeader: "طلب تسجيل طالب جديد",
+        regLabelName: "الاسم الكامل",
+        regLabelPhone: "رقم الهاتف",
+        regLabelCourse: "اختر الدورة المطلوبة",
+        regSubmitBtn: "إرسال الطلب عبر واتساب",
+        regPlaceholderName: "الاسم الثلاثي",
+        regPlaceholderPhone: "06XXXXXXXX",
 
-            // بوابة الطلاب والنتائج
-            portalHeader: "بوابة استعلام النتائج",
-            portalLabelName: "اسم الطالب الثلاثي",
-            portalPlaceholderName: "أدخل الاسم كما هو مسجل...",
-            portalSubmitBtn: "عرض النتيجة",
-            studentCard: "بطاقة الطالب:",
+        // بوابة الطلاب والنتائج
+        portalHeader: "بوابة استعلام النتائج",
+        portalLabelName: "اسم الطالب الثلاثي",
+        portalPlaceholderName: "أدخل الاسم كما هو مسجل...",
+        portalSubmitBtn: "عرض النتيجة",
+        studentCard: "بطاقة الطالب:",
 
-            // بوابة الأساتذة
-            teacherLoginHeader: "دخول المعلمين",
-            teacherLoginLabelPass: "كلمة المرور",
-            teacherLoginBtn: "دخول",
-            dashHeader: "لوحة رصد الدرجات",
-            dashSelectStudent: "اختر الطالب",
-            dashSaveBtn: "حفظ البيانات",
-            footerText: "© 2026 جميع الحقوق محفوظة لأكاديمية إتقان التعليمية",
+        // بوابة الأساتذة
+        teacherLoginHeader: "دخول المعلمين",
+        teacherLoginLabelPass: "كلمة المرور",
+        teacherLoginBtn: "دخول",
+        dashHeader: "لوحة رصد الدرجات",
+        dashSelectStudent: "اختر الطالب",
+        dashSaveBtn: "حفظ البيانات",
+        footerText: "© 2026 جميع الحقوق محفوظة لأكاديمية إتقان التعليمية",
 
-            // رسائل وتنبيهات برمجية
-            enterNameAlert: "يرجى إدخال اسم الطالب",
-            noResultAlert: "عذراً، لم نجد نتائج لهذا الاسم.",
-            serverErrorAlert: "حدث خطأ أثناء الاتصال بالسيرفر.",
-            wrongPassAlert: "كلمة المرور غير صحيحة",
-            saveSuccessAlert: "✅ تم حفظ البيانات بنجاح",
-            saveErrorAlert: "حدث خطأ أثناء الحفظ",
-            savingBtnText: "جاري الحفظ...",
-            loadingNamesOption: "جاري تحميل القائمة...",
-            loadFailOption: "فشل التحميل",
-            redirectingMsg: "✅ تم توجيهك للواتساب لتأكيد الطلب...",
+        // رسائل وتنبيهات برمجية
+        enterNameAlert: "يرجى إدخال اسم الطالب",
+        noResultAlert: "عذراً، لم نجد نتائج لهذا الاسم.",
+        serverErrorAlert: "حدث خطأ أثناء الاتصال بالسيرفر.",
+        wrongPassAlert: "كلمة المرور غير صحيحة",
+        saveSuccessAlert: "✅ تم حفظ البيانات بنجاح",
+        saveErrorAlert: "حدث خطأ أثناء الحفظ",
+        savingBtnText: "جاري الحفظ...",
+        loadingNamesOption: "جاري تحميل القائمة...",
+        loadFailOption: "فشل التحميل",
+        redirectingMsg: "✅ تم توجيهك للواتساب لتأكيد الطلب...",
 
-            // حقول الرصد للمعلمين ونتائج الطلاب
-            fields: {
-              "مراجعة": "مراجعة",
-              "استظهار": "استظهار",
-              "إعداد": "إعداد",
-              "اللغة العربية": "اللغة العربية",
-              "التربية": "التربية",
-              "الفرض": "الفرض",
-              "ملاحظات": "ملاحظات",
-              "الدرجة النهائية": "الدرجة النهائية"
-            },
-            dir: "rtl"
-          },
-          fr: {
-            pageTitle: "Académie Itqan | Plateforme Éducative",
-            logoText: "Académie Itqan",
-            navAbout: "Présentation",
-            navCourses: "Cours",
-            courseQuran: "Département du Saint Coran",
-            courseIslamic: "Culture Islamique",
-            courseArabic: "Langue Arabe",
-            courseSkills: "Compétences de com.",
-            navNews: "Nos Actualités",
-            navContact: "Contact",
-            navReviews: "Témoignages",
-            navLogin: "Accès Membres",
-            loginStudent: "Espace Étudiants",
-            loginTeacher: "Espace Enseignants",
-            loginAdmin: "Espace Admin",
-            navRegister: "S'inscrire",
-            langToggle: "العربية",
-            
-            // قسم أخبارنا بالفرنسية
-            newsHeading: "Nos Actualités",
-            newsHighlight: "🎉 Nous avons le plaisir d'annoncer l'ouverture des inscriptions pour la nouvelle session académique.",
-            newsLink: "Lire plus d'actualités...",
+        // تحديث حقول الرصد المزدوجة لتطابق الشيت والموقع تماماً
+        fields: {
+          "مراجعة": "مراجعة",
+          "نقطة مراجعة": "نقطة مراجعة",
+          "استظهار": "استظهار",
+          "نقطة الاستظهار": "نقطة الاستظهار",
+          "إعداد": "إعداد",
+          "نقطة إعداد": "نقطة إعداد",
+          "اللغة العربية": "اللغة العربية",
+          "نقطة العربية": "نقطة العربية",
+          "التربية": "التربية",
+          "نقطة التربية": "نقطة التربية",
+          "الفرض": "الفرض",
+          "نقطة الفرض": "نقطة الفرض",
+          "ملاحظات": "ملاحظات"
+        },
+        dir: "rtl"
+      },
+      fr: {
+        pageTitle: "Académie ETCAN | Espace de Tarbiya, du Coran et de la langue Arabe numérique",
+        logoText: "Académie ETCAN",
+        navAbout: "Présentation",
+        navCourses: "Cours",
+        courseQuran: "Saint Coran",
+        courseIslamic: "Culture Islamique",
+        courseArabic: "Langue Arabe",
+        courseSkills: "Formation et Compétences",
+        navNews: "Actualités",
+        navContact: "Contact",
+        navReviews: "Témoignages",
+        navLogin: "Accès Membres",
+        navRegister: "S'inscrire",
+        langToggle: "العربية",
+        
+        // قسم أخبارنا بالفرنسية
+        newsHeading: "Actualités",
+        newsHighlight: "🎉 Nous avons le plaisir d'annoncer l'ouverture des inscriptions pour la nouvelle session académique.",
+        newsLink: "Lire plus d'actualités...",
 
-            // Qui sommes-nous
-            aboutHeading: "Qui sommes-nous ?",
-            aboutDescription: "L'Académie Itqan est une institution éducative spécialisée qui s'efforce d'offrir un contenu académique d'excellence dans divers domaines du savoir. Nous croyons fermement que la rigueur et l'excellence (Itqan) sont les piliers de la réussite. C'est pourquoi nous créons un environnement d'apprentissage interactif qui allie qualité académique et simplicité technologique afin de transmettre le savoir à chaque étudiant, où qu'il soit dans le monde.",
-            visionTitle: "Notre Vision",
-            visionText: "Devenir la première plateforme de référence dans le monde pour un enseignement maîtrisé et rigoureux.",
-            missionTitle: "Notre Mission",
-            missionText: "Faciliter l'accès à la science et sa diffusion par le biais des dernières innovations technologiques.",
+        // Qui sommes-nous
+        aboutHeading: "Qui sommes-nous ?",
+        aboutDescription: "L'Académie ETCAN est une institution éducative spécialisée qui s'efforce d'offrir un contenu académique d'excellence dans divers domaines du savoir. Nous croyons fermement que la rigueur et l'excellence (ETCAN) sont les piliers de la réussite. C'est pourquoi nous créons un environnement d'apprentissage interactif qui allie qualité académique et simplicité technologique afin de transmettre le savoir à chaque étudiant, où qu'il soit dans le monde.",
+        visionTitle: "Notre Vision",
+        visionText: "Devenir la première plateforme de référence dans le monde pour un enseignement maîtrisé et rigoureux.",
+        missionTitle: "Notre Mission",
+        missionText: "Faciliter l'accès à la science et sa diffusion par le biais des dernières innovations technologiques.",
 
-            // Département Coran
-            quranTitle: "Département du Saint Coran",
-            quranSub: "Une attention particulière à la mémorisation, au Tajwid et à la récitation du Livre d'Allah",
-            availableTracks: "Filières Disponibles",
-            quranTrack1: "• Mémorisation du Saint Coran pour adultes et enfants.",
-            quranTrack2: "• Correction de la récitation et perfectionnement de la phonétique.",
-            quranTrack3: "• Étude théorique et pratique des règles du Tajwid.",
-            quranTrack4: "• Obtention d'une Ijazah avec chaîne de transmission (Sanad) liée au Prophète ﷺ.",
-            studySystem: "Système d'Études",
-            quranSystemText: "Nous offrons des séances d'apprentissage flexibles adaptées à tous les emplois du temps (matin et soir) via des classes virtuelles interactives, avec un suivi rigoureux et individuel de chaque apprenant.",
-            registerSectionBtn: "S'inscrire dans ce département",
+        // Département Coran
+        quranTitle: "Département du Saint Coran",
+        quranSub: "Une attention particulière à la mémorisation, au Tajwid et à la récitation du Livre d'Allah",
+        availableTracks: "Filières Disponibles",
+        quranTrack1: "• Mémorisation du Saint Coran pour adultes et enfants.",
+        quranTrack2: "• Correction de la récitation et perfectionnement de la phonétique.",
+        quranTrack3: "• Étude théorique et pratique des règles du Tajwid.",
+        quranTrack4: "• Obtention d'une Ijazah avec chaîne de transmission (Sanad) liée au Prophète ﷺ.",
+        studySystem: "Système d'Études",
+        quranSystemText: "Nous offrons des séances d'apprentissage flexibles adaptées à tous les emplois du temps (matin et soir) via des classes virtuelles interactives, avec un suivi rigoureux et individuel de chaque apprenant.",
+        registerSectionBtn: "S'inscrire dans ce département",
 
-            // Département Arabe
-            arabicTitle: "Département de Langue Arabe",
-            arabicSub: "La langue arabe.. Identité, culture et maîtrise",
-            arabicTrack1Title: "L'Arabe pour Enfants",
-            arabicTrack1Text: "Enseignement de l'alphabet, de la lecture et de l'écriture grâce à des méthodes ludiques basées sur le conte et le jeu.",
-            arabicTrack2Title: "Pour Non-Arabophones",
-            arabicTrack2Text: "Un programme international structuré permettant aux non-arabophones de communiquer et de comprendre l'arabe avec aisance.",
-            arabicTrack3Title: "Grammaire et Littérature",
-            arabicTrack3Text: "Explications simplifiées de la grammaire (Nahw), de la morphologie (Sarf), de la rhétorique et de la littérature arabe.",
-            arabicFeaturesTitle: "Les atouts de notre programme d'arabe :",
-            arabicFeature1: "• Interaction directe : Cours en direct axés sur le dialogue et l'expression orale.",
-            arabicFeature2: "• Supports multimédias : Des présentations visuelles pour simplifier l'assimilation des règles complexes.",
-            arabicFeature3: "• Évaluation régulière : Des tests pour évaluer le niveau en lecture, écriture et compréhension orale.",
-            arabicRegisterBtn: "Rejoindre le département d'arabe",
+        // Département Arabe
+        arabicTitle: "Département de Langue Arabe",
+        arabicSub: "La langue arabe.. Identité, culture et maîtrise",
+        arabicTrack1Title: "L'Arabe pour Enfants",
+        arabicTrack1Text: "Enseignement de l'alphabet, de la lecture et de l'écriture grâce à des méthodes ludiques basées sur le conte et le jeu.",
+        arabicTrack2Title: "Pour Non-Arabophones",
+        arabicTrack2Text: "Un programme international structuré permettant aux non-arabophones de communiquer et de comprendre l'arabe avec aisance.",
+        arabicTrack3Title: "Grammaire et Littérature",
+        arabicTrack3Text: "Explications simplifiées de la grammaire (Nahw), de la morphologie (Sarf), de la rhétorique et de la littérature arabe.",
+        arabicFeaturesTitle: "Les atouts de notre programme d'arabe :",
+        arabicFeature1: "• Interaction directe : Cours en direct axés sur le dialogue et l'expression orale.",
+        arabicFeature2: "• Supports multimédias : Des présentations visuelles pour simplifier l'assimilation des règles complexes.",
+        arabicFeature3: "• Évaluation régulière : Des tests pour évaluer le niveau en lecture, écriture et compréhension orale.",
+        arabicRegisterBtn: "Rejoindre le département d'arabe",
 
-            // Culture Islamique
-            islamicTitle: "Culture Islamique",
-            islamicSub: "Comprendre le passé, appréhender le présent et bâtir l'avenir",
-            islamicHub1Title: "Histoire et Civilisation",
-            islamicHub1Text: "Un voyage dans l'histoire islamique, de l'époque prophétique aux contributions scientifiques majeures des musulmans en médecine, astronomie et architecture.",
-            islamicHub2Title: "Pratiques et Adorations",
-            islamicHub2Text: "Explication simplifiée de la jurisprudence (Fiqh) des actes cultuels (Prière, Zakat, Jeûne, Hajj) avec un accent sur les valeurs morales et spirituelles.",
-            islamicHub3Title: "Biographie et Éthique",
-            islamicHub3Text: "Étude approfondie du modèle comportemental du Prophète ﷺ et de ses enseignements moraux pour l'individu et la société moderne.",
-            whyStudyIslamic: "Pourquoi étudier la culture islamique à l'Académie Itqan ?",
-            islamicReason1: "Approche juste et modérée",
-            islamicReason2: "Lien concret avec le quotidien",
-            islamicReason3: "Enseignants qualifiés et spécialisés",
-            islamicRegisterBtn: "S'inscrire à nos cours culturels",
+        // Culture Islamique
+        islamicTitle: "Culture Islamique",
+        islamicSub: "Comprendre le passé, appréhender le présent et bâtir l'avenir",
+        islamicHub1Title: "Histoire et Civilisation",
+        islamicHub1Text: "Un voyage dans l'histoire islamique, de l'époque prophétique aux contributions scientifiques majeures des musulmans en médecine, astronomie et architecture.",
+        islamicHub2Title: "Pratiques et Adorations",
+        islamicHub2Text: "Explication simplifiée de la jurisprudence (Fiqh) des actes cultuels (Prière, Zakat, Jeûne, Hajj) avec un accent sur les valeurs morales et spirituelles.",
+        islamicHub3Title: "Biographie et Éthique",
+        islamicHub3Text: "Étude approfondie du modèle comportemental du Prophète ﷺ et de ses enseignements moraux pour l'individu et la société moderne.",
+        whyStudyIslamic: "Pourquoi étudier la culture islamique à l'Académie ETCAN ?",
+        islamicReason1: "Approche juste et modérée",
+        islamicReason2: "Lien concret avec le quotidien",
+        islamicReason3: "Enseignants qualifiés et spécialisés",
+        islamicRegisterBtn: "S'inscrire à nos cours culturels",
 
-            // Compétences
-            skillsTitle: "Développement des Compétences",
-            skillsSub: "Valoriser les talents et renforcer les aptitudes pour relever les défis de notre époque",
-            skill1Title: "Formation de Profs d'Arabe",
-            skill1Text: "Formations spécialisées aux méthodologies d'enseignement modernes et à la gestion interactive des classes en ligne.",
-            skill2Title: "Outils de l'IA et Technologie",
-            skill2Text: "Maîtrise de l'outil informatique et exploitation des opportunités offertes par l'IA dans l'éducation et la recherche.",
-            skill3Title: "Art Oratoire et Éloquence",
-            skill3Text: "Maîtriser la prise de parole en public, s'exprimer avec assurance et cultiver son charisme vocal.",
-            skill4Title: "Esthétique de la Récitation",
-            skill4Text: "Cours approfondi sur la pose de voix, les mélodies de récitation (Maqamats) et l'excellence de l'interprétation coranique.",
-            skillsNotice: "Tous nos cursus intègrent des ateliers pratiques et sont sanctionnés par des attestations de réussite agréées par l'Académie.",
-            skillsRegisterBtn: "Réserver ma place dès maintenant",
+        // Compétences
+        skillsTitle: "Développement des Compétences",
+        skillsSub: "Valoriser les talents et renforcer les aptitudes pour relever les défis de notre époque",
+        skill1Title: "Formation de Profs d'Arabe",
+        skill1Text: "Formations spécialisées aux méthodologies d'enseignement modernes et à la gestion interactive des classes en ligne.",
+        skill2Title: "Outils de l'IA et Technologie",
+        skill2Text: "Maîtrise de l'outil informatique et exploitation des opportunités offertes par l'IA dans l'éducation et la recherche.",
+        skill3Title: "Art Oratoire et Éloquence",
+        skill3Text: "Maîtriser la prise de parole en public, s'exprimer avec assurance et cultiver son charisme vocal.",
+        skill4Title: "Esthétique de la Récitation",
+        skill4Text: "Cours approfondi sur la pose de voix, les mélodies de récitation (Maqamats) et l'excellence de l'interprétation coranique.",
+        skillsNotice: "Tous nos cursus intègrent des ateliers pratiques et sont sanctionnés par des attestations de réussite agréées par l'Académie.",
+        skillsRegisterBtn: "Réserver ma place dès maintenant",
 
-            // Contact
-            contactTitle: "Contactez-nous",
-            contactSub: "Nous serons ravis de recevoir vos questions et suggestions",
-            contactLabelName: "Nom complet",
-            contactLabelEmail: "Adresse e-mail",
-            contactLabelMsg: "Votre message",
-            contactSendBtn: "Envoyer le message maintenant",
+        // Contact
+        contactTitle: "Contactez-nous",
+        contactSub: "Nous serons ravis de recevoir vos questions et suggestions",
+        contactLabelName: "Nom complet",
+        contactLabelEmail: "Adresse e-mail",
+        contactLabelMsg: "Votre message",
+        contactSendBtn: "Envoyer le message maintenant",
 
-            // Témoignages
-            reviewsTitle: "Ce qu'ils disent de l'Académie Itqan",
-            review1Text: `"Mon expérience dans le département du Coran a été exceptionnelle, les professeurs font preuve d'une grande patience et la plateforme est très intuitive."`,
-            review1Author: "- Ahmed, étudiant du Maroc",
-            review2Text: `"La formation sur l'Intelligence Artificielle a totalement transformé ma manière d'enseigner. Un grand merci à l'Académie Itqan."`,
-            review2Author: "- Professeure Fatima",
-            reviewCallTitle: "Votre avis nous est précieux",
-            reviewCallSub: "Avez-vous étudié avec nous ? Partagez votre expérience en toute franchise",
-            reviewCallBtn: "Laisser mon avis ici",
+        // Témoignages
+        reviewsTitle: "Ce qu'ils disent de l'Académie ETCAN",
+        review1Text: `"Mon expérience dans le département du Coran a été exceptionnelle, les professeurs font preuve d'une grande patience et la plateforme est très intuitive."`,
+        review1Author: "- Ahmed, étudiant du Maroc",
+        review2Text: `"La formation sur l'Intelligence Artificielle a totalement transformé ma manière d'enseigner. Un grand merci à l'Académie ETCAN."`,
+        review2Author: "- Professeure Fatima",
+        reviewCallTitle: "Votre avis nous est précieux",
+        reviewCallSub: "Avez-vous étudié avec nous ？ Partagez votre expérience en toute franchise",
+        reviewCallBtn: "Laisser mon avis ici",
 
-            // Accueil
-            heroTitle: "Bienvenue au sein de l'Académie \"Itqan\"",
-            heroSub: "Enseignement authentique et académique par des méthodes numériques modernes alliant tradition et modernité.",
-            heroRegisterBtn: "S'inscrire",
-            heroAboutBtn: "Présentation",
-            feature1Title: "Professeurs d'Élite",
-            feature1Text: "Diplômés des plus prestigieuses universités islamiques.",
-            feature2Title: "Classes Interactives",
-            feature2Text: "Séances en direct et groupes de discussion dynamiques.",
-            feature3Title: "Diplômes Reconnus",
-            feature3Text: "Validation officielle de votre parcours et de vos acquis.",
+        // Accueil
+        heroTitle: "Bienvenue au sein de l'Académie \"ETCAN\"",
+        heroSub: "Enseignement authentique et académique par des méthodes numériques modernes alliant tradition et modernité.",
+        heroRegisterBtn: "S'inscrire",
+        heroAboutBtn: "Présentation",
+        feature1Title: "Professeurs d'Élite",
+        feature1Text: "Diplômés des plus prestigieuses universités islamiques.",
+        feature2Title: "Classes Interactives",
+        feature2Text: "Séances en direct et groupes de discussion dynamiques.",
+        feature3Title: "Diplômes Reconnus",
+        feature3Text: "Validation officielle de votre parcours et de vos acquis.",
 
-            // Formulaire inscription
-            regHeader: "Inscription Nouvel Étudiant",
-            regLabelName: "Nom complet",
-            regLabelPhone: "Numéro de téléphone",
-            regLabelCourse: "Sélectionnez le cours souhaité",
-            regSubmitBtn: "Envoyer l'inscription par WhatsApp",
-            regPlaceholderName: "Nom et Prénom",
-            regPlaceholderPhone: "06XXXXXXXX",
+        // Formulaire inscription
+        regHeader: "Inscription Nouvel Étudiant",
+        regLabelName: "Nom complet",
+        regLabelPhone: "Numéro de téléphone",
+        regLabelCourse: "Sélectionnez le cours souhaité",
+        regSubmitBtn: "Envoyer l'inscription par WhatsApp",
+        regPlaceholderName: "Nom et Prénom",
+        regPlaceholderPhone: "06XXXXXXXX",
 
-            // Portail résultats
-            portalHeader: "Consultation des Résultats",
-            portalLabelName: "Nom complet de l'étudiant",
-            portalPlaceholderName: "Entrez le nom tel qu'il a été enregistré...",
-            portalSubmitBtn: "Rechercher",
-            studentCard: "Fiche d'étudiant :",
+        // Portail résultats
+        portalHeader: "Consultation des Résultats",
+        portalLabelName: "Nom complet de l'étudiant",
+        portalPlaceholderName: "Entrez le nom tel qu'il a été enregistré...",
+        portalSubmitBtn: "Rechercher",
+        studentCard: "Fiche d'étudiant :",
 
-            // Portail Enseignants
-            teacherLoginHeader: "Portail Enseignants",
-            teacherLoginLabelPass: "Mot de passe",
-            teacherLoginBtn: "Se connecter",
-            dashHeader: "Saisie des Notes & Évaluations",
-            dashSelectStudent: "Sélectionner un étudiant",
-            dashSaveBtn: "Enregistrer les évaluations",
-            footerText: "© 2026 Tous droits réservés à l'Académie Éducative Itqan",
+        // Portail Enseignants
+        teacherLoginHeader: "Portail Enseignants",
+        teacherLoginLabelPass: "Mot de passe",
+        teacherLoginBtn: "Se connecter",
+        dashHeader: "Saisie des Notes & Évaluations",
+        dashSelectStudent: "Sélectionner un étudiant",
+        dashSaveBtn: "Enregistrer les évaluations",
+        footerText: "© 2026 Tous droits réservés à l'Académie Éducative ETCAN",
 
-            // Alertes
-            enterNameAlert: "Veuillez entrer le nom de l'étudiant.",
-            noResultAlert: "Désolé, aucun résultat trouvé pour ce nom.",
-            serverErrorAlert: "Une erreur est survenue lors de la connexion au serveur.",
-            wrongPassAlert: "Mot de passe incorrect.",
-            saveSuccessAlert: "✅ Évaluations enregistrées avec succès.",
-            saveErrorAlert: "Une erreur est survenue lors de l'enregistrement.",
-            savingBtnText: "Enregistrement...",
-            loadingNamesOption: "Chargement de la liste...",
-            loadFailOption: "Échec du chargement de la liste",
-            redirectingMsg: "✅ Redirection vers WhatsApp en cours...",
+        // Alertes
+        enterNameAlert: "Veuillez entrer le nom de l'étudiant.",
+        noResultAlert: "Désolé, aucun résultat trouvé pour ce nom.",
+        serverErrorAlert: "Une erreur est survenue lors de la connexion au serveur.",
+        wrongPassAlert: "Mot de passe incorrect.",
+        saveSuccessAlert: "✅ Évaluations enregistrées avec succès.",
+        saveErrorAlert: "Une erreur est survenue lors de l'enregistrement.",
+        savingBtnText: "Enregistrement...",
+        loadingNamesOption: "Chargement de la liste...",
+        loadFailOption: "Échec du chargement de la liste",
+        redirectingMsg: "✅ Redirection vers WhatsApp en cours...",
 
-            // حقول الرصد للمعلمين ونتائج الطلاب
-            fields: {
-              "مراجعة": "Révision",
-              "استظهار": "Récitation",
-              "إعداد": "Préparation",
-              "اللغة العربية": "Langue Arabe",
-              "التربية": "Éducation",
-              "الفرض": "Évaluation",
-              "ملاحظات": "Notes/Remarques",
-              "الدرجة النهائية": "Note Finale"
-            },
-            dir: "ltr"
-          }
-        };
+        // حقول الرصد بالفرنسية متطابقة مع التغيير الجديد
+        fields: {
+          "مراجعة": "Révision",
+          "نقطة مراجعة": "Note Révision",
+          "استظهار": "Récitation",
+          "نقطة الاستظهار": "Note Récitation",
+          "إعداد": "Préparation",
+          "نقطة إعداد": "Note Préparation",
+          "اللغة العربية": "Langue Arabe",
+          "نقطة العربية": "Note Arabe",
+          "التربية": "Éducation",
+          "نقطة التربية": "Note Éducation",
+          "الفرض": "Évaluation",
+          "نقطة الفرض": "Note Évaluation",
+          "ملاحظات": "Notes/Remarques"
+        },
+        dir: "ltr"
+      }
+    };
 
-        let currentLang = localStorage.getItem('selectedLang') || 'ar';
+    if (typeof currentLang === 'undefined') {
+        window.currentLang = localStorage.getItem('selectedLang') || 'ar';
+    }
 
-        // Premium Toast Notifications System replacing raw alerts
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
-            const toast = document.createElement('div');
-            toast.className = `toast-msg toast-${type}`;
-            
-            let icon = '<i class="fas fa-info-circle"></i>';
-            if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
-            if (type === 'danger') icon = '<i class="fas fa-exclamation-circle"></i>';
-            
-            toast.innerHTML = `${icon} <span>${message}</span>`;
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.animation = 'slideDown 0.3s ease reverse';
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
-        }
+    function applyTranslations(lang) {
+        try {
+            if (!translations || !translations[lang]) return;
 
-        function applyTranslations(lang) {
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                if (translations[lang][key]) {
+                if (translations[lang][key] !== undefined) {
                     element.textContent = translations[lang][key];
                 }
             });
 
             document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
                 const key = element.getAttribute('data-i18n-placeholder');
-                if (translations[lang][key]) {
+                if (translations[lang][key] !== undefined) {
                     element.setAttribute('placeholder', translations[lang][key]);
                 }
             });
 
-            document.documentElement.dir = translations[lang]['dir'];
+            document.documentElement.dir = translations[lang]['dir'] || 'rtl';
             document.documentElement.lang = lang;
 
             const langBtn = document.getElementById('lang-toggle');
-            if(langBtn) {
+            if (langBtn) {
                 langBtn.textContent = translations[lang]['langToggle'];
             }
-
-            const grid = document.getElementById('ratingGrid');
-            if (grid && grid.innerHTML !== "") {
-                const currentInputs = Array.from(document.querySelectorAll('.rating-input')).map(i => i.value);
-                initTeacherDashboard();
-                const newInputs = document.querySelectorAll('.rating-input');
-                currentInputs.forEach((val, index) => {
-                    if(newInputs[index]) newInputs[index].value = val;
-                });
-            }
-
-            // استدعاء دالة جلب وعرض الأخبار لتتزامن مع اللغة الحالية للزائر تلقائياً
-            fetchAndDisplayNews();
+        } catch (error) {
+            console.error("Error in applyTranslations:", error);
         }
+    }
 
-        function switchLanguage() {
-            currentLang = (currentLang === 'ar') ? 'fr' : 'ar';
-            localStorage.setItem('selectedLang', currentLang);
-            applyTranslations(currentLang);
-            navigateTo('home-page');
+    function switchLanguage() {
+        window.currentLang = (window.currentLang === 'ar') ? 'fr' : 'ar';
+        localStorage.setItem('selectedLang', window.currentLang);
+        applyTranslations(window.currentLang);
+    }
+	
+// دالة إظهار وإخفاء كلمة المرور عند الضغط على العين
+function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('loginPassword');
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    if (passwordInput && toggleBtn) {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleBtn.classList.remove('fa-eye');
+            toggleBtn.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleBtn.classList.remove('fa-eye-slash');
+            toggleBtn.classList.add('fa-eye');
         }
+    }
+}
 
-        function navigateTo(pageId) {
-            const pages = document.querySelectorAll('.page-content');
-            pages.forEach(page => {
-                page.style.display = 'none';
-                page.classList.remove('page-active');
-            });
+// ==========================================
+// 3. دالة الدخول الموحد والربط الذكي مع الشيت
+// ==========================================
+function handleUnifiedLogin(event) {
+    // 1. منع النموذج من إعادة تحديث الصفحة وإظهار البيانات في الرابط العلوي
+    if (event && event.preventDefault) {
+        event.preventDefault(); 
+    } else if (window.event) {
+        window.event.returnValue = false;
+    }
 
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.style.display = 'block';
-                setTimeout(() => {
-                    targetPage.classList.add('page-active');
-                }, 10);
+    // جلب قيم المدخلات من الفورم عندك (تأكد من مطابقة المعرفات لـ username و password)
+    const userInput = document.getElementById('username') || document.getElementById('loginUsername');
+    const passInput = document.getElementById('password') || document.getElementById('loginPassword');
+    
+    if (!userInput || !passInput) {
+        alert("خطأ: لم يتم العثور على حقول إدخال اسم المستخدم أو كلمة المرور في الـ HTML");
+        return false;
+    }
 
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-                console.log("Navigated successfully to: " + pageId);
+    const usernameValue = userInput.value.trim();
+    const passwordValue = passInput.value.trim();
+
+    if (!usernameValue || !passwordValue) {
+        alert("يرجى إدخال اسم المستخدم وكلمة المرور");
+        return false;
+    }
+
+    // 2. إرسال طلب POST آمن ونظيف إلى الرابط الموحد الخاص بك
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+            action: "unifiedLogin",
+            username: usernameValue,
+            password: passwordValue
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        // تأكد من أن السيرفر يرسل { success: true, role: "teacher", name: "أحمد" } مثلاً
+        if (data.success || data.status === "success") {
+            alert("تم تسجيل الدخول بنجاح! 🌸");
+            
+            // استخدام الاسم القادم من السيرفر أو الاسم الذي أدخله المعلم
+            const finalName = data.name || usernameValue;
+            
+            // تشغيل دالة إخفاء الأزرار وجلب التلاميذ تلقائياً دفعة واحدة!
+            handleLoginUIEffects("teacher", finalName);
+            
+            // الانتقال إلى لوحة تحكم المعلم وإخفاء صفحة الدخول
+            if(typeof showPage === "function") {
+                showPage('teacher-dashboard'); // أو الطريقة المعتمدة عندك للتنقل
             } else {
-                console.error("Error: ID not found: " + pageId);
+                document.getElementById('teacher-dashboard').style.display = 'block';
+                const loginPage = document.getElementById('teacher-login') || document.getElementById('login-page');
+                if (loginPage) loginPage.style.display = 'none';
             }
+        } else {
+            alert("خطأ: " + (data.message || "اسم المستخدم أو كلمة المرور غير صحيحة"));
         }
+    })
+    .catch(err => {
+        console.error("خطأ المنظومة الجذري:", err);
+        alert("فشل الاتصال بسبب حماية المتصفح المحلية (CORS). يرجى تشغيل الموقع عبر Live Server أو رفعه على Netlify المستضيف للأكاديمية ليعمل فوراً.");
+    });
 
-        // دالة عرض الأخبار ثنائية النمط: تأخذ مباشرة من القاموس (محلية) + تدعم الجلب من الشيت حياً إذا توفر السيرفر
-        function fetchAndDisplayNews() {
-            const container = document.getElementById('news-container');
-            const homeHighlight = document.getElementById('home-news-highlight');
-
-            // 1. مصفوفة الأخبار الافتراضية محلياً (تأخذ من القاموس مباشرة لتعديل فوري وسهل!)
-            const fallbackNews = [
-                [translations['ar']['newsHighlight'], translations['fr']['newsHighlight']]
-            ];
-
-            function renderNews(newsList) {
-                // أولاً: حقن كافة الأخبار بالتفصيل في صفحة الأخبار المستقلة (news-page)
-                if (container) {
-                    container.innerHTML = '';
-                    if (!newsList || newsList.length === 0) {
-                        container.innerHTML = `<p style="color: #a0aec0;">${translations[currentLang]['loadingNamesOption']}</p>`;
-                    } else {
-                        newsList.forEach(function(newsItem) {
-                            const newsText = (currentLang === 'ar') ? newsItem[0] : newsItem[1];
-                            if (!newsText) return;
-                            const newsCard = document.createElement('div');
-                            const isRtl = (currentLang === 'ar');
-                            newsCard.style.cssText = `
-                                background: #ffffff;
-                                padding: 25px;
-                                border-radius: 12px;
-                                box-shadow: var(--shadow);
-                                border-${isRtl ? 'right' : 'left'}: 5px solid var(--secondary);
-                                text-align: ${isRtl ? 'right' : 'left'};
-                                max-width: 800px;
-                                width: 100%;
-                                box-sizing: border-box;
-                            `;
-                            newsCard.innerHTML = `<p style="font-size: 1.1rem; color: var(--text-dark); line-height: 1.7; margin: 0;">${newsText}</p>`;
-                            container.appendChild(newsCard);
-                        });
-                    }
+    return false;
+}// دالة جلب البيانات لملء قائمة التلاميذ المنسدلة للأساتذة
+function fetchTeacherDashboardData(teacherName) {
+    const currentUrl = typeof WEB_APP_URL !== 'undefined' ? WEB_APP_URL : SCRIPT_URL;
+    const url = `${currentUrl}?action=getTeacherDashboardData&teacherName=${encodeURIComponent(teacherName)}`;
+    
+    fetch(url)
+    .then(res => res.json())
+    .then(response => {
+        if (response.status === "success") {
+            const selector = document.getElementById('dashboardStudentSelector');
+            if (selector) {
+                selector.innerHTML = '<option value="">-- اختر التلميذ --</option>';
+                const studentList = [...new Set(response.data.map(item => item.student))];
+                
+                if (studentList.length === 0) {
+                    selector.innerHTML = '<option value="">لا يوجد تلاميذ مسجلين باسمك</option>';
+                    return;
                 }
 
-                // ثانياً: حقن آخر وأحدث خبر فقط في صندوق واجهة الصفحة الرئيسية (home-page) كعرض مؤقت
-                if (homeHighlight) {
-                    homeHighlight.innerHTML = '';
-                    if (newsList && newsList.length > 0) {
-                        const latestNews = newsList[0];
-                        const newsText = (currentLang === 'ar') ? latestNews[0] : latestNews[1];
-                        if (newsText) {
-                            const isRtl = (currentLang === 'ar');
-                            homeHighlight.innerHTML = `
-                                <div style="background: #ffffff; padding: 25px; border-radius: 15px; box-shadow: var(--shadow); border-${isRtl ? 'right' : 'left'}: 6px solid var(--secondary); text-align: ${isRtl ? 'right' : 'left'}; max-width: 800px; margin: 0 auto; width: 100%; box-sizing: border-box;">
-                                    <span style="background: var(--accent); color: var(--primary); padding: 4px 10px; border-radius: 6px; font-weight: 900; font-size: 0.8rem; margin-bottom: 10px; display: inline-block;">${currentLang === 'ar' ? 'آخر الأخبار' : 'Dernière Actualité'}</span>
-                                    <p style="font-size: 1.15rem; color: var(--text-dark); line-height: 1.7; margin-bottom: 15px;">${newsText}</p>
-                                    <a onclick="navigateTo('news-page')" style="color: var(--secondary); font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
-                                        <span>${currentLang === 'ar' ? 'عرض كافة الأخبار' : 'Voir toutes les actualités'}</span> 
-                                        <i class="fas ${isRtl ? 'fa-arrow-left' : 'fa-arrow-right'}"></i>
-                                    </a>
-                                </div>
-                            `;
-                        }
-                    } else {
-                        homeHighlight.innerHTML = `<p style="color: #a0aec0;">${currentLang === 'ar' ? 'لا توجد أخبار حالياً.' : 'Aucune actualité pour le moment.'}</p>`;
-                    }
-                }
-            }
-
-            // التبديل الديناميكي بين الاتصال بالسيرفر (أونلاين) وبين النسخة الاحتياطية المأخوذة من القاموس (أوفلاين)
-            if (typeof google !== 'undefined' && google.script && google.script.run) {
-                google.script.run
-                  .withSuccessHandler(function(newsList) {
-                      renderNews(newsList);
-                  })
-                  .withFailureHandler(function(err) {
-                      console.error("فشل الاتصال بجدول البيانات للخبر، استخدام المحلي: ", err);
-                      renderNews(fallbackNews);
-                  })
-                  .getNewsFromSheet();
-            } else {
-                // التشغيل الأوفلاين يعتمد تماماً على القاموسcontentDB لسهولة تعديل لا نهائية!
-                renderNews(fallbackNews);
-            }
-        }
-
-        function toggleMenu(e) {
-            if (e) e.stopPropagation();
-            const nav = document.getElementById('nav-list');
-            if (nav) nav.classList.toggle('active');
-        }
-
-        function closeMenu(pageId) {
-            const navList = document.getElementById('nav-list');
-            if (navList) navList.classList.remove('active');
-            
-            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
-            navigateTo(pageId);
-        }
-
-        document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const form = this;
-            const btn = form.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-            
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLang === 'fr' ? 'Envoi...' : 'جاري الإرسال...'}`;
-            
-            try {
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: new FormData(form),
-                    headers: { 'Accept': 'application/json' }
+                studentList.forEach(student => {
+                    const option = document.createElement('option');
+                    option.value = student;
+                    option.textContent = student;
+                    selector.appendChild(option);
                 });
-                if (response.ok) {
-                    showToast(currentLang === 'fr' ? '✅ Message envoyé avec succès !' : '✅ تم إرسال رسالتك بنجاح !', 'success');
-                    form.reset();
-                } else {
-                    showToast(currentLang === 'fr' ? '❌ Erreur de serveur.' : '❌ حدث خطأ في الخادم أثناء الإرسال.', 'danger');
-                }
-            } catch (error) {
-                showToast(currentLang === 'fr' ? '❌ Erreur de connexion.' : '❌ خطأ في الاتصال بالشبكة.', 'danger');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalText;
             }
+            window.currentTeacherData = response.data;
+        }
+    })
+    .catch(err => console.error("خطأ أثناء تحديث قائمة الطلاب:", err));
+}
+
+// تشغيل النظام فور تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+    // التأكد من مواءمة التسمية الموحدة للرابط في نطاق الجلوبال
+    if (typeof WEB_APP_URL === 'undefined' && typeof SCRIPT_URL !== 'undefined') {
+        window.WEB_APP_URL = SCRIPT_URL;
+    }
+    applyTranslations(window.currentLang);
+});
+// ==========================================
+// 4. نظام التنقل وإدارة المحتوى واللوحات
+// ==========================================
+
+function navigateTo(pageId) {
+    const pages = document.querySelectorAll('.page-content');
+    pages.forEach(page => {
+        page.style.display = 'none';
+        page.classList.remove('page-active');
+    });
+
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.style.display = 'block';
+        setTimeout(() => {
+            targetPage.classList.add('page-active');
+        }, 10);
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
+        console.log("Navigated successfully to: " + pageId);
+    } else {
+        console.error("Error: ID not found: " + pageId);
+    }
+}
 
-        document.getElementById('registrationForm')?.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('regName').value;
-            const phone = document.getElementById('regPhone').value;
-            const course = document.getElementById('regCourse').value;
+// دالة عرض الأخبار ثنائية النمط: تأخذ من القاموس المحلي + تدعم الجلب الحي من الشيت
+function fetchAndDisplayNews() {
+    const container = document.getElementById('news-container');
+    const homeHighlight = document.getElementById('home-news-highlight');
 
-            try {
-                fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({
-                        type: "register",
-                        name: name,
-                        phone: phone,
-                        course: course
-                    })
+    // مصفوفة الأخبار الافتراضية محلياً من القاموس مباشرة
+    const fallbackNews = [
+        [translations['ar']['newsHighlight'], translations['fr']['newsHighlight']]
+    ];
+
+    function renderNews(newsList) {
+        // أولاً: حقن كافة الأخبار بالتفصيل في صفحة الأخبار المستقلة
+        if (container) {
+            container.innerHTML = '';
+            if (!newsList || newsList.length === 0) {
+                container.innerHTML = `<p style="color: #a0aec0;">${translations[currentLang]['loadingNamesOption']}</p>`;
+            } else {
+                newsList.forEach(function(newsItem) {
+                    const newsText = (currentLang === 'ar') ? newsItem[0] : newsItem[1];
+                    if (!newsText) return;
+                    const newsCard = document.createElement('div');
+                    const isRtl = (currentLang === 'ar');
+                    newsCard.style.cssText = `
+                        background: #ffffff;
+                        padding: 25px;
+                        border-radius: 12px;
+                        box-shadow: var(--shadow);
+                        border-${isRtl ? 'right' : 'left'}: 5px solid var(--secondary);
+                        text-align: ${isRtl ? 'right' : 'left'};
+                        max-width: 800px;
+                        width: 100%;
+                        box-sizing: border-box;
+                    `;
+                    newsCard.innerHTML = `<p style="font-size: 1.1rem; color: var(--text-dark); line-height: 1.7; margin: 0;">${newsText}</p>`;
+                    container.appendChild(newsCard);
                 });
-            } catch (err) { 
-                console.log("Sheet registration error", err); 
-            }
-
-            let message = "";
-            if (currentLang === 'fr') {
-                message = `Bonjour Académie Itqan,%0A%0A` +
-                          `Je souhaite inscrire un nouvel étudiant :%0A` +
-                          `*Nom complet :* ${name}%0A` +
-                          `*Téléphone :* ${phone}%0A` +
-                          `*Formation demandée :* ${course}%0A%0A` +
-                          `Merci de bien vouloir confirmer mon inscription.`;
-            } else {
-                message = `السلام عليكم أكاديمية إتقان،%0A%0A` +
-                          `أرغب في التسجيل بطلب جديد:%0A` +
-                          `*الاسم:* ${name}%0A` +
-                          `*الهاتف:* ${phone}%0A` +
-                          `*الدورة:* ${course}%0A%0A` +
-                          `يرجى تأكيد تسجيل طلبي.`;
-            }
-
-            const whatsappUrl = `https://wa.me/212633661441?text=${message}`;
-            window.open(whatsappUrl, '_blank');
-
-            document.getElementById('regStatus').innerHTML = translations[currentLang]['redirectingMsg'];
-            showToast(translations[currentLang]['redirectingMsg'], 'success');
-            this.reset();
-        });
-
-        async function fetchStudentResult() {
-            const name = document.getElementById('searchName').value.trim();
-            const btn = document.getElementById('searchBtn');
-            const loader = document.getElementById('searchLoader');
-            const resArea = document.getElementById('resultArea');
-
-            if(!name) { 
-                showToast(translations[currentLang]['enterNameAlert'], 'danger'); 
-                return; 
-            }
-
-            btn.disabled = true;
-            loader.style.display = "inline-block";
-            resArea.style.display = "none";
-
-            try {
-                const resp = await fetch(`${SCRIPT_URL}?action=getResult&name=${encodeURIComponent(name)}`);
-                const data = await resp.json();
-
-                if (data.status === "success") {
-                    const headingText = translations[currentLang]['studentCard'];
-                    document.getElementById('studentDisplayName').innerText = `${headingText} ${name}`;
-                    
-                    document.getElementById('resultDetails').innerHTML = data.results.map(r => {
-                        const translatedLabel = translations[currentLang]['fields'][r.label] || r.label;
-                        return `
-                            <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid #f1f5f9; text-align: start;">
-                                <span style="font-weight:bold; color:#64748b;">${translatedLabel}</span>
-                                <span style="font-weight:700;">${r.value || '---'}</span>
-                            </div>
-                        `;
-                    }).join('');
-                    resArea.style.display = "block";
-                    showToast(translations[currentLang]['portalHeader'], 'success');
-                } else {
-                    showToast(translations[currentLang]['noResultAlert'], 'danger');
-                }
-            } catch (e) {
-                showToast(translations[currentLang]['serverErrorAlert'], 'danger');
-            } finally {
-                btn.disabled = false;
-                loader.style.display = "none";
             }
         }
 
-        function checkTeacherPass() {
-            const pass = document.getElementById('teacherPass').value;
-            if(pass === "1234") {
-                document.getElementById('login-box').style.display = "none";
-                document.getElementById('teacher-dashboard').style.display = "block";
-                initTeacherDashboard();
-            } else {
-                showToast(translations[currentLang]['wrongPassAlert'], 'danger');
-            }
-        }
-
-        function initTeacherDashboard() {
-            const fields = ["مراجعة", "استظهار", "إعداد", "اللغة العربية", "التربية", "الفرض", "ملاحظات", "الدرجة النهائية"];
-            const grid = document.getElementById('ratingGrid');
-            if (grid) {
-                grid.innerHTML = fields.map(f => {
-                    const translatedFieldLabel = translations[currentLang]['fields'][f] || f;
-                    return `
-                        <div class="form-group">
-                            <label>${translatedFieldLabel}</label>
-                            <input type="text" class="rating-input" data-field-origin="${f}" placeholder="--">
+        // ثانياً: حقن أحدث خبر فقط في صندوق واجهة الصفحة الرئيسية
+        if (homeHighlight) {
+            homeHighlight.innerHTML = '';
+            if (newsList && newsList.length > 0) {
+                const latestNews = newsList[0];
+                const newsText = (currentLang === 'ar') ? latestNews[0] : latestNews[1];
+                if (newsText) {
+                    const isRtl = (currentLang === 'ar');
+                    homeHighlight.innerHTML = `
+                        <div style="background: #ffffff; padding: 25px; border-radius: 15px; box-shadow: var(--shadow); border-${isRtl ? 'right' : 'left'}: 6px solid var(--secondary); text-align: ${isRtl ? 'right' : 'left'}; max-width: 800px; margin: 0 auto; width: 100%; box-sizing: border-box;">
+                            <span style="background: var(--accent); color: var(--primary); padding: 4px 10px; border-radius: 6px; font-weight: 900; font-size: 0.8rem; margin-bottom: 10px; display: inline-block;">${currentLang === 'ar' ? 'آخر الأخبار' : 'Dernière Actualité'}</span>
+                            <p style="font-size: 1.15rem; color: var(--text-dark); line-height: 1.7; margin-bottom: 15px;">${newsText}</p>
+                            <a onclick="navigateTo('news-page')" style="color: var(--secondary); font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                                <span>${currentLang === 'ar' ? 'عرض كافة الأخبار' : 'Voir toutes les actualités'}</span> 
+                                <i class="fas ${isRtl ? 'fa-arrow-left' : 'fa-arrow-right'}"></i>
+                            </a>
                         </div>
                     `;
-                }).join('');
-                loadStudentNames();
+                }
+            } else {
+                homeHighlight.innerHTML = `<p style="color: #a0aec0;">${currentLang === 'ar' ? 'لا توجد أخبار حالياً.' : 'Aucune actualité pour le moment.'}</p>`;
             }
         }
+    }
 
-        async function loadStudentNames() {
-            const select = document.getElementById('studentSelect');
-            if (!select) return;
-            select.innerHTML = `<option>${translations[currentLang]['loadingNamesOption']}</option>`;
-            try {
-                const resp = await fetch(SCRIPT_URL + "?action=getNames");
-                const names = await resp.json();
-                select.innerHTML = names.map(n => `<option value="${n}">${n}</option>`).join('');
-            } catch (e) {
-                select.innerHTML = `<option>${translations[currentLang]['loadFailOption']}</option>`;
-                showToast(translations[currentLang]['loadFailOption'], 'danger');
-            }
-        }
+    // التبديل الديناميكي بين الاتصال أونلاين وبين النسخة الاحتياطية
+    if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(newsList) {
+              renderNews(newsList);
+          })
+          .withFailureHandler(function(err) {
+              console.error("فشل الاتصال بجدول البيانات للخبر، استخدام المحلي: ", err);
+              renderNews(fallbackNews);
+          })
+          .getNewsFromSheet();
+    } else {
+        renderNews(fallbackNews);
+    }
+}
 
-        async function saveFromWeb() {
-            const name = document.getElementById('studentSelect').value;
-            const ratings = Array.from(document.querySelectorAll('.rating-input')).map(i => i.value);
-            const btn = document.getElementById('saveBtnWeb');
+// دالة إغلاق القوائم المنسدلة والانتقال السلس
+function closeMenu(pageId) {
+    const navList = document.getElementById('nav-list');
+    if (navList) navList.classList.remove('active');
 
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${translations[currentLang]['savingBtnText']}`;
+    document.querySelectorAll('.dropdown-content').forEach(content => content.classList.remove('show'));
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
 
-            try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({ name, ratings })
-                });
-                showToast(translations[currentLang]['saveSuccessAlert'], 'success');
-                document.querySelectorAll('.rating-input').forEach(i => i.value = "");
-            } catch (e) {
-                showToast(translations[currentLang]['saveErrorAlert'], 'danger');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fas fa-save"></i> <span>${translations[currentLang]['dashSaveBtn']}</span>`;
-            }
-        }
+    if (typeof navigateTo === 'function') navigateTo(pageId);
+}
 
-        const dropdownBtns = document.querySelectorAll('.dropdown-btn');
+// دالة القائمة المنسدلة للهواتف
+function toggleMenu() {
+    const navList = document.getElementById('nav-list');
+    if (navList) navList.classList.toggle('active');
+}
 
-        dropdownBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation(); 
+// ==========================================
+// 5. معالجة النماذج (الاتصال والتسجيل والطلاب)
+// ==========================================
 
-                const currentContent = this.nextElementSibling;
-                const parent = this.parentElement; 
-
-                document.querySelectorAll('.dropdown-content').forEach(content => {
-                    if (content !== currentContent) {
-                        content.classList.remove('show');
-                    }
-                });
-                
-                document.querySelectorAll('.dropdown').forEach(d => {
-                    if (d !== parent) d.classList.remove('active');
-                });
-
-                if (currentContent) currentContent.classList.toggle('show');
-                if (parent) parent.classList.toggle('active'); 
-            });
+// نموذج الاتصال (Formspree)
+document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = this;
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLang === 'fr' ? 'Envoi...' : 'جاري الإرسال...'}`;
+    
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
         });
+        if (response.ok) {
+            showToast(currentLang === 'fr' ? '✅ Message envoyé avec succès !' : '✅ تم إرسال رسالتك بنجاح !', 'success');
+            form.reset();
+        } else {
+            showToast(currentLang === 'fr' ? '❌ Erreur de serveur.' : '❌ حدث خطأ في الخادم أثناء الإرسال.', 'danger');
+        }
+    } catch (error) {
+        showToast(currentLang === 'fr' ? '❌ Erreur de connexion.' : '❌ خطأ في الاتصال بالشبكة.', 'danger');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    }
+});
 
-        // Global dismiss for all active menus
-        window.addEventListener('click', function(event) {
-            if (event.target.matches('.dropdown-btn') || event.target.matches('.menu-toggle') || event.target.closest('.menu-toggle')) {
-                return;
-            }
+// نموذج التسجيل الجديد (شيت + واتساب)
+document.getElementById('registrationForm')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const currentUrl = typeof WEB_APP_URL !== 'undefined' ? WEB_APP_URL : SCRIPT_URL;
+    const name = document.getElementById('regName').value;
+    const phone = document.getElementById('regPhone').value;
+    const course = document.getElementById('regCourse').value;
 
-            document.querySelectorAll('.dropdown-content').forEach(content => {
-                content.classList.remove('show');
-            });
-            document.querySelectorAll('.dropdown').forEach(d => {
-                d.classList.remove('active');
-            });
+    try {
+        fetch(currentUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+                type: "register",
+                name: name,
+                phone: phone,
+                course: course
+            })
+        });
+    } catch (err) { 
+        console.log("Sheet registration error", err); 
+    }
+
+    let message = "";
+    if (currentLang === 'fr') {
+        message = `Bonjour Académie ITQAN,%0A%0A` +
+                  `Je souhaite inscrire un nouvel étudiant :%0A` +
+                  `*Nom complet :* ${name}%0A` +
+                  `*Téléphone :* ${phone}%0A` +
+                  `*Formation demandée :* ${course}%0A%0A` +
+                  `Merci de bien vouloir confirmer mon inscription.`;
+    } else {
+        message = `السلام عليكم أكاديمية إتقان،%0A%0A` +
+                  `أرغب في التسجيل بطلب جديد:%0A` +
+                  `*الاسم:* ${name}%0A` +
+                  `*الهاتف:* ${phone}%0A` +
+                  `*الدورة:* ${course}%0A%0A` +
+                  `يرجى تأكيد تسجيل طلبي.`;
+    }
+
+    const whatsappUrl = `https://wa.me/212633661441?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+
+    document.getElementById('regStatus').innerHTML = translations[currentLang]['redirectingMsg'];
+    showToast(translations[currentLang]['redirectingMsg'], 'success');
+    this.reset();
+});
+
+// جلب نتائج الطلاب للبوابة الموحدة
+async function fetchStudentResult() {
+    const currentUrl = typeof WEB_APP_URL !== 'undefined' ? WEB_APP_URL : SCRIPT_URL;
+    const name = document.getElementById('searchName').value.trim();
+    const btn = document.getElementById('searchBtn');
+    const loader = document.getElementById('searchLoader');
+    const resArea = document.getElementById('resultArea');
+
+    if(!name) { 
+        showToast(translations[currentLang]['enterNameAlert'], 'danger'); 
+        return; 
+    }
+
+    btn.disabled = true;
+    if (loader) loader.style.display = "inline-block";
+    if (resArea) resArea.style.display = "none";
+
+    try {
+        const resp = await fetch(`${currentUrl}?action=getResult&name=${encodeURIComponent(name)}`);
+        const data = await resp.json();
+
+        if (data.status === "success") {
+            const headingText = translations[currentLang]['studentCard'];
+            document.getElementById('studentDisplayName').innerText = `${headingText} ${name}`;
             
-            const navList = document.getElementById('nav-list');
-            if (navList && navList.classList.contains('active')) {
-                navList.classList.remove('active');
-            }
+            document.getElementById('resultDetails').innerHTML = data.results.map(r => {
+                const translatedLabel = translations[currentLang]['fields'][r.label] || r.label;
+                return `
+                    <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid #f1f5f9; text-align: start;">
+                        <span style="font-weight:bold; color:#64748b;">${translatedLabel}</span>
+                        <span style="font-weight:700;">${r.value || '---'}</span>
+                    </div>
+                `;
+            }).join('');
+            if (resArea) resArea.style.display = "block";
+            showToast(translations[currentLang]['portalHeader'], 'success');
+        } else {
+            showToast(translations[currentLang]['noResultAlert'], 'danger');
+        }
+    } catch (e) {
+        showToast(translations[currentLang]['serverErrorAlert'], 'danger');
+    } finally {
+        btn.disabled = false;
+        if (loader) loader.style.display = "none";
+    }
+}
+
+// ==========================================
+// 6. لوحة تحكم المعلم (بناء الحقول، المراقبة، والحفظ)
+// ==========================================
+
+function initTeacherDashboard(teacherName) {
+    const fields = ["مراجعة", "استظهار", "إعداد", "اللغة العربية", "التربية", "الفرض", "ملاحظات", "الدرجة النهائية"];
+    const grid = document.getElementById('ratingGrid');
+    if (grid) {
+        grid.innerHTML = fields.map(f => {
+            const translatedFieldLabel = translations[currentLang]['fields'][f] || f;
+            return `
+                <div class="form-group">
+                    <label>${translatedFieldLabel}</label>
+                    <input type="text" class="rating-input" data-field-origin="${f}" placeholder="--">
+                </div>
+            `;
+        }).join('');
+    }
+
+    // إعداد مراقبة اختيار الطلاب ديناميكياً لتعبئة النقاط تلقائياً
+    const selector = document.getElementById('dashboardStudentSelector') || document.getElementById('studentSelect');
+    if (selector) {
+        selector.addEventListener('change', function() {
+            const selectedStudent = this.value;
+            if (!selectedStudent || !window.currentTeacherData) return;
+            
+            // تصفية البيانات الخاصة بالطالب المختار
+            const studentRecords = window.currentTeacherData.filter(item => item.student === selectedStudent);
+            
+            // تفريغ الحقول أولاً ثم تعبئتها حياً بناءً على ما هو قادم من السيرفر
+            document.querySelectorAll('.rating-input').forEach(input => {
+                const fieldName = input.getAttribute('data-field-origin');
+                const record = studentRecords.find(r => r.label === fieldName);
+                input.value = record ? record.value : "";
+            });
+        });
+    }
+}
+
+// دالة حفظ البيانات الصافية من واجهة المعلم وإرسالها للسيرفر الموحد
+async function saveFromWeb() {
+    const currentUrl = typeof WEB_APP_URL !== 'undefined' ? WEB_APP_URL : SCRIPT_URL;
+    const selector = document.getElementById('dashboardStudentSelector') || document.getElementById('studentSelect');
+    const name = selector ? selector.value : '';
+    const btn = document.getElementById('saveBtnWeb');
+
+    if (!name) {
+        showToast("يرجى اختيار التلميذ أولاً", "danger");
+        return;
+    }
+
+    // تجميع البيانات في شكل مصفوفة كائنات تحتوي على الحقل والقيمة بدقة لضمان توافق الشيت
+    const ratings = Array.from(document.querySelectorAll('.rating-input')).map(input => {
+        return {
+            field: input.getAttribute('data-field-origin'),
+            value: input.value.trim()
+        };
+    });
+
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${translations[currentLang]['savingBtnText']}`;
+
+    try {
+        const response = await fetch(currentUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+                action: "saveTeacherRatings",
+                name: name,
+                ratings: ratings
+            })
+        });
+        
+        showToast(translations[currentLang]['saveSuccessAlert'], 'success');
+        // تفريغ المدخلات بعد الحفظ الناجح
+        document.querySelectorAll('.rating-input').forEach(i => i.value = "");
+        if (selector) selector.value = "";
+    } catch (e) {
+        showToast(translations[currentLang]['saveErrorAlert'], 'danger');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-save"></i> <span>${translations[currentLang]['dashSaveBtn']}</span>`;
+    }
+}
+
+// ==========================================
+// 7. إدارة القوائم المنسدلة العامة للأزرار والأحداث
+// ==========================================
+
+const dropdownBtns = document.querySelectorAll('.dropdown-btn');
+dropdownBtns.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation(); 
+
+        const currentContent = this.nextElementSibling;
+        const parent = this.parentElement; 
+
+        document.querySelectorAll('.dropdown-content').forEach(content => {
+            if (content !== currentContent) content.classList.remove('show');
+        });
+        
+        document.querySelectorAll('.dropdown').forEach(d => {
+            if (d !== parent) d.classList.remove('active');
         });
 
-        // Load correct language and setup events on start
-        window.addEventListener('DOMContentLoaded', () => {
-            const toggleBtn = document.getElementById('menuToggleBtn');
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', toggleMenu);
-            }
-            applyTranslations(currentLang);
-            navigateTo('home-page');
+        if (currentContent) currentContent.classList.toggle('show');
+        if (parent) parent.classList.toggle('active'); 
+    });
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target.matches('.dropdown-btn') || event.target.matches('.menu-toggle') || event.target.closest('.menu-toggle')) {
+        return;
+    }
+
+    document.querySelectorAll('.dropdown-content').forEach(content => content.classList.remove('show'));
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+    
+    const navList = document.getElementById('nav-list');
+    if (navList && navList.classList.contains('active')) {
+        navList.classList.remove('active');
+    }
+});
+
+// ==========================================
+// 1. إخفاء أزرار الدخول والتسجيل عند تسجيل الدخول
+// ==========================================
+function handleLoginUIEffects(userRole, userName) {
+    const loginLi = document.getElementById('navLoginLi'); 
+    const registerLi = document.getElementById('navRegisterLi');
+    const welcomeLi = document.getElementById('navWelcomeLi');
+    const welcomeArea = document.getElementById('navUserWelcomeArea'); 
+
+    if (loginLi) loginLi.style.display = 'none';
+    if (registerLi) registerLi.style.display = 'none';
+
+    if (welcomeLi && welcomeArea) {
+        welcomeArea.innerHTML = `
+            <span style="color: var(--secondary); font-weight: bold; font-size: 14px;">مرحباً بك: ${userName} 🌸</span>
+            <span onclick="location.reload()" style="color: #ef4444; cursor: pointer; font-size: 11px; font-weight: bold; margin-right: 6px; border-right: 1px solid #ccc; padding-right: 6px;">[خروج]</span>
+        `;
+        welcomeLi.style.display = 'flex'; 
+    }
+    
+    const dashboardTeacherNameSpan = document.getElementById('displayTeacherName');
+    if (dashboardTeacherNameSpan) {
+        dashboardTeacherNameSpan.innerText = userName;
+    }
+
+    // 👇 🔥 هنا التطبيق السحري والذكي للسطرين الفوق! 🔥 👇
+    // بمجرد نجاح تأثيرات الدخول، نقوم بتشغيل جلب التلاميذ للأستاذ الحالي تلقائياً
+    if (userRole === "teacher" || userRole === "معلم") {
+        setupStudentSelectorLogic(userName);
+        calculateTimeline(); // لتصفير وتجهيز التوقيت على رقم 5 تلقائياً
+    }
+}
+// ==========================================
+// 2. تحديث التوقيت التلقائي بفارق 12 دقيقة لكل نشاط
+// ==========================================
+function calculateTimeline() {
+    const startInput = document.getElementById('startTimeInput');
+    if (!startInput) return;
+    
+    let baseMinutes = parseInt(startInput.value) || 0;
+    const timeCells = document.querySelectorAll('.time-col');
+
+    timeCells.forEach((cell, index) => {
+        if (cell.innerText === '-' || index > 5) return; 
+
+        let currentMinutes = baseMinutes + (index * 12);
+        let hours = Math.floor(currentMinutes / 60);
+        let mins = currentMinutes % 60;
+        let formattedMins = mins < 10 ? '0' + mins : mins;
+        
+        if (hours > 0) {
+            cell.innerText = `${hours}:${formattedMins}`;
+        } else {
+            cell.innerText = `${formattedMins}`;
+        }
+    });
+}
+
+// ربط الضغط على زر Enter داخل إنبوت التوقيت
+const startTimeInputEl = document.getElementById('startTimeInput');
+if(startTimeInputEl) {
+    startTimeInputEl.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') { calculateTimeline(); }
+    });
+}
+
+// ==========================================
+// 4. ربط قائمة اختيار التلميذ وجلب الأرشيف حياً (باستخدام الثابت الموحد)
+// ==========================================
+
+function setupStudentSelectorLogic(currentTeacherName) {
+    const selector = document.getElementById('dashboardStudentSelector');
+    if (!selector) return;
+
+    selector.innerHTML = '<option value="">-- جاري تحميل تلاميذك... --</option>';
+    
+    // تحويل الطلب الأول إلى POST لجلب أسماء التلاميذ
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+            action: "getTeacherStudents",
+            teacher: currentTeacherName
+        })
+    })
+    .then(res => res.json())
+    .then(studentsList => {
+        selector.innerHTML = '<option value="">-- اختر التلميذ --</option>';
+        
+        if (!studentsList || studentsList.length === 0) {
+            selector.innerHTML = '<option value="">❌ لا يوجد تلاميذ مسجلين باسمك</option>';
+            return;
+        }
+
+        studentsList.forEach(studentName => {
+            const option = document.createElement('option');
+            option.value = studentName;
+            option.innerText = studentName;
+            selector.appendChild(option);
         });
-    </script>
+    })
+    .catch(err => {
+        console.error("خطأ:", err);
+        selector.innerHTML = '<option value="">-- فشل جلب القائمة --</option>';
+    });
+
+    // تفعيل مراقبة قائمة الاختيار
+    selector.onchange = null; 
+    selector.addEventListener('change', function() {
+        const studentName = this.value;
+        if (!studentName) {
+            clearDashboardForm();
+            return;
+        }
+
+        document.getElementById('studentArchiveTableBody').innerHTML = `<tr><td colspan="8" style="padding:15px; color:#ff9800;"><i class="fas fa-spinner fa-spin"></i> جاري استدعاء سجلات التلميذ من DB_RESPONSES...</td></tr>`;
+
+        // تحويل الطلب الثاني إلى POST لجلب أرشيف التلميذ المختار
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: "getStudentArchive",
+                student: studentName,
+                teacher: currentTeacherName
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            // ملء خانات الإنجازات السابقة
+            if(data.lastRow) {
+                document.getElementById('prev_revision').innerText = data.lastRow.revision || '---';
+                document.getElementById('prev_recitation').innerText = data.lastRow.recitation || '---';
+                document.getElementById('prev_preparation').innerText = data.lastRow.preparation || '---';
+                document.getElementById('prev_arabe').innerText = data.lastRow.arabe || '---';
+                document.getElementById('prev_tarbiya').innerText = data.lastRow.tarbiya || '---';
+                document.getElementById('prev_devoir').innerText = data.lastRow.devoir || '---';
+                document.getElementById('prev_remarque').innerText = data.lastRow.remarque || '---';
+                document.getElementById('prev_grade').innerText = data.lastRow.grade || '---';
+            } else {
+                const defaults = ['prev_revision', 'prev_recitation', 'prev_preparation', 'prev_arabe', 'prev_tarbiya', 'prev_devoir', 'prev_remarque', 'prev_grade'];
+                defaults.forEach(id => { if(document.getElementById(id)) document.getElementById(id).innerText = "---"; });
+            }
+
+            // بناء جدول الأرشيف الزمني السفلي
+            const archiveBody = document.getElementById('studentArchiveTableBody');
+            if (data.history && data.history.length > 0) {
+                archiveBody.innerHTML = data.history.map(row => `
+                    <tr>
+                        <td style="border: 1px solid #cbd5e1; padding: 10px; background:#fdfbf7;">${row.timestamp}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 10px;">${row.revision || '-'}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 10px;">${row.recitation || '-'}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 10px;">${row.preparation || '-'}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 10px;">${row.arabe || '-'}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 10px;">${row.devoir || '-'}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 10px;">${row.remarque || '-'}</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight:bold; background:#fff5f5;">${row.grade || '-'}</td>
+                    </tr>
+                `).join('');
+            } else {
+                archiveBody.innerHTML = `<tr><td colspan="8" style="padding:15px; color:#94a3b8;">لا توجد سجلات مؤرشفة سابقة لهذا التلميذ.</td></tr>`;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('studentArchiveTableBody').innerHTML = `<tr><td colspan="8" style="padding:15px; color:#ef4444;">خطأ أثناء الاتصال بقاعدة البيانات.</td></tr>`;
+        });
+    });
+}
+// ==========================================
+// 5. تفعيل أزرار الحفظ (POST للثابت الموحد) والتفريغ المباشر
+// ==========================================
+function saveFromWeb() {
+    const student = document.getElementById('dashboardStudentSelector').value;
+    const teacher = document.getElementById('displayTeacherName').innerText;
+    
+    if (!student) {
+        alert("تنبيه: يرجى تحديد اسم التلميذ المستهدف أولاً قبل عملية الحفظ!");
+        return;
+    }
+
+    const payload = {
+        action: "saveDashboardScores",
+        teacher: teacher,
+        student: student,
+        date: document.getElementById('currentDateDisplay').innerText,
+        startTime: document.getElementById('startTimeInput').value,
+        
+        revision: { text: document.getElementById('input_revision').value, score: document.getElementById('score_revision').value },
+        recitation: { text: document.getElementById('input_recitation').value, score: document.getElementById('score_recitation').value },
+        preparation: { text: document.getElementById('input_preparation').value, score: document.getElementById('score_preparation').value },
+        arabe: { text: document.getElementById('input_arabe').value, score: document.getElementById('score_arabe').value },
+        tarbiya: { text: document.getElementById('input_tarbiya').value, score: document.getElementById('score_tarbiya').value },
+        devoir: { text: document.getElementById('input_devoir').value, score: document.getElementById('score_devoir').value },
+        remarque: document.getElementById('input_remarque').value,
+        finalGrade: document.getElementById('input_grade').value
+    };
+
+    // إرسال طلب POST مباشرة إلى الثابت العام دون أي تكرار روابط
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(res => {
+        if(res.status === 'success') {
+            alert(`تم الحفظ والترحيل بنجاح لـ: ${student}`);
+            clearDashboardForm();
+        } else {
+            alert("حدث خطأ أثناء محاولة الترحيل: " + res.message);
+        }
+    })
+    .catch(err => {
+        console.error("خطأ الإرسال:", err);
+        alert("فشل الاتصال بالسيرفر، تأكد من إعدادات الـ URL المحددة.");
+    });
+}
+
+function clearDashboardForm() {
+    document.getElementById('input_revision').value = "";
+    document.getElementById('input_recitation').value = "";
+    document.getElementById('input_preparation').value = "";
+    document.getElementById('input_arabe').value = "";
+    document.getElementById('input_tarbiya').value = "";
+    document.getElementById('input_devoir').value = "";
+    document.getElementById('input_remarque').value = "";
+    document.getElementById('input_grade').value = "";
+
+    document.getElementById('score_revision').value = "";
+    document.getElementById('score_recitation').value = "";
+    document.getElementById('score_preparation').value = "";
+    document.getElementById('score_arabe').value = "";
+    document.getElementById('score_tarbiya').value = "";
+    document.getElementById('score_devoir').value = "";
+
+    const defaults = ['prev_revision', 'prev_recitation', 'prev_preparation', 'prev_arabe', 'prev_tarbiya', 'prev_devoir', 'prev_remarque', 'prev_grade'];
+    defaults.forEach(id => { if(document.getElementById(id)) document.getElementById(id).innerText = "---"; });
+    
+    document.getElementById('studentArchiveTableBody').innerHTML = `<tr><td colspan="8" style="border: 1px solid #cbd5e1; padding: 15px; color: #64748b;">يرجى اختيار تلميذ لعرض شريط الأرشيف الخاص به هنا...</td></tr>`;
+}	
+	</script>
 </body>
 </html>
