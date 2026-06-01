@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="pageTitle">أكاديمية إتقان | المنصة التعليمية</title>
+    <title data-i18n="pageTitle"></title>
     
     <!-- Importing Premium Cairo Font and FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -453,57 +453,54 @@
 <body>
 
     <div class="fixed-ticker">
-        <div class="ticker-label" data-i18n="logoText">أكاديمية إتقان</div>
-        <div class="ticker-text" data-i18n="heroSub">تعليم شرعي وأكاديمي بأساليب تقنية حديثة تجمع بين الأصالة والمعاصرة.</div>
+        <div class="ticker-label" data-i18n="logoText"></div>
+        <div class="ticker-text" data-i18n="heroSub"> </div>
     </div>
-
-    <header>
-        <nav class="navbar">
-            <div class="logo" onclick="navigateTo('home-page')">
-                <i class="fas fa-graduation-cap"></i> <span data-i18n="logoText">أكاديمية إتقان</span>
-            </div>
-
-            <div class="menu-toggle" id="menuToggleBtn">
-                <i class="fas fa-bars"></i>
-            </div>
-
-            <ul class="nav-links" id="nav-list">
-                <li><a onclick="closeMenu('about-page')" data-i18n="navAbout">التعريف</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-btn"><span data-i18n="navCourses">الدورات</span> <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-content">
-                        <li><a onclick="closeMenu('quran-page')" data-i18n="courseQuran">قسم القرآن الكريم</a></li>
-                        <li><a onclick="closeMenu('islamic-page')" data-i18n="courseIslamic">قسم الثقافة الإسلامية</a></li>
-                        <li><a onclick="closeMenu('arabic-page')" data-i18n="courseArabic">قسم اللغة العربية</a></li>
-                        <li><a onclick="closeMenu('skills-page')" data-i18n="courseSkills">قسم مهارات التواصل</a></li>
-                    </ul>
-                </li>
-                <li><a onclick="closeMenu('news-page')" data-i18n="navNews">أخبارنا</a></li>
-                <li><a onclick="closeMenu('contact-page')" data-i18n="navContact">اتصل بنا</a></li>
-                <li><a onclick="closeMenu('reviews-page')" data-i18n="navReviews">آراء المشتركين</a></li>
-                
-                <li id="navLoginLi">
-    <a onclick="closeMenu('teacher-login')" style="color: var(--secondary); font-weight: bold; cursor: pointer;">
-        <span data-i18n="navLogin">دخول المسجلين</span> <i class="fas fa-user-lock"></i>
-    </a>
-</li>
-
-<li id="navRegisterLi">
-    <a onclick="closeMenu('register-page')" class="btn btn-primary" style="color:white;" data-i18n="navRegister">التسجيل</a>
-</li>
-
-<li id="navWelcomeLi" style="display: none; align-items: center; justify-content: center;">
-    <div id="navUserWelcomeArea" style="background: rgba(230, 81, 0, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--secondary); display: flex; align-items: center; gap: 8px;">
+<!-- Header -->
+ <header>
+    <nav class="navbar">
+        <div class="logo" onclick="navigateTo('home-page')">
+            <i class="fas fa-graduation-cap"></i> <span data-i18n="logoText"></span>
         </div>
-</li>
 
-<li>
-    <button id="lang-toggle" class="btn" style="background: var(--secondary); color: white; border: none; padding: 6px 16px; cursor: pointer; border-radius: 8px;" onclick="switchLanguage()">Français</button>
-</li>
-            </ul>
-        </nav>
-    </header>
+        <div class="menu-toggle" id="menuToggleBtn">
+            <i class="fas fa-bars"></i>
+        </div>
 
+        <ul class="nav-links" id="nav-list">
+            <li><a onclick="closeMenu('about-page')" data-i18n="navAbout">التعريف</a></li>
+            <li class="dropdown">
+                <a class="dropdown-btn"><span data-i18n="navCourses">الدورات</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-content">
+                    <li><a onclick="closeMenu('quran-page')" data-i18n="courseQuran">قسم القرآن الكريم</a></li>
+                    <li><a onclick="closeMenu('islamic-page')" data-i18n="courseIslamic">قسم الثقافة الإسلامية</a></li>
+                    <li><a onclick="closeMenu('arabic-page')" data-i18n="courseArabic">قسم اللغة العربية</a></li>
+                    <li><a onclick="closeMenu('skills-page')" data-i18n="courseSkills">قسم مهارات التواصل</a></li>
+                </ul>
+            </li>
+            <li><a onclick="closeMenu('news-page')" data-i18n="navNews">أخبارنا</a></li>
+            <li><a onclick="closeMenu('contact-page')" data-i18n="navContact">اتصل بنا</a></li>
+            <li><a onclick="closeMenu('reviews-page')" data-i18n="navReviews">آراء المشتركين</a></li>
+            
+            <li id="authNavLi">
+                <a id="authLink" onclick="closeMenu('auth-page')" style="color: var(--secondary); font-weight: bold; cursor: pointer;">
+                    <span id="authLinkText">تسجيل الدخول</span> <i class="fas fa-user-lock"></i>
+                </a>
+            </li>
+
+            <li id="navWelcomeLi" style="display: none; align-items: center; justify-content: center;">
+                <div id="navUserWelcomeArea" style="background: rgba(230, 81, 0, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--secondary); display: flex; align-items: center; gap: 8px;">
+                </div>
+            </li>
+
+            <li>
+                <button id="lang-toggle" class="btn" style="background: var(--secondary); color: white; border: none; padding: 6px 6px; cursor: pointer; border-radius: 8px;" onclick="switchLanguage()">Fr</button>
+            </li>
+        </ul>
+    </nav>
+</header>er>
+ <!--/Header-->
+ 
     <!-- TOAST PORT CONTAINER -->
     <div id="toast-container"></div>
 
@@ -564,14 +561,18 @@
                     <ul style="list-style: none; padding: 0; line-height: 2; text-align: start;">
                         <li data-i18n="quranTrack1">• حفظ القرآن الكريم للكبار والصغار.</li>
                         <li data-i18n="quranTrack2">• تصحيح التلاوة وإتقان مخارج الحروف.</li>
-                        <li data-i18n="quranTrack3">• دراسة أحكام التجويد (نظري وتطبيقي).</li>
-                        <li data-i18n="quranTrack4">• الإجازة بالسند المتصل إلى النبي ﷺ.</li>
+                        <li data-i18n="quranTrack3">• دراسة أحكام التجويد (نظري وتطبيقي).</li>                   
                     </ul>
                 </div>
 
                 <div class="card" style="border-inline-start: 5px solid #2b6cb0; background: #ebf8ff; padding: 20px; text-align: start;">
                     <h3 style="color: #2b6cb0; margin-bottom: 12px;"><i class="fas fa-clock"></i> <span data-i18n="studySystem">نظام الدراسة</span></h3>
-                    <p data-i18n="quranSystemText">نوفر حصصاً مرنة تناسب جميع الأوقات (صباحية ومسائية) عبر قاعات افتراضية تفاعلية، مع متابعة فردية لكل طالب.</p>
+					 <ul style="list-style: none; padding: 0; line-height: 2; text-align: start;">
+                        <li data-i18n="quranSystem1">• .</li>
+                        <li data-i18n="quranSystem2">• .</li>
+                        <li data-i18n="quranSystem3">• .</li>
+                       
+                    </ul>               
                 </div>
             </div>
 
@@ -822,6 +823,29 @@
         </section>
     </div>
     <!-- END HOME PAGE -->
+
+	<!-- START LOGIN -->
+	<section id="auth-page" class="page" style="display:none; padding: 40px 20px; text-align: center;">
+    <div class="auth-container" style="max-width: 400px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        
+        <h2 id="authTitle">تسجيل الدخول إلى أكاديمية إتقان</h2>
+        <p>أدخل معلومات الاتصال</p>
+
+        <form id="authForm" onsubmit="return handleUnifiedLogin(event)">
+            <input type="email" id="loginUsername" placeholder="البريد الإلكتروني" required style="width: 100%; padding: 10px; margin: 10px 0;">
+            <input type="password" id="loginPassword" placeholder="الرمز السري" required style="width: 100%; padding: 10px; margin: 10px 0;">
+            
+            <button type="submit" id="mainSubmitBtn" class="btn btn-primary" style="width: 100%; padding: 10px;">دخول</button>
+        </form>
+
+        <div style="margin-top: 20px;">
+            <p id="authToggleText">ليس لديك حساب؟ <a href="javascript:void(0)" onclick="switchAuthMode('register')">فتح حساب جديد</a></p>
+            <p><a href="javascript:void(0)" onclick="switchAuthMode('forgot')">نسيت كلمة المرور؟</a></p>
+        </div>
+    </div>
+</section>
+			</section>
+	<!-- END LOGIN-->
 
     <!-- START REGISTER PAGE -->
     <div id="register-page" class="page-content">
@@ -1082,28 +1106,29 @@
         <p data-i18n="footerText">© 2026 جميع الحقوق محفوظة لأكاديمية إتقان التعليمية</p>
     </footer>
 
-    <!-- ========================================================================= -->
+    <!-- ========================== -->
     <!-- JAVASCRIPT LOGIC AND MULTI-LINGUAL SYSTEM (INTEGRATED FROM script.js)     -->
-    <!-- ========================================================================= -->
+    <!-- ========================== -->
    <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrz1AdSqO2CnDyp369UiBM0Zm5AeXyediPM_zKW3jDET_1JxsRDUGWoC86BOMZ0aRl0A/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuuoBRCLjQsh_XEI3hyxRLMsmzeLE1dkzTn0vF8RgiMxPktswH-sFdW2ReI8VWW34-yQ/exec";
 
+// ==========================================
     const translations = {
       ar: {
-        pageTitle: "أكاديمية إتقان ",
+        pageTitle: "إتقان - التميز في التربية والقرآن واللغة العربية",
         logoText: "أكاديمية إتقان",
-        navAbout: "التعريف",
+        navAbout: "من نحن",
         navCourses: "الدورات",
-        courseQuran: "قسم القرآن الكريم",
-        courseIslamic: "قسم الثقافة الإسلامية",
-        courseArabic: "قسم اللغة العربية",
+        courseQuran: "القرآن الكريم",
+        courseIslamic: "الثقافة الإسلامية",
+        courseArabic: "اللغة العربية",
         courseSkills: "قسم مهارات التواصل",
         navNews: "أخبارنا",
         navContact: "اتصل بنا",
         navReviews: "آراء المشتركين",
         navLogin: "دخول المسجلين",
         navRegister: "التسجيل",
-        langToggle: "Français",
+        langToggle: "Fr",
         
         // قسم أخبارنا الجديد
         newsHeading: "أخبارنا",
@@ -1111,12 +1136,12 @@
         newsLink: "اقرأ المزيد من الأخبار...",
         
         // صفحة من نحن
-        aboutHeading: "اعرف بنا",
-        aboutDescription: "أكاديمية إتقان هي مؤسسة تعليمية متخصصة تسعى إلى تقديم محتوى تعليمي متميز في شتى العلوم. نحن نؤمن بأن الإتقان هو أساس النجاح، ولذلك نعمل على توفير بيئة تعليمية تفاعلية تجمع بين الجودة الأكاديمية والسهولة التقنية لتصل المعلومة إلى كل طالب علم أينما كان.",
+        aboutHeading: "من نحن",
+        aboutDescription: "أكاديمية إتقان ليست مجرد منصة، بل هي مسارٌ تربوي متكامل؛ تأسست لتكون مرجعاً للباحثين عن جودة التعليم وأصالة القيم. نؤمن بأن الإتقان هو مفتاح النجاح، لذا نسخر خبراتنا ومعاييرنا الأكاديمية لنبني شخصية الطالب، ونمنحه أدوات التميز في عالمٍ دائم التغير، أينما كان موقعه.",
         visionTitle: "رؤيتنا",
-        visionText: "أن نكون المنصة الأولى والرائدة في العالم العربي للتعليم المتقن والمؤصل.",
+        visionText: "أن نساهم في بناء جيلٍ متقنٍ لعلومه، متمسكٍ بقيمه، وقادرٍ على الحفاظ على هويته في ظل متغيرات العصر وتحدياته",
         missionTitle: "رسالتنا",
-        missionText: "تيسير سبل طلب العلم ونشره باستخدام أحدث الوسائل التكنولوجية المتاحة.",
+        missionText: "رسالتنا هي توفير إطار تربوي متكامل لأبنائكم، يجمع بين تحصيل المعارف الأساسية والأصيلة وترسيخ القيم الأخلاقية. ومن خلال تعليم القرآن الكريم، نسعى إلى إيقاظ مَلَكاتهم الروحية، وتعزيز ثقتهم بأنفسهم، وصياغة هويتهم في عالمٍ دائم التغير.",
 
         // صفحة القرآن
         quranTitle: "قسم القرآن الكريم",
@@ -1125,9 +1150,10 @@
         quranTrack1: "• حفظ القرآن الكريم للكبار والصغار.",
         quranTrack2: "• تصحيح التلاوة وإتقان مخارج الحروف.",
         quranTrack3: "• دراسة أحكام التجويد (نظري وتطبيقي).",
-        quranTrack4: "• الإجازة بالسند المتصل إلى النبي ﷺ.",
         studySystem: "نظام الدراسة",
-        quranSystemText: "نوفر حصصاً مرنة تناسب جميع الأوقات (صباحية ومسائية) عبر قاعات افتراضية تفاعلية، مع متابعة فردية لكل طالب.",
+		quranSystem1: "• حصص مرنة تناسب جميع الأوقات الصباحية والمسائية.",
+        quranSystem2: "• قاعات افتراضية تفاعلية، وأخرى حضورية.",
+        quranSystem3: "• متابعة فردية لكل طالب.",
         registerSectionBtn: "سجل الآن في هذا القسم",
 
         // صفحة العربية
@@ -1193,16 +1219,16 @@
         reviewCallBtn: "اضغط هنا لترك رأيك",
 
         // الرئيسية
-        heroTitle: "مرحباً بك في صرح \"إتقان\" العلمي",
-        heroSub: "تعليم شرعي وأكاديمي بأساليب تقنية حديثة تجمع بين الأصالة والمعاصرة.",
+        heroTitle: "إتقان.. حيث يلتقي التميز التعليمي بالهوية الراسخة",
+        heroSub: "نحن أكثر من مجرد منصة تعليمية؛ نحن شريككم في صياغة جيلٍ يجمع بين سعة المعرفة، وعمق القيم، وتوازن الشخصية.",
         heroRegisterBtn: "سجل الآن",
-        heroAboutBtn: "التعريف",
-        feature1Title: "نخبة المعلمين",
-        feature1Text: "خريجو كبار الجامعات الإسلامية.",
-        feature2Title: "بيئة تفاعلية",
-        feature2Text: "دروس مباشرة وحلقات نقاش.",
-        feature3Title: "شهادات معتمدة",
-        feature3Text: "توثيق رسمي لمسيرتك العلمية.",
+        heroAboutBtn: "من نحن",
+        feature1Title: "تعليم متوازن ذو بعد عالمي",
+        feature1Text: "نعتمد معايير تربوية عالمية تضمن تفوق أبنائكم في بيئات تعليمية متنوعة، مع الحرص التام على ترسيخ هويتهم وقيمهم.",
+        feature2Title: "بيئة تفاعلية ومتابعة شخصية",
+        feature2Text: "نقدم دروسا مباشرة (حضورية أو عن بعد) تضمن تفاعلاً حقيقياً بين الطالب وأستاذه، مع متابعة دقيقة ومخصصة  طالب على حدة.",
+        feature3Title: "تقييم دقيق، وشهادات موثوقة",
+        feature3Text: "نعتمد أدوات تقييم تربوية دقيقة ، حيث لا تكتفي تقاريرنا بالأرقام، بل تحلل جوانب الأداء المهاري، السلوكي، والأكاديمي، وتُتوج بشهاداتٍ معبرةٍ عن المستوى الفعلي للطالب.",
 
         // صفحة التسجيل
         regHeader: "طلب تسجيل طالب جديد",
@@ -1227,7 +1253,7 @@
         dashHeader: "لوحة رصد الدرجات",
         dashSelectStudent: "اختر الطالب",
         dashSaveBtn: "حفظ البيانات",
-        footerText: "© 2026 جميع الحقوق محفوظة لأكاديمية إتقان التعليمية",
+        footerText: "© 2026 التربية بالقيم، والتميز بالإتقان",
 
         // رسائل وتنبيهات برمجية
         enterNameAlert: "يرجى إدخال اسم الطالب",
@@ -1260,7 +1286,7 @@
         dir: "rtl"
       },
       fr: {
-        pageTitle: "Académie ETCAN | Espace de Tarbiya, du Coran et de la langue Arabe numérique",
+        pageTitle: "Académie ETCAN | Excellence dans la Tarbiya, le Coran et la langue Arabe numérique",
         logoText: "Académie ETCAN",
         navAbout: "Présentation",
         navCourses: "Cours",
@@ -1273,11 +1299,11 @@
         navReviews: "Témoignages",
         navLogin: "Accès Membres",
         navRegister: "S'inscrire",
-        langToggle: "العربية",
+        langToggle: "ع",
         
         // قسم أخبارنا بالفرنسية
         newsHeading: "Actualités",
-        newsHighlight: "🎉 Nous avons le plaisir d'annoncer l'ouverture des inscriptions pour la nouvelle session académique.",
+        newsHighlight: "🎉 Nous avons le plaisir d'annoncer l'ouverture des inscriptions pour la nouvelle année 2026/2027, Les place seront limitées, veuillez remplir le dossier d'inscription",
         newsLink: "Lire plus d'actualités...",
 
         // Qui sommes-nous
@@ -1289,7 +1315,7 @@
         missionText: "Faciliter l'accès à la science et sa diffusion par le biais des dernières innovations technologiques.",
 
         // Département Coran
-        quranTitle: "Département du Saint Coran",
+        quranTitle: "Saint Coran",
         quranSub: "Une attention particulière à la mémorisation, au Tajwid et à la récitation du Livre d'Allah",
         availableTracks: "Filières Disponibles",
         quranTrack1: "• Mémorisation du Saint Coran pour adultes et enfants.",
@@ -1297,11 +1323,13 @@
         quranTrack3: "• Étude théorique et pratique des règles du Tajwid.",
         quranTrack4: "• Obtention d'une Ijazah avec chaîne de transmission (Sanad) liée au Prophète ﷺ.",
         studySystem: "Système d'Études",
-        quranSystemText: "Nous offrons des séances d'apprentissage flexibles adaptées à tous les emplois du temps (matin et soir) via des classes virtuelles interactives, avec un suivi rigoureux et individuel de chaque apprenant.",
+       quranSystem1: "• Horaires flexibles adaptés à toutes vos disponibilités, matin et soir.",
+		quranSystem2: "• Salles de classe virtuelles interactives et sessions en présentiel.",
+		quranSystem3: "• Suivi personnalisé pour chaque étudiant.",
         registerSectionBtn: "S'inscrire dans ce département",
 
         // Département Arabe
-        arabicTitle: "Département de Langue Arabe",
+        arabicTitle: "Langue Arabe",
         arabicSub: "La langue arabe.. Identité, culture et maîtrise",
         arabicTrack1Title: "L'Arabe pour Enfants",
         arabicTrack1Text: "Enseignement de l'alphabet, de la lecture et de l'écriture grâce à des méthodes ludiques basées sur le conte et le jeu.",
@@ -1435,6 +1463,7 @@
         window.currentLang = localStorage.getItem('selectedLang') || 'ar';
     }
 
+// ==========================================
     function applyTranslations(lang) {
         try {
             if (!translations || !translations[lang]) return;
@@ -1465,12 +1494,136 @@
         }
     }
 
+// ==========================================
     function switchLanguage() {
         window.currentLang = (window.currentLang === 'ar') ? 'fr' : 'ar';
         localStorage.setItem('selectedLang', window.currentLang);
         applyTranslations(window.currentLang);
     }
 	
+
+// =========سكربت إدارة أكاديمية إتقان - النظام الموحد
+
+// 1. التهيئة عند التحميل
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof WEB_APP_URL === 'undefined' && typeof SCRIPT_URL !== 'undefined') {
+        window.WEB_APP_URL = SCRIPT_URL;
+    }
+    applyTranslations(window.currentLang);
+});
+
+window.onload = function() {
+    const savedName = localStorage.getItem('userName');
+    if (savedName) handleLoginUIEffects("teacher", savedName);
+};
+
+// 2. إدارة الواجهة الموحدة (Auth Mode)
+function switchAuthMode(mode) {
+    const title = document.getElementById('authTitle');
+    const authBtnText = document.getElementById('authLinkText'); 
+    const submitBtn = document.getElementById('mainSubmitBtn'); 
+    const toggleText = document.getElementById('authToggleText');
+
+    if (mode === 'register') {
+        title.innerText = "فتح حساب جديد في أكاديمية إتقان";
+        authBtnText.innerText = "تسجيل جديد";
+        submitBtn.innerText = "تسجيل";
+        toggleText.innerHTML = 'لديك حساب؟ <a href="javascript:void(0)" onclick="switchAuthMode(\'login\')">دخول</a>';
+    } else if (mode === 'login') {
+        title.innerText = "تسجيل الدخول إلى أكاديمية إتقان";
+        authBtnText.innerText = "تسجيل الدخول";
+        submitBtn.innerText = "دخول";
+        toggleText.innerHTML = 'ليس لديك حساب؟ <a href="javascript:void(0)" onclick="switchAuthMode(\'register\')">فتح حساب جديد</a>';
+    } else if (mode === 'forgot') {
+        title.innerText = "استعادة كلمة المرور";
+        authBtnText.innerText = "استعادة";
+        submitBtn.innerText = "إرسال رابط الاستعادة";
+    }
+}
+
+// 3. دالة الدخول الموحد (تم إصلاح المتغيرات هنا)
+async function handleUnifiedLogin(event) {
+    if (event) event.preventDefault();
+
+    const userInput = document.getElementById('loginUsername');
+    const passInput = document.getElementById('loginPassword');
+    
+    if (!userInput.value || !passInput.value) {
+        alert("يرجى إدخال اسم المستخدم وكلمة المرور");
+        return false;
+    }
+
+    const usernameValue = userInput.value.trim();
+    const passwordValue = passInput.value.trim();
+
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+            action: "unifiedLogin",
+            username: usernameValue, // استخدام المتغير الصحيح
+            password: passwordValue  // استخدام المتغير الصحيح
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            localStorage.setItem('userName', data.name);
+            handleLoginUIEffects(data.role, data.name);
+            showPage(data.role === 'teacher' ? 'teacher-dashboard' : 'parent-dashboard');
+        } else {
+            alert("خطأ: " + (data.message || "بيانات الدخول غير صحيحة"));
+        }
+    })
+    .catch(err => console.error("خطأ الاتصال:", err));
+}
+
+// 4. التأثيرات البصرية بعد الدخول
+function handleLoginUIEffects(userRole, userName) {
+    const authLi = document.getElementById('authNavLi'); 
+    const welcomeLi = document.getElementById('navWelcomeLi');
+    const welcomeArea = document.getElementById('navUserWelcomeArea'); 
+
+    if (authLi) authLi.style.display = 'none';
+    if (welcomeLi && welcomeArea) {
+        welcomeArea.innerHTML = `
+            <span style="color: var(--secondary);">أهلاً: ${userName}</span>
+            <span onclick="location.reload()" style="color:red; cursor:pointer;">[خروج]</span>
+        `;
+        welcomeLi.style.display = 'flex';
+    }
+    
+    if (userRole === "teacher") fetchTeacherDashboardData(userName);
+}
+
+// 5. إدارة الصفحات
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+    
+    const target = document.getElementById(pageId);
+    if (target) target.style.display = 'block';
+}
+
+// ... (باقي الدوال الخاصة بك: fetchTeacherDashboardData, saveFromWeb, navigateTo .. إلخ، تبقى كما هي دون تغيير)
+
+
+
+
+
+
+// دالة بسيطة لضبط الزر عند تحميل الصفحة
+function initNavbar() {
+    const loginText = document.getElementById('loginText');
+    const isLogged = checkUserSession(); // وظيفة تتحقق إذا كان المستخدم مسجلاً أم لا
+
+    if (isLogged) {
+        loginText.innerText = "لوحة التحكم"; // هنا يتغير الاسم تلقائياً
+        // يمكنك أيضاً تغيير الوظيفة عند الضغط
+    } else {
+        loginText.innerText = "دخول المسجلين"; // الحالة الافتراضية
+    }
+}
 // دالة إظهار وإخفاء كلمة المرور عند الضغط على العين
 function togglePasswordVisibility() {
     const passwordInput = document.getElementById('loginPassword');
@@ -1489,77 +1642,26 @@ function togglePasswordVisibility() {
 }
 
 // ==========================================
-// 3. دالة الدخول الموحد والربط الذكي مع الشيت
-// ==========================================
-function handleUnifiedLogin(event) {
-    // 1. منع النموذج من إعادة تحديث الصفحة وإظهار البيانات في الرابط العلوي
-    if (event && event.preventDefault) {
-        event.preventDefault(); 
-    } else if (window.event) {
-        window.event.returnValue = false;
+function toggleLoginUI(isLoggedIn) {
+    const loginLink = document.getElementById('loginLink');
+    const loginText = document.getElementById('loginText');
+    const loginLi = document.getElementById('navLoginLi');
+    const registerLi = document.getElementById('navRegisterLi');
+
+    if (isLoggedIn) {
+        // حالة: المستخدم مسجل دخول
+        loginText.innerText = "لوحة التحكم";
+        loginLink.onclick = function() { showPage('teacher-dashboard'); };
+        registerLi.style.display = 'none'; // إخفاء زر التسجيل
+    } else {
+        // حالة: المستخدم زائر (الوضع الافتراضي)
+        loginText.innerText = "دخول / تسجيل";
+        loginLink.onclick = function() { showPage('teacher-login'); };
+        registerLi.style.display = 'block';
     }
+}
 
-    // جلب قيم المدخلات من الفورم عندك (تأكد من مطابقة المعرفات لـ username و password)
-    const userInput = document.getElementById('username') || document.getElementById('loginUsername');
-    const passInput = document.getElementById('password') || document.getElementById('loginPassword');
-    
-    if (!userInput || !passInput) {
-        alert("خطأ: لم يتم العثور على حقول إدخال اسم المستخدم أو كلمة المرور في الـ HTML");
-        return false;
-    }
-
-    const usernameValue = userInput.value.trim();
-    const passwordValue = passInput.value.trim();
-
-    if (!usernameValue || !passwordValue) {
-        alert("يرجى إدخال اسم المستخدم وكلمة المرور");
-        return false;
-    }
-
-    // 2. إرسال طلب POST آمن ونظيف إلى الرابط الموحد الخاص بك
-    fetch(SCRIPT_URL, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'text/plain;charset=utf-8' // 👈 هذا السطر السحري الذي كان ينقصك لمنع الـ CORS
-  },
-  body: JSON.stringify({
-    action: "unifiedLogin",
-    username: username, // تأكد أن هذا الاسم يطابق متغير اسم المستخدم عندك في الكود
-    password: password  // تأكد أن هذا الاسم يطابق متغير كلمة المرور عندك في الكود
-  })
-})
-
-    .then(res => res.json())
-    .then(data => {
-        // تأكد من أن السيرفر يرسل { success: true, role: "teacher", name: "أحمد" } مثلاً
-        if (data.success || data.status === "success") {
-            alert("تم تسجيل الدخول بنجاح! 🌸");
-            
-            // استخدام الاسم القادم من السيرفر أو الاسم الذي أدخله المعلم
-            const finalName = data.name || usernameValue;
-            
-            // تشغيل دالة إخفاء الأزرار وجلب التلاميذ تلقائياً دفعة واحدة!
-            handleLoginUIEffects("teacher", finalName);
-            
-            // الانتقال إلى لوحة تحكم المعلم وإخفاء صفحة الدخول
-            if(typeof showPage === "function") {
-                showPage('teacher-dashboard'); // أو الطريقة المعتمدة عندك للتنقل
-            } else {
-                document.getElementById('teacher-dashboard').style.display = 'block';
-                const loginPage = document.getElementById('teacher-login') || document.getElementById('login-page');
-                if (loginPage) loginPage.style.display = 'none';
-            }
-        } else {
-            alert("خطأ: " + (data.message || "اسم المستخدم أو كلمة المرور غير صحيحة"));
-        }
-    })
-    .catch(err => {
-        console.error("خطأ المنظومة الجذري:", err);
-        alert("فشل الاتصال بسبب حماية المتصفح المحلية (CORS). يرجى تشغيل الموقع عبر Live Server أو رفعه على Netlify المستضيف للأكاديمية ليعمل فوراً.");
-    });
-
-    return false;
-}// دالة جلب البيانات لملء قائمة التلاميذ المنسدلة للأساتذة
+// دالة جلب البيانات لملء قائمة التلاميذ المنسدلة للأساتذة
 function fetchTeacherDashboardData(teacherName) {
     const currentUrl = typeof WEB_APP_URL !== 'undefined' ? WEB_APP_URL : SCRIPT_URL;
     const url = `${currentUrl}?action=getTeacherDashboardData&teacherName=${encodeURIComponent(teacherName)}`;
@@ -1591,18 +1693,10 @@ function fetchTeacherDashboardData(teacherName) {
     .catch(err => console.error("خطأ أثناء تحديث قائمة الطلاب:", err));
 }
 
-// تشغيل النظام فور تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-    // التأكد من مواءمة التسمية الموحدة للرابط في نطاق الجلوبال
-    if (typeof WEB_APP_URL === 'undefined' && typeof SCRIPT_URL !== 'undefined') {
-        window.WEB_APP_URL = SCRIPT_URL;
-    }
-    applyTranslations(window.currentLang);
-});
-// ==========================================
-// 4. نظام التنقل وإدارة المحتوى واللوحات
 // ==========================================
 
+// 4. نظام التنقل وإدارة المحتوى واللوحات
+// ==========================================
 function navigateTo(pageId) {
     const pages = document.querySelectorAll('.page-content');
     pages.forEach(page => {
@@ -1941,8 +2035,6 @@ async function saveFromWeb() {
 
 // ==========================================
 // 7. إدارة القوائم المنسدلة العامة للأزرار والأحداث
-// ==========================================
-
 const dropdownBtns = document.querySelectorAll('.dropdown-btn');
 dropdownBtns.forEach(btn => {
     btn.addEventListener('click', function(e) {
@@ -1964,53 +2056,6 @@ dropdownBtns.forEach(btn => {
     });
 });
 
-window.addEventListener('click', function(event) {
-    if (event.target.matches('.dropdown-btn') || event.target.matches('.menu-toggle') || event.target.closest('.menu-toggle')) {
-        return;
-    }
-
-    document.querySelectorAll('.dropdown-content').forEach(content => content.classList.remove('show'));
-    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
-    
-    const navList = document.getElementById('nav-list');
-    if (navList && navList.classList.contains('active')) {
-        navList.classList.remove('active');
-    }
-});
-
-// ==========================================
-// 1. إخفاء أزرار الدخول والتسجيل عند تسجيل الدخول
-// ==========================================
-function handleLoginUIEffects(userRole, userName) {
-    const loginLi = document.getElementById('navLoginLi'); 
-    const registerLi = document.getElementById('navRegisterLi');
-    const welcomeLi = document.getElementById('navWelcomeLi');
-    const welcomeArea = document.getElementById('navUserWelcomeArea'); 
-
-    if (loginLi) loginLi.style.display = 'none';
-    if (registerLi) registerLi.style.display = 'none';
-
-    if (welcomeLi && welcomeArea) {
-        welcomeArea.innerHTML = `
-            <span style="color: var(--secondary); font-weight: bold; font-size: 14px;">مرحباً بك: ${userName} 🌸</span>
-            <span onclick="location.reload()" style="color: #ef4444; cursor: pointer; font-size: 11px; font-weight: bold; margin-right: 6px; border-right: 1px solid #ccc; padding-right: 6px;">[خروج]</span>
-        `;
-        welcomeLi.style.display = 'flex'; 
-    }
-    
-    const dashboardTeacherNameSpan = document.getElementById('displayTeacherName');
-    if (dashboardTeacherNameSpan) {
-        dashboardTeacherNameSpan.innerText = userName;
-    }
-
-    // 👇 🔥 هنا التطبيق السحري والذكي للسطرين الفوق! 🔥 👇
-    // بمجرد نجاح تأثيرات الدخول، نقوم بتشغيل جلب التلاميذ للأستاذ الحالي تلقائياً
-    if (userRole === "teacher" || userRole === "معلم") {
-        setupStudentSelectorLogic(userName);
-        calculateTimeline(); // لتصفير وتجهيز التوقيت على رقم 5 تلقائياً
-    }
-}
-// ==========================================
 // 2. تحديث التوقيت التلقائي بفارق 12 دقيقة لكل نشاط
 // ==========================================
 function calculateTimeline() {
