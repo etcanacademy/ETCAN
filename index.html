@@ -1815,8 +1815,14 @@ function closeMenu(pageId) {
 // دالة القائمة المنسدلة للهواتف
 function toggleMenu() {
     const navList = document.getElementById('nav-list');
-    if (navList) navList.classList.toggle('active');
+    if (navList) {
+        navList.classList.toggle('active');
+        console.log("Menu toggled: " + navList.classList.contains('active'));
+    } else {
+        console.error("Error: Element 'nav-list' not found!");
+    }
 }
+	   
 
 // ==========================================
 // 5. معالجة النماذج (الاتصال والتسجيل والطلاب)
