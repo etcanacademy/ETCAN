@@ -1,0 +1,41 @@
+<header>
+   <nav class="navbar">
+        <div class="logo" onclick="navigateTo('home-page')">
+            <i class="fas fa-graduation-cap"></i> <span data-i18n="logoText"></span>
+        </div>
+
+        <div class="menu-toggle" id="menuToggleBtn">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="nav-list">
+            <li><a onclick="closeMenu('about-page')" data-i18n="navAbout">التعريف</a></li>
+            <li class="dropdown">
+                <a class="dropdown-btn"><span data-i18n="navCourses">الدورات</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-content">
+                    <li><a onclick="closeMenu('quran-page')" data-i18n="courseQuran">قسم القرآن الكريم</a></li>
+                    <li><a onclick="closeMenu('islamic-page')" data-i18n="courseIslamic">قسم الثقافة الإسلامية</a></li>
+                    <li><a onclick="closeMenu('arabic-page')" data-i18n="courseArabic">قسم اللغة العربية</a></li>
+                    <li><a onclick="closeMenu('skills-page')" data-i18n="courseSkills">قسم مهارات التواصل</a></li>
+                </ul>
+            </li>
+            <li><a onclick="closeMenu('news-page')" data-i18n="navNews">أخبارنا</a></li>
+            <li><a onclick="closeMenu('contact-page')" data-i18n="navContact">اتصل بنا</a></li>
+            <li><a onclick="closeMenu('reviews-page')" data-i18n="navReviews">آراء المشتركين</a></li>
+            <li id="authNavLi">
+            <a id="authLink" onclick="closeMenu('auth-page')" style="color: var(--secondary); font-weight: bold; cursor: pointer;">
+                <span id="authLinkText" data-i18n="navLogin">تسجيل الدخول</span> 
+                <i class="fas fa-user-lock"></i>
+            </a></li>
+             <li id="navWelcomeLi" style="display: none; align-items: center; justify-content: center;">
+                <div id="navUserWelcomeArea" style="background: rgba(230, 81, 0, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--secondary); display: flex; align-items: center; gap: 8px;">
+                </div>
+            </li>
+
+            <li>
+                <button id="lang-toggle" class="btn" style="background: var(--secondary); color: white; border: none; padding: 6px 6px; cursor: pointer; border-radius: 8px;" onclick="switchLanguage()">Fr</button>
+            </li>
+            
+        </ul>
+    </nav>
+</header>
