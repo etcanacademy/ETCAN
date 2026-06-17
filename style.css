@@ -2,6 +2,8 @@
         :root {
             --primary: #1a237e;
             --secondary: #0288d1;
+            --primary-color: #005088; /* لون الموقع الأساسي - غيره لما يناسبك */
+            --text-white: #ffffff;
             --accent: #ffd600;
             --white: #ffffff;
             --bg-light: #f8fafc;
@@ -27,41 +29,109 @@
             line-height: 1.6; 
             overflow-x: hidden; 
         }
+                /* فرض الاتجاه بناءً على لغة الـ HTML */
+        html[dir="rtl"] { direction: rtl; text-align: right; }
+        html[dir="ltr"] { direction: ltr; text-align: left; }
+                /* فرض الاتجاه من اليمين لليسار للعربية */
+        body[dir="rtl"] {direction: rtl; text-align: right;}
+        [dir="ltr"] .nav-links { justify-content: flex-start; }
+        [dir="rtl"] .nav-links { justify-content: flex-end; }
+        /* فرض الاتجاه من اليسار لليمين للفرنسية */
+        body[dir="ltr"] {direction: ltr; text-align: left;}
 
-        /* Styling Header & Navigation Bar */
-        header { 
-            background: var(--white); 
-            box-shadow: var(--shadow); 
-            position: sticky; 
-            top: 40px; /* Spacing for the fixed top ticker */
-            z-index: 1000; 
-            transition: var(--transition); 
-            width: 100%;
+         #header-placeholder {
+            position: relative; /* هذا يجعل أي شيء بداخلها (absolute) يحترم حدودها */
+            z-index: 1000;      /* لضمان بقاء الهيدر فوق كل شيء */
         }
 
-        .navbar { 
-            width: 100%;
-            max-width: 100%; 
-            margin: 0; 
-            padding: 12px 30px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            position: relative;
-            flex-wrap: nowrap;
+
+
+/* 1. الحاوية الرئيسية (الهيدر) */
+header {
+    background: var(--white);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0; /* تأكد أنها 0 إذا لم تكن بحاجة لمساحة إضافية */
+    z-index: 1000;
+    width: 100%;
+}/* هذا المحدد (Selector) قوي جداً وسيطبق على الاسم في أي مكان */
+header .navbar .logo .logo-text,
+header .navbar .logo span {
+    font-size: 30px !important;       /* حجم كبير وواضح */
+    font-weight: 900 !important;      /* سماكة قصوى */
+    color: #005088 !important;        /* اللون الأزرق المعتمد */
+    display: inline-block !important;
+    line-height: 1.2 !important;
+    text-decoration: none !important;
+    letter-spacing: 0.5px;            /* لمسة جمالية إضافية */
+}
+
+/* 2. تنظيف الحاوية لضمان عدم تداخل الزر مع اللوغو */
+.navbar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background-color: transparent !important; /* تأكد أن الخلفية لا تغطي النص */
+    flex-wrap: nowrap !important;
+}
+/* 3. تنسيق اللوغو */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0; /* يمنع اللوغو من الانكماش عند ضيق الشاشة */
+}
+
+/* 4. زر القائمة (يظهر فقط في الشاشات الصغيرة) */
+.menu-toggle {
+    display: none; /* مخفي افتراضياً في الشاشات الكبيرة */
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+    border: none !important;
+    background: transparent !important;
+    color: #005088;
+}
+
+
+/* الحاوية الرئيسية للهيدر */
+.header-main-container {
+    display: flex;
+    justify-content: space-between; /* اللوغو في جهة والزر في جهة */
+    align-items: center;            /* توسيط عمودي */
+    padding: 15px 20px;
+    width: 100%;
+    box-sizing: border-box;         /* لضمان عدم خروج الـ padding عن العرض */
+}
+
+        .logo-bar {
+            background-color: var(--primary-color); /* بدلاً من الأبيض */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-white);
         }
 
-        .logo { 
-            font-size: 1.5rem; 
-            font-weight: 900; 
-            color: var(--primary); 
-            text-decoration: none; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            white-space: nowrap;
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
+
+        .logo-img {
+            height: 50px; /* تحكم في حجم اللوغو */
+        }
+
+      .logo-text {
+    font-size: 2rem !important; /* هذا الحجم مناسب جداً للهيدر */
+    font-weight: 800 !important; /* القيمة القصوى للخطوط هي 900 */
+    color: #005088 !important;
+    letter-spacing: 0.7px;
+}
 
         .nav-links { 
             display: flex; 
@@ -86,14 +156,6 @@
         .nav-links a:hover { 
             background: rgba(2, 136, 209, 0.1); 
             color: var(--secondary); 
-        }
-
-        .menu-toggle { 
-            display: none; 
-            font-size: 1.5rem; 
-            cursor: pointer; 
-            color: var(--primary); 
-            padding: 5px;
         }
 
         .dropdown { 
@@ -144,10 +206,50 @@
         }
 
         @media screen and (max-width: 991px) {
-            .menu-toggle { 
-                display: block; 
-            }
-            .nav-links {
+       /* 1. إجبار الهيدر على أن يحتوي العناصر بشكل صحيح */
+       .menu-toggle {
+        display: flex; /* يظهر الزر */
+        order: -1;      /* يجعله يظهر في أقصى اليمين/اليسار حسب اتجاه اللغة */
+    }
+
+       .logo-bar {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    /* 2. رفع الزر إلى أعلى طبقة ممكنة */
+    #menuToggleBtn {
+        display: block !important;
+        position: relative !important;
+        z-index: 9999 !important; /* الرقم الأكبر ليكون فوق كل شيء */
+        background-color: transparent !important;
+        border: 1px solid #005088 !important; /* لون الإطار ليكون مرئياً فوق الأبيض */
+        color: #005088 !important; /* لون الأيقونة */
+        padding: 10px !important;
+        cursor: pointer;
+        }
+   /* 3. إذا كان هناك خلفية بيضاء تغطي العناصر، اجعلها شفافة أو غير موجودة */
+    #header-placeholder {
+        position: relative;
+        z-index: 5;
+    }
+
+    .logo-container {
+        /* لجعل الشعار والنص في المنتصف أو بجانب بعضهما */
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+        .logo-text {
+            font-size: 1.2rem;
+            width: 100%;
+            display: block;
+        }
+        
+                .nav-links {
                 display: none;
                 flex-direction: column;
                 align-items: flex-start; /* This aligns items to the left */
@@ -217,14 +319,29 @@
 }
 
 .hero-image {
-    width: 100%;       /* لن تتجاوز عرض حاويتها */
-    max-width: 500px;  /* تحديد أقصى عرض للصورة لتظل أنيقة */
-    height: auto;      /* الحفاظ على نسب الصورة */
-    border-radius: 20px; /* تدوير زوايا الصورة نفسها */
-    margin-bottom: 20px; /* مسافة بين الصورة والعنوان */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* إضافة ظل لتبدو بارزة */
+    width: 100%; 
+    max-width: 500px; 
+    height: auto; 
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    
+    /* الإضافات للحل النهائي: */
+    display: block;          /* لمنع الفراغات غير المرغوبة أسفل الصورة */
+    pointer-events: none;    /* يمنع أي تفاعل (نقرة، سحب، أيقونات المتصفح) */
+    user-select: none;       /* يمنع تحديد الصورة */
+    -webkit-user-drag: none; /* يمنع سحب الصورة */
 }
 
+.main-banner-image {
+    width: 100%;            /* تأخذ كامل عرض حاويتها */
+    height: 400px;          /* يمكنك تعديل الطول حسب الرغبة */
+    object-fit: cover;      /* هذا هو السر: يملأ المساحة ويقص الزوائد باحترافية */
+    object-position: center; /* تضمن توسيط الصورة دائماً */
+    display: block;
+    border-radius: 8px;     /* لمسة جمالية (اختياري) */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* تعطي عمق للصورة */
+}
 .hero-text h1 {
     font-size: 2.5rem;
     margin-bottom: 15px;
@@ -348,57 +465,7 @@
             100% { transform: rotate(360deg); } 
         }
 
-        /* Styling Top Marquee Ticker */
-        .fixed-ticker {
-            background: var(--primary);
-            color: white;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1001;
-            overflow: hidden;
-            font-size: 0.9rem;
-        }
-
-        .ticker-label { 
-            background: var(--accent); 
-            color: var(--primary); 
-            padding: 0 15px; 
-            font-weight: 900; 
-            z-index: 2; 
-            height: 100%; 
-            display: flex; 
-            align-items: center; 
-            box-shadow: 4px 0 10px rgba(0,0,0,0.15);
-        }
-
-        .ticker-text { 
-            white-space: nowrap; 
-            display: inline-block;
-            padding-inline-start: 100%;
-        }
-
-        html[dir="rtl"] .ticker-text {
-            animation: ticker-rtl 25s linear infinite;
-        }
-
-        html[dir="ltr"] .ticker-text {
-            animation: ticker-ltr 25s linear infinite;
-        }
-
-        @keyframes ticker-rtl { 
-            0% { transform: translate3d(0, 0, 0); } 
-            100% { transform: translate3d(-100%, 0, 0); } 
-        }
-
-        @keyframes ticker-ltr { 
-            0% { transform: translate3d(0, 0, 0); } 
-            100% { transform: translate3d(100%, 0, 0); } 
-        }
-
+       
         /* PREMIUM TOAST NOTIFICATION STYLING */
         #toast-container {
             position: fixed;
