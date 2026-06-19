@@ -1,5 +1,5 @@
     
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxfj8-u5oVgXIOGsnraztzTwkjFovYBEwgmf1XoidutF7fUaKW3WMVCa93K6i9Jrt30/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuuoBRCLjQsh_XEI3hyxRLMsmzeLE1dkzTn0vF8RgiMxPktswH-sFdW2ReI8VWW34-yQ/exec";
 
 
     const lang = localStorage.getItem('currentLang') || 'fr';
